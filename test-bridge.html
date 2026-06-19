@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Klaseco Bridge Debugger</title></head>
+<body>
+    <h2>Bridge Status: <span id="status" style="color:orange">Testing...</span></h2>
+    <div id="log" style="font-family:monospace; background:#eee; padding:10px;"></div>
+    <script>
+        const log = (msg) => document.getElementById('log').innerHTML += `<p>${msg}</p>`;
+        const status = document.getElementById('status');
+        try {
+            const socket = new WebSocket('wss://www.klaseco.com/bridge');
+            socket.onopen = () => {
+                status.innerText = "ONLINE ✅";
+                status.style.color = "green";
+                log("Successfully connected to the Bridge!");
+            };
+            socket.onerror = (err) => {
+                status.innerText = "OFFLINE ❌";
+                status.style.color = "red";
+                log("Connection Failed. Check .htaccess or Node.js status.");
+            };
+        } catch (e) { log("Error: " + e.message); }
+    </script>
+</body>
+</html>

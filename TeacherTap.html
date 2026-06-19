@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMART CLASSROOM ATTENDANCE</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/klaseco-logo.png" />
+
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- External CSS -->
+   <!--<link rel="stylesheet" href="attendance.css">-->
+  <link rel="stylesheet" href="assets/css/Tap/choose.css" />
+  <link rel="stylesheet" href="assets/css/Tap/Tap.css" />
+  <link rel="stylesheet" href="assets/css/Tap/Loader.css" />
+</head>
+
+<body>
+
+<div id="loading-overlay">
+  <div class="loader">
+    <img src="assets/images/klaseco-logo.png" alt="Klaseco Loading" class="loader-logo">
+    
+    <div class="spinner"></div>
+    <p>Initializing System...</p>
+  </div>
+</div>
+
+<!-- 🔹 FIRST CONTAINER: CHOOSE ROOM A301 / A302 -->
+<section class="room-select-screen" id="room-select-screen">
+  <div class="room-select-panel">
+
+    <!-- ✅ KLASECO BRANDING -->
+    <div class="room-brand-block">
+      <div class="room-brand-info">
+        <img src="assets/images/klaseco-logo.png" alt="KLASECO Logo" class="room-brand-logo">
+        <span class="room-brand-name">KLASECO</span>
+      </div>
+      
+      <a href="login.php" class="room-login-btn">
+        <i class="fa-solid fa-user-shield"></i>
+        <span>Admin Login</span>
+      </a>
+    </div>
+
+    <div class="room-select-header">
+      <div>
+        <div class="room-select-title">Choose Classroom</div>
+        <div class="room-select-sub">
+          Select which room this SMART CLASSROOM ATTENDANCE panel will monitor.
+        </div>
+      </div>
+      <div class="room-select-chip">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>Cetafa Building A • 3rd Floor</span>
+      </div>
+    </div>
+
+    <div class="room-cards-grid">
+      <!-- A301 CARD -->
+      <div class="room-card" data-room="A303">
+        <div class="room-card-header">
+          <div class="room-icon-circle">
+            <i class="fa-solid fa-door-open"></i>
+          </div>
+          <div>
+            <div class="room-name">A303</div>
+          </div>
+        </div>
+        <div class="room-footer">
+          <div>Tap to use this room for attendance.</div>
+          <div class="room-status-pill">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- A302 CARD -->
+      <div class="room-card" data-room="A304">
+        <div class="room-card-header">
+          <div class="room-icon-circle">
+            <i class="fa-solid fa-door-closed"></i>
+          </div>
+          <div>
+            <div class="room-name">A304</div>
+          </div>
+        </div>
+        <div class="room-footer">
+          <div>Tap to use this room for attendance.</div>
+          <div class="room-status-pill">
+            <i class="fa-solid fa-circle-dot"></i>
+            <span>Ready</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-hint">
+      <i class="fa-solid fa-circle-info"></i>
+      <span>Once you select a room, this device will log RFID taps under that classroom.</span>
+    </div>
+  </div>
+</section>
+
+
+<div class="attendance-wrapper hidden-attendance">
+
+  <header class="top-bar">
+    <div class="brand-block">
+      <img
+        src="assets/images/klaseco-logo.png"
+        class="klaseco-logo"
+        alt="Logo"
+        onerror="this.src='https://via.placeholder.com/60/00aebf/ffffff?text=KC'"
+      >
+      <div class="brand-text">
+        <div class="brand-title">SMART CLASSROOM</div>
+        <div class="brand-subtitle">
+          RFID &amp; Biometric Log
+          <span class="room-label">
+            | Room: <span id="selected-room-label">LAB-101</span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-right-chips">
+      <button class="btn-back-room" id="btn-back-to-room">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Change Room</span>
+      </button>
+      <div class="chip chip-time" id="top-clock">00:00:00 AM</div>
+      <div class="chip chip-focus"><span>Focus: Tap</span></div>
+    </div>
+  </header>
+
+  <section class="top-grid">
+    <!-- LEFT: RFID + BIOMETRIC COLUMN -->
+    <div class="auth-column">
+
+      <!-- RFID TAP CARD -->
+      <!-- 🔹 added id="card-step-1" and STEP badge + status text id -->
+      <div class="tap-card-outer" id="card-step-1">
+        <div class="step-badge">STEP 1</div>
+        <div class="tap-card-inner">
+          <div class="tap-radar">
+            <span class="tap-radar-ring ring-1"></span>
+            <span class="tap-radar-ring ring-2"></span>
+            <div class="tap-icon-badge">
+              <i class="fa-solid fa-wifi"></i>
+            </div>
+          </div>
+
+          <div class="tap-content">
+            <div class="tap-title">RFID Tap</div>
+            <p class="tap-sub" id="rfid-status-text">
+              Place card near reader.<br>
+              <strong>Waiting for scan...</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIOMETRIC CARD -->
+      <!-- 🔹 added id="card-step-2" + class "disabled" so it starts grayed out -->
+      <div class="bio-card-outer disabled" id="card-step-2">
+        <div class="step-badge">STEP 2</div>
+        <div class="bio-card-inner" id="bio-trigger">
+          <div class="bio-scanner">
+            <i class="fa-solid fa-fingerprint bio-icon"></i>
+            <div class="bio-scan-bar"></div>
+          </div>
+          <div class="tap-content">
+            <div class="tap-title">Fingerprint Scan</div>
+            <p class="tap-sub" id="bio-status-text">
+              Verify Identity.<br>
+              <strong>Locked (Tap RFID first)</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ATTENDANCE LOG PANEL -->
+    <div class="att-log-outer">
+      <div class="att-log-header">
+        <div class="att-log-title-group">
+          <h3>Today's Attendance</h3>
+          <div class="att-log-pills">
+            <div class="log-pill">
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>
+              <span>IN:</span>
+              <span class="count" id="today-in-count">0</span>
+            </div>
+            <div class="log-pill out">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>OUT:</span>
+              <span class="count" id="today-out-count">0</span>
+            </div>
+          </div>
+        </div>
+        <div class="log-updated" id="last-updated">
+          <small>Live Update</small>
+        </div>
+      </div>
+
+      <div class="att-log-inner">
+        <div class="att-log-headbar">
+          <span>Time</span>
+          <span>Name</span>
+          <span>Program</span>
+          <span>Status</span>
+        </div>
+
+        <div class="att-log-list" id="log-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM INFO PANEL -->
+  <section class="bottom-panel">
+    <div class="info-top-row">
+
+      <div class="info-card">
+        <h4><i class="fa-solid fa-chalkboard-user"></i> Teacher Info</h4>
+        <div class="info-name-value" id="teacher-name">---</div>
+
+        <div class="teacher-id-meta">
+          ID: <span id="teacher-id">---</span>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="status-card-inner">
+          <div class="status-label">
+            <i class="fa-solid fa-signal"></i> System Status
+          </div>
+          <div class="status-badge" id="teacher-status">Standby</div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <h4><i class="fa-solid fa-id-card"></i> Scanned ID</h4>
+        <!-- JS uses #teacher-rfid (and falls back from display-rfid), so this is fine -->
+        <div class="info-name-value" id="teacher-rfid">---</div>
+      </div>
+
+    </div>
+
+    <div class="info-bottom-row">
+      <div class="long-info">
+        <span class="long-info-label">
+          <i class="fa-regular fa-clock"></i> Current Time
+        </span>
+        <span class="long-info-value" id="current-time-bottom">--:--:--</span>
+      </div>
+      <div class="long-info">
+        <span class="long-info-label">
+          <i class="fa-regular fa-hourglass-half"></i> Last Tap
+        </span>
+        <span class="long-info-value" id="last-tap-time">--:--</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- 🔌 SENSOR CONNECTION BAR (for WebSocket status) -->
+<div class="connection-bar">
+  <span class="status-dot offline" id="sensor-dot"></span>
+  <span id="sensor-text">Sensor Offline</span>
+</div>
+
+<script src="assets/js/TeacherTap/Loader.js"></script>
+<script src="assets/js/TeacherTap/Choose.js"></script>
+<script src="assets/js/TeacherTap/MainFunctions.js"></script>
+
+</body>
+</html>
+
+

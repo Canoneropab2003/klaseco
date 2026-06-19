@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Klaseco | Room A303 Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: white; text-align: center; }
+        .container { display: flex; justify-content: center; gap: 20px; margin-top: 50px; flex-wrap: wrap; }
+        .card { background: #1e293b; padding: 30px; border-radius: 15px; min-width: 200px; border: 1px solid #334155; }
+        .value { font-size: 3em; font-weight: bold; color: #38bdf8; margin: 10px 0; }
+        .label { color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+        .status { margin-top: 20px; font-size: 0.8em; color: #4ade80; }
+    </style>
+</head>
+<body>
+    <h1>KLASECO: Room A303 Live</h1>
+    <div class="container">
+        <div class="card">
+            <div class="label">Temperature</div>
+            <div id="temp" class="value">--</div>
+            <div>&deg;C</div>
+        </div>
+        <div class="card">
+            <div class="label">Humidity</div>
+            <div id="hum" class="value">--</div>
+            <div>%</div>
+        </div>
+        <div class="card">
+            <div class="label">Light Level</div>
+            <div id="light" class="value">--</div>
+            <div id="light-text">Checking...</div>
+        </div>
+    </div>
+    <div id="last-update" class="status">Waiting for data...</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const SB_URL = "https://lxdrkiqqqzfiqgnbufjo.supabase.co";
+            const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4ZHJraXFxcXpmaXFnbmJ1ZmpvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5MTU0NTQsImV4cCI6MjA4MDQ5MTQ1NH0.hjTCF_MpXDFEFICZe9s-7_aFVo37GrSm0S6YlLM2Zqs";
+            
+            const _supabase = supabase.createClient(SB_URL, SB_KEY);
+
+            async function fetchLatestData() {
+                console.log("Syncing with Supabase...");
+                const { data, error } = await _supabase
+                    .from('room_environment_logs')
+                    .select('*')
+                    .eq('room_code', 'A303')
+                    .order('created_at', { ascending: false })
+                    .limit(1);
+
+                if (error) {
+                    console.error("Supabase Error:", error);
+                    return;
+                }
+
+                if (data && data.length > 0) {
+                    const log = data[0];
+                    document.getElementById('temp').innerText = log.temp_c.toFixed(1);
+                    document.getElementById('hum').innerText = log.humidity_pct.toFixed(1);
+                    document.getElementById('light').innerText = log.light_raw;
+                    
+                    // Logic check for LDR: 46 is Bright
+                    document.getElementById('light-text').innerText = log.light_raw > 500 ? "DARK" : "BRIGHT";
+                    
+                    const time = new Date(log.created_at).toLocaleTimeString();
+                    document.getElementById('last-update').innerText = "Last Sync: " + time;
+                }
+            }
+
+            // Update every 5 seconds
+            setInterval(fetchLatestData, 5000);
+            fetchLatestData();
+        });
+    </script>
+</body>
+</html>

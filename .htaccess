@@ -1,0 +1,37 @@
+RewriteEngine On
+PassengerPoolIdleTime 0
+PassengerMinInstances 1
+
+SSLProxyEngine On
+SSLProxyVerify None
+SSLProxyCheckPeerCN Off
+SSLProxyCheckPeerName Off
+
+# BRIDGE (WebSocket)
+RewriteCond %{HTTP:Upgrade} websocket [NC]
+RewriteCond %{HTTP:Connection} upgrade [NC]
+RewriteRule ^bridge(.*) http://127.0.0.1:8000/$1 [P,L]
+RewriteRule ^bridge$ - [L]
+RewriteRule ^bridge/ - [L]
+
+
+# ─── BIOMETRIC SYNC PROXY ───
+<Location "/sync-all">
+    PassengerEnabled off
+</Location>
+RewriteEngine On
+RewriteRule ^sync-all$ http://127.0.0.1:3001/sync-all [P,L]
+
+# PHP clean URLs
+# Exclude ai_proxy.php from clean URL redirect (preserves POST method)
+RewriteCond %{REQUEST_URI} ^/api/ai_proxy\.php$ [NC]
+RewriteRule ^ - [L]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php[\s?] [NC]
+RewriteRule ^ %1 [R=301,L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.+?)/?$ $1.php [L,QSA]
