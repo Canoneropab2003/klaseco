@@ -1,0 +1,411 @@
+/* =========================================================
+   🧰 MAINTENANCE REQUESTS
+   Uses same theme as overview (glass cards on card-bg panel)
+   ========================================================= */
+
+/* Whole page wrapper */
+#maintenance-requests.page-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Outer panel (same feel as .overview) */
+.maint-requests-panel {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 28px 36px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* Title row */
+.maint-requests-panel h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: 22px;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.maint-requests-panel h2 i {
+  color: #ff8c42;
+}
+
+/* Top filters bar (re-use overview style) */
+.mreq-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #ecf2f7;
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 18px;
+}
+
+.mreq-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mreq-field-grow {
+  flex: 1;
+  min-width: 220px;
+}
+
+.mreq-field label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #43606d;
+}
+
+.mreq-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.mreq-input-wrap i {
+  position: absolute;
+  left: 10px;
+  font-size: 13px;
+  color: #6f8a96;
+}
+
+.mreq-input-wrap input {
+  width: 100%;
+  padding: 8px 10px 8px 30px;
+  border-radius: 10px;
+  border: 1px solid #c8d7de;
+  background: #ffffff;
+  font-size: 13px;
+  color: #153741;
+}
+
+.mreq-filters select {
+  min-width: 150px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #c8d7de;
+  background: #ffffff;
+  font-size: 13px;
+  color: #153741;
+}
+
+/* "New Request" button on the right */
+.mreq-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mreq-btn-primary {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0f5fff, #00b7ff);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(15, 95, 255, 0.35);
+  transition: transform 0.18s var(--ease-smooth),
+              box-shadow 0.18s var(--ease-softer);
+}
+
+.mreq-btn-primary i {
+  font-size: 13px;
+}
+
+.mreq-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(15, 95, 255, 0.45);
+}
+
+/* =========================================================
+   TABLE (glass shell similar to dashboard cards)
+   ========================================================= */
+.mreq-table-shell {
+  margin-top: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px) saturate(1.5);
+  -webkit-backdrop-filter: blur(12px) saturate(1.5);
+  border: 1px solid rgba(255,255,255,0.4);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+/* scroll container */
+.mreq-table-scroll {
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.mreq-table-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.mreq-table-scroll::-webkit-scrollbar-thumb {
+  background: #b0bec5;
+  border-radius: 10px;
+}
+.mreq-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #8fa1a9;
+}
+@supports (scrollbar-width: thin) {
+  .mreq-table-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #a6b4bd #e9edf0;
+  }
+}
+
+/* Real table */
+.mreq-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.mreq-table thead th {
+  font-weight: 900;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.32px;
+  color: #ffffff;
+  text-align: center;
+  background: #0b1f44;
+  padding: 10px 8px;
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.mreq-table thead th:first-child {
+  border-top-left-radius: 18px;
+}
+.mreq-table thead th:last-child {
+  border-top-right-radius: 18px;
+}
+
+/* rows */
+.mreq-table tbody tr:nth-child(even) td {
+  background: #f5f8fc;
+}
+
+.mreq-table tbody td {
+  font-size: 13px;
+  color: #163040;
+  padding: 9px 8px;
+  border-bottom: 1px solid #dde7f0;
+  text-align: center;
+}
+
+/* make issue + room left aligned */
+.mreq-table tbody td:nth-child(2),
+.mreq-table tbody td:nth-child(3) {
+  text-align: left;
+}
+
+/* Empty state row */
+.mreq-empty-row td {
+  text-align: center !important;
+  padding: 32px 10px !important;
+  background: #f5f9ff !important;
+  color: #7f8ea3;
+}
+
+/* Badges */
+.mreq-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.mreq-priority-low {
+  background: rgba(57, 181, 74, 0.1);
+  color: #1a7a34;
+}
+.mreq-priority-medium {
+  background: rgba(255, 193, 7, 0.12);
+  color: #c27b00;
+}
+.mreq-priority-high {
+  background: rgba(244, 67, 54, 0.12);
+  color: #c62828;
+}
+
+.mreq-status-pending {
+  background: rgba(255, 152, 0, 0.12);
+  color: #e65100;
+}
+.mreq-status-inprogress {
+  background: rgba(33, 150, 243, 0.12);
+  color: #0d47a1;
+}
+.mreq-status-resolved {
+  background: rgba(76, 175, 80, 0.12);
+  color: #1b5e20;
+}
+
+/* Row action buttons */
+.mreq-actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.mreq-tag-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform .15s var(--ease-softer),
+              box-shadow .15s var(--ease-softer),
+              background .15s ease;
+}
+
+.mreq-tag-edit {
+  background: #e3f3ff;
+  color: #0b3b46;
+}
+.mreq-tag-edit:hover {
+  background: #cfe7ff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(138, 190, 255, 0.45);
+}
+
+.mreq-tag-delete {
+  background: #ff9aa2;
+  color: #fff;
+}
+.mreq-tag-delete:hover {
+  background: #ff6b6b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.45);
+}
+
+/* =========================================================
+   MODAL (New / Edit Request) – light theme
+   ========================================================= */
+.mreq-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 18, 40, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.mreq-modal.show {
+  display: flex;
+}
+
+.mreq-modal-dialog {
+  width: 100%;
+  max-width: 640px;
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mreq-modal-header,
+.mreq-modal-footer {
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #f4f7fb;
+}
+
+.mreq-modal-header h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.mreq-modal-body {
+  padding: 16px 18px 18px;
+  background: #ffffff;
+}
+
+/* form layout in modal */
+.mreq-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.mreq-modal .mreq-field label {
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.mreq-modal .mreq-field input,
+.mreq-modal .mreq-field select,
+.mreq-modal .mreq-field textarea {
+  border-radius: 10px;
+  border: 1px solid #c8d7de;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: var(--font);
+  color: #153741;
+  background: #ffffff;
+}
+
+.mreq-modal .mreq-field textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.mreq-modal-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.mreq-modal-close:hover {
+  color: #1e293b;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .maint-requests-panel {
+    padding: 24px 20px;
+  }
+
+  .mreq-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

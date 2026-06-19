@@ -1,0 +1,736 @@
+/* =========================================================
+   🛠 MAINTENANCEACCOUNTS PANEL — Scrollable & Responsive
+   (Scoped to #maintenanceaccounts)
+   FULL UPDATED (Now matches AdminStaff style/behavior)
+   ✅ Fix: 1024/768 clipping / pushed buttons
+   ✅ Fix: cleaner grid + button row across widths
+   ✅ Mobile stays clean (375/425 widths OK)
+   ✅ Same layout logic as AdminStaff (1200px + 1400px behavior)
+========================================================= */
+
+/* ---------------------------------------------------------
+   ✅ Fluid tokens (scales smoothly) — MATCHES ADMINSTAFF
+--------------------------------------------------------- */
+#maintenanceaccounts{
+  --ma-pad: clamp(14px, 2.2vw, 28px);
+  --ma-radius: clamp(14px, 1.6vw, 20px);
+  --ma-gap: clamp(12px, 1.6vw, 24px);
+  --ma-title: clamp(18px, 1.9vw, 22px);
+  --ma-input: clamp(13px, 1.4vw, 14px);
+}
+
+/* =========================================================
+   Panel
+========================================================= */
+#maintenanceaccounts .maintenance-panel{
+  background: var(--card-bg);
+  border-radius: var(--ma-radius);
+  padding: var(--ma-pad);
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  margin-top: clamp(12px, 1.8vw, 20px);
+
+  /* ✅ safer than 100vh on mobile */
+  max-height: clamp(520px, calc(100dvh - 160px), 980px);
+
+  overflow: auto;
+  scroll-behavior: smooth; /* ✅ modern & standard */
+}
+
+/* =========================
+   SCROLLBAR — WebKit
+========================= */
+#maintenanceaccounts .maintenance-panel::-webkit-scrollbar{
+  width: 12px;
+}
+
+#maintenanceaccounts .maintenance-panel::-webkit-scrollbar-track{
+  background: rgba(255,255,255,0.07);
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+}
+
+#maintenanceaccounts .maintenance-panel::-webkit-scrollbar-thumb{
+  background: linear-gradient(
+    145deg,
+    #e8eff3 0%,
+    #c6d4dd 40%,
+    #9aabb4 100%
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.4);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.25),
+    inset 0 0 6px rgba(255,255,255,0.25);
+  transition: all .3s ease;
+}
+
+#maintenanceaccounts .maintenance-panel::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(
+    145deg,
+    #f6fcff 0%,
+    #dce8ee 40%,
+    #b4c3cc 100%
+  );
+  box-shadow:
+    0 0 14px rgba(230,240,255,0.6),
+    inset 0 0 10px rgba(255,255,255,0.4);
+  transform: translateY(-1px);
+}
+
+/* =========================
+   FIREFOX (SAFE GUARD)
+========================= */
+@supports (scrollbar-width: thin){
+  #maintenanceaccounts .maintenance-panel{
+    scrollbar-width: thin;
+    scrollbar-color: #b4c3cc rgba(255,255,255,0.07);
+  }
+}
+
+
+/* =========================================================
+   Header
+========================================================= */
+#maintenanceaccounts .maintenance-head h2{
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: var(--ma-title);
+  letter-spacing: .2px;
+  margin-bottom: clamp(12px, 1.7vw, 18px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#maintenanceaccounts .maintenance-head h2 i{ color:#0b1f44; }
+
+/* ===================================================
+   🌙 FORM CARD — MAINTENANCE (match adminstaff)
+=================================================== */
+#maintenanceaccounts .mform-card{
+  background:#0f2230;
+  border-radius: var(--ma-radius);
+  padding: clamp(16px, 2.2vw, 28px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  margin-bottom: clamp(16px, 2.2vw, 28px);
+
+  /* ✅ IMPORTANT: prevents “clipped buttons” issues */
+  overflow: visible;
+}
+
+/* ✅ Grid that adapts automatically */
+#maintenanceaccounts .mform-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--ma-gap);
+  align-items: end;
+  width: 100%;
+}
+
+/* Fields */
+#maintenanceaccounts .mfield{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#maintenanceaccounts .mfield label{
+  font-weight:800;
+  font-size: clamp(12px, 1.2vw, 13px);
+  color:#d5eaf3;
+  letter-spacing:.2px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+#maintenanceaccounts .mfield label i{
+  color:#d5eaf3;
+  font-size:13px;
+}
+
+/* Inputs */
+#maintenanceaccounts .minput{
+  background:#0e2a3a;
+  border:1px solid rgba(255,255,255,0.08);
+  color:#f1fcff;
+  border-radius: clamp(10px, 1.2vw, 12px);
+  padding: clamp(10px, 1.3vw, 12px) clamp(12px, 1.6vw, 14px);
+  font-weight:700;
+  font-size: var(--ma-input);
+  outline:none;
+  transition:all .25s ease;
+  min-width: 0; /* ✅ prevents grid overflow */
+}
+#maintenanceaccounts .minput::placeholder{
+  color: rgba(234,243,247,0.55);
+  font-weight:600;
+}
+#maintenanceaccounts .minput:focus{
+  border-color:#b8f86f;
+  box-shadow:0 0 0 3px rgba(184,248,111,0.25);
+}
+
+/* ===================================================
+   🔐 PASSWORD (with eye) — adminstaff feel
+=================================================== */
+#maintenanceaccounts .m-password-wrapper{
+  width:100%;
+  position:relative;
+}
+#maintenanceaccounts .m-password-wrapper .minput{
+  width:100%;
+  padding-right:42px;
+}
+#maintenanceaccounts .m-password-toggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  color:#c7d7e2;
+  font-size:14px;
+  padding:4px;
+}
+#maintenanceaccounts .m-password-toggle:hover{ color:#ffffff; }
+
+#maintenanceaccounts .m-password-strength{
+  margin-top:4px;
+  font-size:11px;
+  font-weight:700;
+}
+#maintenanceaccounts .m-password-strength.weak{ color:#ff6b6b; }
+#maintenanceaccounts .m-password-strength.medium{ color:#f6c344; }
+#maintenanceaccounts .m-password-strength.strong{ color:#4cd964; }
+
+/* ===================================================
+   🔧 BUTTONS (Fix layout across widths) — MATCH ADMINSTAFF
+=================================================== */
+#maintenanceaccounts .as-actions-field,
+#maintenanceaccounts .ma-actions-field,
+#maintenanceaccounts .m-actions-field{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-width:0;
+}
+
+/* Main actions container */
+#maintenanceaccounts .mactions{
+  display:flex;
+  gap: clamp(10px, 1.5vw, 16px);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap; /* keep side-by-side */
+}
+
+/* ✅ button base (no stretching, no overflow) */
+#maintenanceaccounts .mbtn{
+  height: 48px;
+  min-height: 46px;
+  max-height: 52px;
+  padding: 0 18px;
+
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  transition: all .25s ease;
+  border:none;
+
+  flex: 0 1 auto;      /* ✅ can shrink */
+  min-width: 150px;    /* ✅ prevents clipping */
+  max-width: 280px;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Green */
+#maintenanceaccounts .mbtn-green{
+  background: linear-gradient(180deg,#b8f86f,#8fdc49);
+  color:#0b2b38;
+}
+#maintenanceaccounts .mbtn-green:hover{
+  box-shadow:0 0 16px rgba(184,248,111,0.35);
+  transform:translateY(-1px);
+}
+
+/* Clear */
+#maintenanceaccounts .mbtn-clear{
+  background:#ff6b6b;
+  color:#fff;
+}
+#maintenanceaccounts .mbtn-clear:hover{
+  background:#ff5050;
+  box-shadow:0 0 16px rgba(255,80,80,0.35);
+}
+
+/* =========================================================
+   ✅ DESKTOP (≥1200px) — SAME LOGIC AS ADMINSTAFF
+   - Stable 3-column grid
+   - Password spans col 1–2
+   - Actions in col 3
+========================================================= */
+@media (min-width: 1200px){
+
+  #maintenanceaccounts .mform-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    align-items: end;
+  }
+
+  /* If your maintenance layout has a dedicated password field class, support it.
+     Otherwise (no HTML change), use nth-child mapping. */
+  #maintenanceaccounts .as-password-field,
+  #maintenanceaccounts .ma-password-field{
+    grid-column: 1 / 3 !important;
+  }
+
+  #maintenanceaccounts .as-actions-field,
+  #maintenanceaccounts .ma-actions-field,
+  #maintenanceaccounts .m-actions-field{
+    grid-column: 3 / 4 !important;
+    align-self: start;
+  }
+
+  /* No HTML change fallback (your DOM order: 7th=password, 8th=actions) */
+  #maintenanceaccounts .mform-grid .mfield:nth-child(7){
+    grid-column: 1 / 3 !important;
+  }
+  #maintenanceaccounts .mform-grid .mfield:nth-child(8){
+    grid-column: 3 / 4 !important;
+    align-self: start;
+  }
+
+  /* Buttons side-by-side grid */
+  #maintenanceaccounts .mactions{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  #maintenanceaccounts .mbtn{
+    width: 100%;
+    min-width: 0;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}
+
+/* =========================================================
+   ✅ FHD / WQHD (≥1400px) — SAME FEEL AS ADMINSTAFF
+   - Still 3 columns
+   - Keep clean spacing
+========================================================= */
+@media (min-width: 1400px){
+
+  #maintenanceaccounts .mform-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    align-items: end;
+  }
+
+  /* Keep same “desktop” placement */
+  #maintenanceaccounts .mform-grid .mfield:nth-child(7){
+    grid-column: 1 / 3 !important;
+  }
+  #maintenanceaccounts .mform-grid .mfield:nth-child(8){
+    grid-column: 3 / 4 !important;
+    align-self: start;
+  }
+
+  #maintenanceaccounts .mactions{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    align-items: center;
+  }
+
+  #maintenanceaccounts .mbtn{
+    width: 100%;
+    min-width: 0;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    white-space: nowrap;
+  }
+}
+
+/* =========================================================
+   ✅ KEY FIX: 1024 / 768 (Tablet & below)
+   - password becomes full width row
+   - actions becomes full width row under it
+   - buttons wrap safely (no clipping)
+========================================================= */
+@media (max-width: 1199px){
+
+  #maintenanceaccounts .as-password-field,
+  #maintenanceaccounts .ma-password-field{
+    grid-column: 1 / -1 !important;
+  }
+  #maintenanceaccounts .as-actions-field,
+  #maintenanceaccounts .ma-actions-field,
+  #maintenanceaccounts .m-actions-field{
+    grid-column: 1 / -1 !important;
+    justify-content: center;
+  }
+
+  /* fallback: 7th=password, 8th=actions */
+  #maintenanceaccounts .mform-grid .mfield:nth-child(7){
+    grid-column: 1 / -1 !important;
+  }
+  #maintenanceaccounts .mform-grid .mfield:nth-child(8){
+    grid-column: 1 / -1 !important;
+  }
+
+  #maintenanceaccounts .mactions{
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  #maintenanceaccounts .mbtn{
+    flex: 1 1 240px;
+    width: min(100%, 360px);
+    min-width: 0;
+  }
+}
+
+/* ✅ Phones: 2 buttons side-by-side */
+@media (max-width: 520px){
+  #maintenanceaccounts .mactions{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:12px;
+    align-items:center;
+  }
+  #maintenanceaccounts .mbtn{
+    width:100%;
+    max-width:none;
+    min-width:0;
+    height:46px;
+    border-radius:14px;
+    padding:0 14px;
+    white-space: normal;
+    line-height: 1.1;
+  }
+}
+
+/* ✅ Very small: stack */
+@media (max-width: 360px){
+  #maintenanceaccounts .mactions{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   📋 MAINTENANCE TABLE (match adminstaff behavior)
+========================================================= */
+#maintenanceaccounts .m-table-scroll{
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: clamp(280px, 45vh, 520px);
+  border-radius: var(--ma-radius);
+  box-shadow: 0 8px 18px rgba(7,26,60,0.18);
+  scroll-behavior: smooth;
+  /* ✅ removed: -webkit-overflow-scrolling: touch; (nonstandard / obsolete warning) */
+}
+
+/* Chrome / Edge / Safari */
+#maintenanceaccounts .m-table-scroll::-webkit-scrollbar{ width:8px; height:8px; }
+#maintenanceaccounts .m-table-scroll::-webkit-scrollbar-thumb{ background:#b0bec5; border-radius:10px; }
+#maintenanceaccounts .m-table-scroll::-webkit-scrollbar-thumb:hover{ background:#8fa1a9; }
+
+/* Firefox (only when supported) */
+@supports (scrollbar-width: thin){
+  #maintenanceaccounts .m-table-scroll{
+    scrollbar-width: thin;
+    scrollbar-color: #a6b4bd #e9edf0;
+  }
+}
+
+
+#maintenanceaccounts .m-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width: 980px;
+}
+
+#maintenanceaccounts .m-table thead th{
+  font-weight:900;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  color:#fff;
+  text-align:center;
+  background:#0b1f44;
+  border-bottom:2px solid rgba(255,255,255,0.12);
+  padding:16px 18px;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+#maintenanceaccounts .m-table thead th:first-child{ border-top-left-radius:10px; }
+#maintenanceaccounts .m-table thead th:last-child{ border-top-right-radius:10px; }
+
+/* Column Layout */
+#maintenanceaccounts .col-mid{ width:16%; text-align:left; }
+#maintenanceaccounts .col-name{ width:18%; text-align:left; }
+#maintenanceaccounts .col-email{ width:20%; text-align:left; }
+#maintenanceaccounts .col-role{ width:16%; text-align:center; }
+#maintenanceaccounts .col-phone{ width:14%; text-align:center; }
+#maintenanceaccounts .col-user{ width:12%; text-align:center; }
+#maintenanceaccounts .col-pass{ width:10%; text-align:center; }
+#maintenanceaccounts .col-actions{
+  width: clamp(220px, 24%, 280px);
+  text-align: center;
+}
+
+/* Body */
+#maintenanceaccounts .m-table tbody td{
+  font-size:14px;
+  font-weight:700;
+  color:#1d303a;
+  background:#eef3f6;
+  padding:18px;
+  border-top:1px solid rgba(0,0,0,.06);
+  transition:background .2s ease;
+}
+#maintenanceaccounts .m-table tbody tr:nth-child(even) td{ background:#e7eef2; }
+#maintenanceaccounts .m-table tbody tr:hover td{ background:#dfe9ef; }
+
+/* Row action buttons */
+#maintenanceaccounts .m-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+}
+
+#maintenanceaccounts .mtag{
+  border:0;
+  padding:8px 12px;
+  border-radius:12px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all .2s ease;
+}
+#maintenanceaccounts .mtag-edit{ background:#a9def9; color:#0b3b46; }
+#maintenanceaccounts .mtag-edit:hover{ background:#8fd2f0; box-shadow:0 6px 14px rgba(137,215,247,0.3); }
+#maintenanceaccounts .mtag-delete{ background:#ff9aa2; color:#fff; }
+#maintenanceaccounts .mtag-delete:hover{ background:#ff6b6b; box-shadow:0 6px 14px rgba(255,107,107,0.3); }
+
+/* Scrollable long text cells */
+#maintenanceaccounts .cell-scroll{
+  max-width:150px;
+  white-space:nowrap;
+  overflow-x:auto;
+  overflow-y:hidden;
+  display:block;
+  padding-bottom:3px;
+  scroll-behavior:smooth;
+}
+#maintenanceaccounts .cell-scroll::-webkit-scrollbar{ height:5px; }
+#maintenanceaccounts .cell-scroll::-webkit-scrollbar-thumb{ background:#9bb6cf; border-radius:10px; }
+#maintenanceaccounts .cell-scroll::-webkit-scrollbar-track{ background:#e8f1f9; }
+@supports (scrollbar-width: thin){ #maintenanceaccounts .cell-scroll{ scrollbar-width: thin; } }
+
+#maintenanceaccounts .col-name .cell-scroll,
+#maintenanceaccounts .col-email .cell-scroll,
+#maintenanceaccounts .col-role .cell-scroll,
+#maintenanceaccounts .col-user .cell-scroll,
+#maintenanceaccounts .col-pass .cell-scroll{ max-width:90px; }
+
+@media (max-width: 720px){
+  #maintenanceaccounts .m-table thead th{ padding:12px 12px; font-size:11px; }
+  #maintenanceaccounts .m-table tbody td{ padding:12px 12px; font-size:13px; }
+}
+
+/* =========================================================
+   🔔 TOAST — MAINTENANCE (scoped)
+========================================================= */
+/* =========================================================
+   🔔 TOAST — MAINTENANCE (Perfect Fit)
+========================================================= */
+#maintenanceaccounts #toast-maintenance {
+  position: fixed !important;
+  bottom: 26px !important;
+  top: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ✅ Ensures toasts stack in the center without stretching */
+  gap: 10px;
+  pointer-events: none;
+  width: auto;
+}
+
+#maintenanceaccounts #toast-maintenance .toast {
+  /* ✅ Remove the hardcoded min-width and specific width */
+  width: max-content; 
+  max-width: 90vw;      /* Prevents it from going off-screen if text is very long */
+  min-width: auto; 
+  
+  padding: 12px 20px;   /* Horizontal padding defines the "fit" */
+  pointer-events: auto;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.30);
+  white-space: nowrap;  /* ✅ Keeps text on one line for that "pill" look */
+  
+  animation: maintenance-toast-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ✅ Mobile Adjustment: Still allow it to wrap if the screen is tiny */
+@media (max-width: 520px) {
+  #maintenanceaccounts #toast-maintenance .toast {
+    width: auto; 
+    max-width: calc(100vw - 40px);
+    white-space: normal; /* Allow wrap on very small phones so it doesn't clip */
+    text-align: center;
+  }
+}
+
+/* --- Keep the rest of your colors and animations --- */
+#maintenanceaccounts #toast-maintenance .toast.error { background: #ff6b6b; }
+#maintenanceaccounts #toast-maintenance .toast.success { background: #4cd964; }
+#maintenanceaccounts #toast-maintenance .toast.loading { background: #0f172a; color: #e5e7eb; }
+
+@keyframes maintenance-toast-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#maintenanceaccounts #toast-maintenance .toast.loading{
+  background:#0f172a;
+  color:#e5e7eb;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+
+/* =========================================================
+   🗑 DELETE CONFIRM POPUP (scoped)
+========================================================= */
+#maintenanceaccounts .t-confirm-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  padding:18px;
+}
+#maintenanceaccounts .t-confirm-box{
+  background:#fff;
+  padding:32px 40px;
+  width:min(420px, 100%);
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(0,0,0,0.25);
+}
+#maintenanceaccounts .hidden{ display:none !important; }
+
+#maintenanceaccounts .t-confirm-icon{
+  font-size:48px;
+  font-weight:900;
+  color:#ffb700;
+  margin-bottom:12px;
+}
+#maintenanceaccounts .t-confirm-box h3{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+#maintenanceaccounts .t-confirm-id{
+  font-size:14px;
+  opacity:.6;
+  margin-bottom:20px;
+}
+#maintenanceaccounts .t-confirm-actions{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+#maintenanceaccounts .t-confirm-delete{
+  background:#e53935;
+  border:none;
+  color:#fff;
+  padding:10px 24px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#maintenanceaccounts .t-confirm-delete:hover{ background:#c62828; }
+
+#maintenanceaccounts .t-confirm-cancel{
+  background:#6c757d;
+  border:none;
+  color:#fff;
+  padding:10px 24px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+}
+#maintenanceaccounts .t-confirm-cancel:hover{ background:#5a6268; }
+
+/* =========================================================
+   EMPTY STATE ROW — "No maintenance yet."
+========================================================= */
+#maintenanceaccounts .m-table tbody .m-empty-row td{
+  background:#f5f9ff !important;
+  border:none !important;
+  padding:0 !important;
+  text-align:center !important;
+  display:table-cell !important;
+  vertical-align:middle !important;
+}
+#maintenanceaccounts .t-empty-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:55px;
+  font-size:14px;
+  font-weight:500;
+  color:#7f8ea3;
+}

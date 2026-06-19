@@ -1,0 +1,988 @@
+.teachers-panel {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 22px 28px 26px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  scroll-behavior: smooth; /* modern smooth scrolling */
+}
+
+/* WebKit scrollbars (Chrome, Edge, Safari, etc.) */
+.teachers-panel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.teachers-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.teachers-panel::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    145deg,
+    #e8eff3 0%,
+    #c6d4dd 40%,
+    #9aabb4 100%
+  );
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 0 6px rgba(255, 255, 255, 0.25);
+  transition: all .3s ease;
+}
+
+.teachers-panel::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    145deg,
+    #f6fcff 0%,
+    #dce8ee 40%,
+    #b4c3cc 100%
+  );
+  box-shadow:
+    0 0 14px rgba(230, 240, 255, 0.6),
+    inset 0 0 10px rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+/* Firefox-only scrollbar styling (wrapped to avoid compat warnings) */
+@supports (scrollbar-width: thin) {
+  .teachers-panel {
+    scrollbar-width: thin;
+    scrollbar-color: #b4c3cc rgba(255, 255, 255, 0.07);
+  }
+}
+
+.teachers-head h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: 22px;
+  letter-spacing: .2px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.teachers-head i {
+  color: #0b1f44;
+}
+
+.tform-card {
+  background: #0f2230;
+  border-radius: 16px;
+  padding: 26px 28px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  margin-bottom: 28px;
+}
+
+.tform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px 24px;
+}
+
+.tfield {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tfield label {
+  font-weight: 800;
+  font-size: 13px;
+  color: #d5eaf3;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tfield i {
+  color: #d5eaf3;
+  font-size: 13px;
+}
+
+.tinput {
+  background: #0e2a3a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f1fcff;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: 700;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.tinput::placeholder {
+  color: rgba(234, 243, 247, 0.55);
+  font-weight: 600;
+}
+
+.tinput:focus {
+  border-color: #b8f86f;
+  box-shadow: 0 0 0 3px rgba(184, 248, 111, 0.25);
+}
+
+.tfield.tfield-span {
+  grid-column: 1 / -1;
+}
+
+.tactions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.tbtn {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 40px;
+  min-width: 200px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.tbtn-primary {
+  background: linear-gradient(180deg, #b8f86f, #8fdc49);
+  color: #0b2b38;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  padding: 13px 26px;
+  transition: all 0.25s ease;
+}
+
+.tbtn-primary:hover {
+  box-shadow: 0 0 16px rgba(184, 248, 111, 0.35);
+  transform: translateY(-1px);
+}
+
+.tbtn-clear {
+  background: #ff6b6b;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  padding: 13px 26px;
+  transition: all 0.25s ease;
+}
+
+.tbtn-clear:hover {
+  background: #ff5050;
+  box-shadow: 0 0 16px rgba(255, 80, 80, 0.35);
+  transform: translateY(-1px);
+}
+
+.t-table-wrap {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 420px;
+  border-radius: 16px;
+  background: #eef5f9;
+  box-shadow: 0 8px 18px rgba(7, 26, 60, 0.18);
+  border: 1px solid rgba(7, 26, 60, 0.06);
+  scroll-behavior: smooth;
+}
+
+/* Chrome, Edge, Safari, Opera */
+.t-table-wrap::-webkit-scrollbar {
+  width: 8px;
+}
+
+.t-table-wrap::-webkit-scrollbar-thumb {
+  background: #b0bec5;
+  border-radius: 10px;
+}
+
+.t-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: #8fa1a9;
+}
+
+/* Firefox only — safely wrapped */
+@supports (scrollbar-width: thin) {
+  .t-table-wrap {
+    scrollbar-width: thin;
+    scrollbar-color: #a6b4bd #e9edf0;
+  }
+}
+
+.t-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.t-table thead {
+  background: #071a3c;
+}
+
+.t-table thead th {
+  text-align: center !important;
+  padding: 14px 18px;
+  color: #ffffff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.t-table thead th:first-child {
+  border-top-left-radius: 16px;
+}
+
+.t-table thead th:last-child {
+  border-top-right-radius: 16px;
+}
+
+.t-table tbody tr {
+  background: #f9fcff;
+  border-bottom: 1px solid #dde7f2;
+  transition: background 0.2s ease;
+}
+
+.t-table tbody tr:nth-child(even) {
+  background: #eef5f9;
+}
+
+.t-table tbody tr:hover {
+  background: #e1edf7;
+}
+
+.t-table td {
+  padding: 13px 18px;
+  color: #0b1f44;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.t-table td:last-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cell-scroll {
+  display: block;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 3px;
+}
+
+.t-table td .cell-scroll {
+  max-width: 100px;
+}
+
+.cell-id {
+  max-width: 90px;
+}
+
+.cell-rfid {
+  max-width: 110px;
+}
+
+.cell-name {
+  max-width: 120px;
+}
+
+.cell-email {
+  max-width: 180px;
+}
+
+.cell-phone {
+  max-width: 110px;
+}
+
+.cell-program {
+  max-width: 150px;
+}
+
+.cell-status {
+  max-width: 100px;
+}
+
+.cell-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cell-scroll::-webkit-scrollbar-thumb {
+  background: #9bb6cf;
+  border-radius: 10px;
+}
+
+.cell-scroll::-webkit-scrollbar-track {
+  background: #e8f1f9;
+}
+
+.action-btn {
+  border: 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background: #a9def9;
+  color: #0b3b46;
+}
+
+.btn-edit:hover {
+  background: #8fd2f0;
+  box-shadow: 0 6px 14px rgba(137,215,247,0.3);
+}
+
+.btn-delete {
+  background: #ff9aa2;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  background: #ff6b6b;
+  box-shadow: 0 6px 14px rgba(255,107,107,0.3);
+}
+
+.btn-edit i,
+.btn-delete i {
+  margin-right: 1px;
+  display: inline-block;
+}
+
+#toast-container {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.toast {
+  min-width: 260px;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  animation: toast-in 0.3s ease-out;
+}
+
+.toast.error {
+  background: #ff6b6b;
+}
+
+.toast.success {
+  background: #4cd964;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#teachersaccounts #toast-container .toast.loading{
+  background:#0f172a;
+  color:#e5e7eb;
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+
+#teachers {
+  padding-right: 6px;
+}
+
+.t-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.t-confirm-box {
+  background: #ffffff;
+  padding: 32px 40px;
+  width: 420px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.t-confirm-icon {
+  font-size: 48px;
+  font-weight: 900;
+  color: #ffb700;
+  margin-bottom: 12px;
+}
+
+.t-confirm-box h3 {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.t-confirm-id {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.t-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.t-confirm-delete {
+  background: #e53935;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t-confirm-delete:hover {
+  background: #c62828;
+}
+
+.t-confirm-cancel {
+  background: #6c757d;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.t-confirm-cancel:hover {
+  background: #5a6268;
+}
+
+/* ============================
+   EMPTY STATE ROW — "No teachers yet."
+   ============================ */
+
+/* Remove default TD styling for the empty row */
+.t-table tbody .t-empty-row td {
+  background: #f5f9ff !important;
+  border: none !important;
+  padding: 0 !important;
+  text-align: center !important;
+  display: table-cell !important;   /* override td:last-child flex */
+  vertical-align: middle !important;
+}
+
+/* Remove first-column extra padding (if any global rule exists) */
+.t-table tbody .t-empty-row td:first-child {
+  padding-left: 0 !important;
+}
+
+/* Center the message nicely */
+.t-table tbody .t-empty-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #7f8ea3;
+}
+
+/* =========================================================
+   EXTRA STYLES FOR BIOMETRIC REGISTRATION + SCAN BUTTON
+   (from "new" CSS, adapted)
+   ========================================================= */
+
+/* 1. Button that looks like an input (Open Scanner) */
+.tinput-btn {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px dashed #ccc; /* Dashed border indicates "action required" */
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  color: #555;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.tinput-btn:hover {
+  background-color: #e2e6ea;
+  border-color: #adb5bd;
+  color: #333;
+}
+
+/* Success state after fingerprint is registered */
+.tinput-btn.is-registered {
+  border: 1px solid #198754; /* Green border */
+  background-color: #d1e7dd; /* Light green background */
+  color: #0f5132;           /* Dark green text */
+}
+
+.tinput-btn.is-registered i {
+  color: #198754;
+}
+
+/* Hint text below button */
+.tfield-hint {
+  color: #666;
+  font-size: 0.85em;
+  margin-top: 5px;
+  display: block;
+}
+
+/* 2. Biometric Modal Layout */
+.bio-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Split into two equal columns */
+  gap: 2rem;
+  padding: 1rem;
+  align-items: stretch;
+}
+
+/* Responsive: Stack columns on mobile */
+@media (max-width: 768px) {
+  .bio-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Column: Controls */
+.bio-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Connection Status Box */
+.connection-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f9fa;
+  padding: 10px 15px;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+}
+
+/* Status Badges */
+.status-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-disconnected {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.status-connected {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #c8e6c9;
+}
+
+/* Small Connect Button */
+.tbtn-sm {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tbtn-sm:hover {
+  background-color: #f0f0f0;
+}
+
+/* Action Buttons Area (inside biometric controls only) */
+.bio-controls .tactions {
+  margin-top: auto; /* Push to bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tbtn-block {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+}
+
+/* Right Column: Visual Feedback */
+.bio-visual {
+  background: #ffffff;
+  border: 2px dashed #dbeafe; /* Light blue dashed border */
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  min-height: 300px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.02);
+}
+
+/* Fingerprint Icon Wrapper */
+.scan-area {
+  margin-bottom: 1.5rem;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* The Fingerprint Icon Itself */
+.scan-placeholder {
+  font-size: 80px;
+  color: #e2e8f0; /* Default gray */
+  transition: all 0.4s ease;
+}
+
+/* Text Instructions */
+.scan-instruction h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  color: #334155;
+}
+
+.scan-instruction p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* Progress Dots */
+.scan-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  opacity: 0.4; /* Dimmed until active */
+  transition: opacity 0.3s;
+}
+
+.scan-progress.active {
+  opacity: 1;
+}
+
+.step-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #e2e8f0;
+  color: #64748b;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.step-dot.active {
+  background-color: #3b82f6;
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-line {
+  width: 40px;
+  height: 3px;
+  background-color: #e2e8f0;
+  margin: 0 5px;
+}
+
+/* Animations */
+/* Pulse Animation for Scanning */
+/* ✅ FIX: JS adds "scanning-active"; CSS must target both names */
+.scan-placeholder.active,
+.scan-placeholder.scanning-active {
+  color: #3b82f6;
+  animation: pulse 1.5s infinite;
+}
+
+/* Success State */
+.scan-placeholder.success {
+  color: #22c55e;
+  transform: scale(1.1);
+  animation: none;
+}
+
+/* Error State */
+.scan-placeholder.error {
+  color: #ef4444;
+  animation: shake 0.5s;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-5px); }
+  75%      { transform: translateX(5px); }
+}
+
+/* Readonly inputs styling */
+.tinput[readonly] {
+  background-color: #f0f0f0; /* Grey */
+  color: #666;
+  cursor: not-allowed;
+  border-color: #d1d5db;
+}
+
+#bio-teacher-name {
+  background-color: #f0f0f0;
+}
+
+/* Back button alignment in biometric header */
+.tbtn-right {
+  margin-left: auto;
+  margin-bottom: 15px; /* spacing under the header */
+}
+
+/* Hide the biometric section by default (JS will toggle) */
+#biometric-registration {
+  display: none;
+}
+
+/* Keep your existing .step-dot, .step-dot.active, and .step-dot.completed */
+
+.step-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #ddd; /* Slightly lighter grey */
+    display: inline-flex; /* Changed to flex for better icon centering */
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+/* New: Style for the connecting line */
+.step-line {
+    flex-grow: 1;
+    height: 4px;
+    background: #ddd;
+    margin: 0 -5px; /* Slight overlap with dots for a connected look */
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+/* New: When the process is finished, the line turns green too */
+.step-line.completed {
+    background: #4caf50;
+}
+
+/* ✅ Step dot completed state — green with checkmark */
+.step-dot.completed {
+    background-color: #4caf50 !important;
+    color: white !important;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.55);
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* ✅ Pulse glow on the active scanning dot */
+.step-dot.active-step {
+    animation: stepPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes stepPulse {
+  from { box-shadow: 0 0 6px rgba(255, 152, 0, 0.5); }
+  to   { box-shadow: 0 0 16px rgba(255, 152, 0, 0.9); transform: scale(1.15); }
+}
+
+/* Ensure the checkmark icon fits inside the dot */
+.step-dot i {
+    font-size: 14px;
+}
+
+/* Animation for the 'active' state to catch the user's eye */
+/* ✅ FIX: JS adds "active-step"; CSS must target both names */
+.step-dot.active,
+.step-dot.active-step {
+    background: #ff9800;
+    color: white;
+    box-shadow: 0 0 12px rgba(255, 152, 0, 0.6);
+    transform: scale(1.1);
+}
+
+/* =========================================================
+   MOBILE RESPONSIVENESS FIXES (UPDATED)
+   ========================================================= */
+
+/* Fix table wrapper to allow horizontal scrolling on all screen sizes */
+.t-table-wrap {
+  overflow-x: auto !important; 
+  width: 100%; /* Ensure it doesn't stretch past its parent */
+  display: block;
+}
+
+@media (max-width: 768px) {
+  /* 0. CRITICAL: Prevent elements from breaking out of the container */
+  .teachers-panel,
+  .tform-card,
+  .tinput,
+  .tbtn,
+  .t-table-wrap,
+  .tinput-btn {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+
+  /* Force inputs to respect boundaries */
+  .tinput {
+    width: 100% !important;
+  }
+
+/* 1. Reduce panel paddings to save screen space */
+  .teachers-panel {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 10px 0 15px 0 !important; /* The '0' strictly prevents right-side pushing */
+    padding: 16px 14px 20px !important;
+    overflow-x: hidden !important; 
+    overflow-y: auto !important;   
+    max-height: calc(100vh - 100px); 
+  }
+
+  .tform-card {
+    padding: 20px 16px;
+    width: 100%;
+  }
+
+  /* 2. Stack the form grid into a single column */
+  .tform-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* 3. Make grid span classes behave normally on mobile */
+  .tfield {
+    width: 100%;
+  }
+
+  /* 4. Stack the action buttons and make them full width */
+  .tactions {
+    flex-direction: column-reverse; /* Puts primary button on top */
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  .tbtn {
+    width: 100% !important; /* Changed from min-width to strictly width */
+    margin-top: 0;
+  }
+
+  /* 5. Adjust table padding for smaller screens */
+  .t-table td, 
+  .t-table thead th {
+    padding: 10px 12px;
+    font-size: 13px;
+    white-space: nowrap; /* Prevents awkward text wrapping in table */
+  }
+
+  /* 6. Adjust confirmation modal width for mobile */
+  .t-confirm-box {
+    width: 90%;
+    padding: 24px 20px;
+    box-sizing: border-box;
+  }
+
+  .t-confirm-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .t-confirm-delete,
+  .t-confirm-cancel {
+    width: 100%;
+    justify-content: center;
+  }
+}

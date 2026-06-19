@@ -1,0 +1,91 @@
+/* ============================
+   OVERVIEW – CLEAN TEACHER STYLE
+============================ */
+
+/* Title */
+#overview .ov-title {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #082032;
+  margin-bottom: 20px;
+}
+
+/* Cards row */
+#overview .ov-cards {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+/* Card looks like "Registered Teachers" */
+#overview .ov-card {
+  flex: 1;
+  min-width: 260px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 34px 30px 26px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+/* Icon – centered circle */
+#overview .ov-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+#overview .ov-icon i {
+  font-size: 32px;
+  color: #000;     /* black like in your teacher card */
+}
+
+/* You can still keep different bg colors if you like */
+#overview .ov-orange { background: #ffffff; }
+#overview .ov-green  { background: #ffffff; }
+#overview .ov-yellow { background: #ffffff; }
+#overview .ov-red    { background: #ffffff; }
+
+/* Label + value */
+#overview .ov-info p {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #003b4f;  /* teal/dark blue */
+}
+
+#overview .ov-info strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00141d;
+}
+
+/* underline under the value (like screenshot) */
+#overview .ov-info::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 3px;
+  border-radius: 999px;
+  background: #003b4f;
+  margin: 6px auto 0;
+}
+
+/* ====== buttons row (you already have these) ====== */
+#overview .ov-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+/* keep your existing .btn-danger, .btn-light, .auto-mode-toggle, .toggle-btn styles,
+   or reuse what we already wrote before */

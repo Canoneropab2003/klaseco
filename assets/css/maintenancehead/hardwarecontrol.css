@@ -1,0 +1,226 @@
+/* ============================================================
+   HARDWARE CONTROL SECTION - REFINED LAYOUT
+   ============================================================ */
+
+#hardware-control.page-section {
+  width: 100%;
+}
+
+.hardware-control-panel {
+  background: var(--card-bg, #ffffff);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+  border: 1px solid rgba(7, 26, 60, 0.15);
+  color: var(--text-dark, #1a1a1a);
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+/* --- Panel Header --- */
+.hardware-control-panel .panel-head {
+  margin-bottom: 20px;
+}
+
+.hardware-control-panel .panel-head h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hardware-control-panel .panel-head .t-subtitle {
+  font-size: 14px;
+  color: #4f6570;
+  margin: 4px 0 0 0;
+}
+
+/* --- Room Tabs --- */
+.room-tabs {
+  display: inline-flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 5px;
+  border-radius: 999px;
+  background: rgba(7, 26, 60, 0.05);
+}
+
+.room-tab {
+  border: none;
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #4f6570;
+  transition: all 0.2s ease;
+}
+
+.room-tab.active {
+  background: #071a3c; /* Match your sidebar-bg */
+  color: #fff;
+}
+
+/* --- Control Area Layout --- */
+.room-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.room-controls.hidden {
+  display: none !important;
+}
+
+/* --- Automation Bar (Full Width) --- */
+.room-automation-bar {
+  background: #f8fafc;
+  border: 1px solid rgba(7, 26, 60, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.automation-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.automation-left i {
+  font-size: 20px;
+  color: #0080a0;
+}
+
+.automation-title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.automation-sub {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.automation-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* --- Device Grid --- */
+.device-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* --- Control Cards --- */
+.control-card {
+  background: #fff;
+  border: 1px solid rgba(7, 26, 60, 0.1);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform 0.2s ease;
+}
+
+.control-card:hover {
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-icon {
+  font-size: 18px;
+  color: #0080a0;
+}
+
+.control-name {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Action row for buttons and status */
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* --- Status Chips & Buttons --- */
+.btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+
+.device-status, .auto-status {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.status-on {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.status-off {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+/* --- Automation Lock Interaction --- */
+.room-controls.automation-on .toggle-device {
+  opacity: 0.5;
+  pointer-events: none;
+  background: #f1f5f9;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 600px) {
+  .room-automation-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .automation-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .device-grid {
+    grid-template-columns: 1fr;
+  }
+}

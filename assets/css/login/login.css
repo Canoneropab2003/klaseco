@@ -1,0 +1,1479 @@
+/* =========================================================
+   KLASECO / LOGIN PAGE – FULL RESPONSIVE CSS (ANY SCREEN)
+   - Keeps your theme, animations, and layout
+   - Fixes overflow issues on short screens
+   - Adds safe clamps + fluid spacing + better stacking
+   - Makes the login-card perfectly adaptable (desktop → phones)
+========================================================= */
+
+:root {
+  /* Brand */
+  --teal-1: #0bb0a8;
+  --teal-2: #0a5f73;
+  --brand-yellow: #FFD34E;
+
+  /* Card palette */
+  --card: #ffffff;
+  --ink: #0b2b38;
+  --ink-2: #254957;
+
+  /* Chips / inputs */
+  --chip-green: #b7f36e;
+  --chip-green-text: #0a2d0d;
+  --chip-cyan: #00c3d5;
+  --input: #e5e5e5;
+  --input-text: #2c2c2c;
+
+  /* Motion tokens */
+  --ease-smooth: cubic-bezier(.22,.61,.36,1);
+  --ease-softer: cubic-bezier(.25,.46,.45,.94);
+  --ease-emph: cubic-bezier(.16,1,.3,1);
+  --dur-fade: .72s;
+  --dur-panel: .9s;
+  --dur-card: .88s;
+  --dur-sheen: 1.35s;
+  --stagger-1: .07s;
+  --stagger-2: .13s;
+  --stagger-3: .2s;
+
+  --scene-depth: 800px;
+
+  --a0: .10s;
+  --a1: .18s;
+  --a2: .28s;
+  --a3: .38s;
+  --a4: .48s;
+  --a5: .58s;
+
+  /* ✅ Fluid sizing helpers */
+  --gutter: clamp(14px, 3vw, 64px);
+  --pad-card-x: clamp(18px, 4.2vw, 60px);
+  --pad-card-y: clamp(18px, 3.2vw, 34px);
+  --radius-card: clamp(22px, 4.2vw, 60px);
+  --hero-h: clamp(190px, 30vw, 260px);
+
+  /* Card sizing (prevents overflow on short screens) */
+  --card-w: min(590px, 100%);
+  --card-minh: clamp(520px, 72vh, 590px);
+  --card-maxh: min(86vh, 760px);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color: #fff;
+  background: #052f3a;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  perspective: var(--scene-depth);
+}
+
+/* =========================
+   Container & Panels
+========================= */
+.container {
+  display: flex;
+  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  animation:
+    fadeZoom var(--dur-fade) var(--ease-smooth) both,
+    fadeInSoft .4s var(--ease-smooth) var(--a0) both;
+  transform-style: preserve-3d;
+  will-change: opacity, transform, filter;
+}
+
+/* soft RTL curtain reveal overlay (non-interactive) */
+.container::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(270deg, rgba(5,22,28,.9) 0%, rgba(5,22,28,.6) 40%, rgba(5,22,28,0) 100%);
+  z-index:999;
+  pointer-events:none;
+  transform:translateX(0);
+  animation: curtainRevealX .85s cubic-bezier(.16,.84,.44,1) .05s both;
+}
+
+/* Left Panel */
+.left-panel {
+  width: 100%;
+  padding: var(--gutter);
+  padding-top: clamp(28px, 5vw, 64px);
+  padding-bottom: clamp(26px, 4.2vw, 56px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background:
+    radial-gradient(1200px 100% at -5% -10%, rgba(255,255,255,.14) 0%, transparent 55%),
+    radial-gradient(1200px 90% at 40% 110%, rgba(255,255,255,.10) 0%, transparent 60%),
+    linear-gradient(135deg, #11C3C6 0%, #0A8BA0 40%, #083854 100%);
+  z-index: 1;
+  animation:
+    auroraShift 14s ease-in-out .15s both,
+    glassSlide var(--dur-panel) var(--ease-softer) var(--stagger-1) both;
+  will-change: background-position, opacity, transform;
+  transform: translateZ(-2px) scale(1.001);
+}
+
+/* subtle shimmer sweep (right → left) */
+.left-panel::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  right:-20%;
+  left:auto;
+  width:40%;
+  background:linear-gradient(90deg, rgba(255,255,255,0) 0%,rgba(255,255,255,.12) 50%,rgba(255,255,255,0) 100%);
+  mix-blend-mode:soft-light;
+  filter:blur(6px);
+  pointer-events:none;
+  opacity:0;
+  animation: panelShimmer 1.2s var(--ease-smooth) .18s both;
+  border-top-left-radius:120px;
+  border-bottom-left-radius:120px;
+}
+
+.left-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0,0,0,.14), transparent 22%);
+  pointer-events: none;
+  animation: veilSoft .9s var(--ease-smooth) .05s both;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: clamp(0px, 6vw, 100px);
+  animation: contentRise .65s var(--ease-smooth) calc(var(--stagger-1) + .06s) both;
+  will-change: opacity, transform;
+}
+
+.header-logo {
+  width: clamp(44px, 5vw, 54px);
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(0,255,255,0.6));
+  animation: idleFloat 6s ease-in-out .8s infinite alternate;
+}
+
+.header p {
+  font-family: 'Open Sauce One', sans-serif;
+  font-weight: 800;
+  font-size: clamp(13px, 1.35vw, 15.5px);
+  line-height: 1.45;
+  letter-spacing: .25px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  height: 100%;
+  margin-top: clamp(-72px, -5vw, -18px);
+  max-width: 560px;
+  padding-left: clamp(0px, 6vw, 100px);
+  animation: contentRise .7s var(--ease-smooth) var(--stagger-2) both;
+  will-change: opacity, transform;
+  transform: translateZ(-1px);
+}
+
+.rp-logo {
+  width: min(360px, 68%);
+  max-width: clamp(200px, 26vw, 250px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.35));
+  animation:
+    logoBloom .75s var(--ease-emph) calc(var(--stagger-2) + .08s) both,
+    idleLift 7s ease-in-out 1.8s infinite alternate;
+  will-change: opacity, transform, filter;
+}
+
+.rp-tagline {
+  font-family: 'Blinker', sans-serif;
+  font-weight: 700;
+  margin-top: 22px;
+  font-size: clamp(14px, 1.9vw, 19px);
+  letter-spacing: .2px;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0,0,0,.25);
+  max-width: 520px;
+  line-height: 1.35;
+  opacity: .95;
+  animation: contentRise .72s var(--ease-smooth) calc(var(--stagger-2) + .14s) both;
+}
+
+/* Right Panel (photo overlay) */
+.right-panel {
+  position: absolute;
+  top: 0; right: 0;
+  height: 100%;
+  width: clamp(220px, 25vw, 420px); /* ✅ safer than % */
+  z-index: 2;
+  overflow: hidden;
+  background-image: url("../../images/background.png");
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.28);
+  animation:
+    photoParallax 16s ease-in-out 1s infinite alternate,
+    glassSlide var(--dur-panel) var(--ease-softer) .12s both;
+  will-change: background-position, opacity, transform;
+}
+
+.right-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  background: linear-gradient(115deg, rgba(255,255,255,.15) 0%, rgba(255,255,255,0) 38%);
+  transform: translateX(45%) skewX(8deg);
+  animation: auroraSheen var(--dur-sheen) var(--ease-smooth) .25s both;
+}
+
+.right-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(80% 120% at 110% 50%, rgba(255,255,255,.08) 0%, rgba(255,255,255,0) 58%);
+  opacity: 0;
+  animation: softMask .95s var(--ease-smooth) .35s both;
+}
+
+/* =========================
+   LOGIN CARD (Overlay Above Panels)
+========================= */
+.login-card {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  left: clamp(56%, 70%, 74%);
+  transform: translate(-50%, -50%);
+  width: var(--card-w);
+  min-height: var(--card-minh);
+  max-height: var(--card-maxh);
+
+  /* ✅ important: allow the inside to scroll on short screens */
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+  border-radius: var(--radius-card);
+  padding: var(--pad-card-y) var(--pad-card-x);
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px) saturate(1.2);
+
+  animation: cardFloatUp var(--dur-card) var(--ease-emph) .18s both;
+  will-change: opacity, transform, filter;
+}
+
+/* nicer scrollbars inside card (optional but clean) */
+.login-card::-webkit-scrollbar { width: 10px; }
+.login-card::-webkit-scrollbar-thumb {
+  background: rgba(10, 95, 115, 0.28);
+  border-radius: 999px;
+}
+.login-card::-webkit-scrollbar-track { background: transparent; }
+
+.login-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(0,132,146,.0), 0 0 0 0 rgba(17,197,190,.0);
+  pointer-events: none;
+  animation: edgeGlow 1.4s var(--ease-smooth) .32s both;
+}
+
+/* Card header row */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 6px;
+  animation: contentRise .6s var(--ease-smooth) .28s both;
+}
+
+.card-badge {
+  width: clamp(72px, 9vw, 90px);
+  height: clamp(72px, 9vw, 90px);
+  border-radius: 50%;
+  animation: tiltIn .85s var(--ease-smooth) .35s both;
+}
+
+.card-title { text-align: center; }
+
+.card-title .system-name {
+  font-weight: 800;
+  letter-spacing: .48em;
+  font-size: 11px;
+  display: block;
+}
+
+.card-title .system-sub {
+  margin-top: 6px;
+  font-weight: 800;
+  color: var(--ink-2);
+  display: block;
+}
+
+/* Welcome + divider */
+.welcome {
+  margin: 18px 0 6px;
+  color: #2f6d8a;
+  font-weight: 800;
+  letter-spacing: .4px;
+  font-size: clamp(18px, 2.4vw, 22px);
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+  display: block;
+  transition: opacity .28s var(--ease-smooth, ease),
+              transform .28s var(--ease-smooth, ease);
+}
+
+.welcome.swap-out { opacity: 0; transform: translateY(6px); }
+.welcome.swap-in  { opacity: 1; transform: translateY(0); }
+
+.divider { border: none; height: 1px; background: #cfd8dc; margin-bottom: 14px; }
+
+/* =========================================================
+   ROLE TOGGLE (Updated for 3 Roles: Admin, Maint, Teacher)
+========================================================= */
+
+.role-toggle {
+  display: grid; /* Switched to grid for perfect 3-column alignment */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px;
+  margin: 6px 0 18px;
+  justify-content: center;
+  animation: pillsIn .66s var(--ease-smooth) .42s both;
+}
+
+.role-toggle input { display: none; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center; /* Center content for better grid look */
+  gap: 8px;
+  border-radius: 999px;
+  padding: 10px 12px;
+  font-weight: 700;
+  font-size: clamp(11px, 1.4vw, 13px); /* Slightly smaller font for 3-col fit */
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .08);
+  cursor: pointer;
+  user-select: none;
+  transform: translateZ(0);
+  transition: all .25s var(--ease-smooth);
+  background: var(--input); /* Default inactive background */
+  color: var(--ink-2);
+}
+
+/* Specific Pill Brand Colors (When Inactive) */
+.pill-admin { background: rgba(183, 243, 110, 0.2); }
+.pill-maint { background: rgba(0, 195, 213, 0.2); }
+.pill-teacher { background: rgba(255, 211, 78, 0.2); } /* Using your --brand-yellow */
+
+/* ✅ Administrator Selected */
+#role-admin:checked ~ .pill-admin {
+  background: var(--chip-green);
+  color: var(--chip-green-text);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(183, 243, 110, 0.3), inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+/* ✅ Maintenance Selected */
+#role-maint:checked ~ .pill-maint {
+  background: var(--chip-cyan);
+  color: #053a44;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 195, 213, 0.3), inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+/* ✅ Teacher Selected */
+#role-teacher:checked ~ .pill-teacher {
+  background: var(--brand-yellow);
+  color: #4a3a05;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(255, 211, 78, 0.3), inset 0 -2px 0 rgba(0,0,0,.08);
+}
+
+/* Section label */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #1b2e3a;
+  margin: 2px 0 10px;
+}
+.section-label i { color: #000; }
+
+/* Base form */
+.form {
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  animation:fieldsIn .7s var(--ease-smooth) .48s both;
+}
+
+.field {
+  position:relative;
+  display:flex;
+  align-items:center;
+  background:var(--input);
+  border-radius:999px;
+  padding:12px 54px 12px 20px;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.06);
+  transform:translateZ(0);
+}
+
+.field input {
+  width:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-size: clamp(14px, 1.7vw, 15px);
+  color:var(--input-text);
+}
+
+.field::before { content:""; position:absolute; left:12px; top:50%; transform:translateY(-50%); }
+
+.field-action {
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:transparent;
+  width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  color:#3a3a3a;
+  font-size:16px;
+  border-radius:50%;
+  cursor:pointer;
+  transition:transform .18s var(--ease-smooth), background .18s var(--ease-smooth);
+}
+
+/* ================================
+   Forgot Password Button
+================================ */
+.form-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: wrap; /* ✅ prevents squish */
+}
+
+.back-btn,
+.forgot {
+  font-size: clamp(12.5px, 1.7vw, 13.5px);
+  color: #244f62;
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+.back-btn i {
+  font-size: 14px;
+  transform: translateY(1px);
+}
+
+.back-btn:hover,
+.forgot:hover {
+  color: #0bb0a8;
+  transform: translateY(-1px);
+}
+
+.back-btn:active,
+.forgot:active {
+  transform: translateY(0);
+  color: #0a5f73;
+}
+
+/* ================================
+   Forgot Password Modal Overlay
+================================ */
+.forgot-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 16, 24, 0.45);
+  backdrop-filter: blur(10px) saturate(1.5) contrast(1.02);
+  -webkit-backdrop-filter: blur(10px) saturate(1.5) contrast(1.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .32s cubic-bezier(.22,.61,.36,1);
+  will-change: opacity;
+}
+
+.forgot-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 70% at 70% 20%, rgba(17,197,190,.12), transparent 60%),
+    radial-gradient(1000px 70% at 20% 80%, rgba(0,132,146,.14), transparent 60%),
+    linear-gradient(180deg, rgba(0,0,0,.24), rgba(0,0,0,.20) 40%, rgba(0,0,0,.18));
+  opacity: .9;
+  pointer-events: none;
+}
+
+.forgot-modal.is-open,
+.forgot-modal.open,
+.forgot-modal.active,
+.forgot-modal[aria-hidden="false"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal content */
+.forgot-content {
+  position: relative;
+  background: rgba(255, 255, 255, 0.96);
+  color: #0b3b46;
+  padding: clamp(20px, 3vw, 28px);
+  border-radius: 24px;
+  width: min(380px, 92%);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+    0 1px 0 rgba(255,255,255,.6) inset;
+  text-align: center;
+  backdrop-filter: blur(12px) saturate(1.25);
+  -webkit-backdrop-filter: blur(12px) saturate(1.25);
+
+  transform: translateY(26px) scale(.98);
+  opacity: 0;
+  transition:
+    transform .44s cubic-bezier(.16,1,.3,1),
+    opacity .44s cubic-bezier(.16,1,.3,1),
+    box-shadow .3s ease;
+  will-change: transform, opacity;
+}
+
+.forgot-content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 28%);
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  opacity: .6;
+}
+
+.forgot-content::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow:
+    0 0 0 1px rgba(11,176,168,.18),
+    0 8px 24px rgba(91,226,240,.18);
+  pointer-events: none;
+  opacity: .85;
+}
+
+.forgot-modal.is-open .forgot-content,
+.forgot-modal.open .forgot-content,
+.forgot-modal.active .forgot-content,
+.forgot-modal[aria-hidden="false"] .forgot-content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.forgot-content h3 {
+  margin-bottom: 8px;
+  font-size: clamp(18px, 2.6vw, 21px);
+  font-weight: 800;
+  letter-spacing: 0.25px;
+  color: #0a5f73;
+}
+
+.forgot-content p {
+  font-size: clamp(13px, 1.9vw, 14.5px);
+  margin-bottom: 16px;
+  color: #254957;
+  opacity: 0.95;
+}
+
+.forgot-content input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #b8d5db;
+  border-radius: 999px;
+  font-size: 14.5px;
+  outline: none;
+  color: #0b3b46;
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color .25s ease,
+    transform .12s ease;
+}
+.forgot-content input:hover { border-color: #9bd0d8; }
+.forgot-content input:focus {
+  border-color: #0bb0a8;
+  box-shadow:
+    0 0 0 2px rgba(91, 226, 240, 0.25),
+    0 8px 22px rgba(11, 176, 168, .10);
+  background: #fff;
+  transform: translateY(-1px);
+}
+.forgot-content input::placeholder { color: #6e8893; opacity: .8; }
+
+.forgot-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-send, .btn-cancel {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 22px;
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: .2px;
+  font-size: 14.5px;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+  outline: none;
+  position: relative;
+  will-change: transform, filter;
+}
+
+.btn-send {
+  background: linear-gradient(180deg, #5ad9e9 0%, #39c0d6 100%);
+  color: #0b3b46;
+  box-shadow:
+    0 6px 16px rgba(91, 226, 240, 0.28),
+    inset 0 -2px 0 rgba(0,0,0,.06);
+}
+.btn-send:hover {
+  background: linear-gradient(180deg, #65e4f2 0%, #42d1e3 100%);
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+.btn-send:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(91, 226, 240, 0.22);
+}
+.btn-send[disabled],
+.btn-send.is-loading {
+  opacity: .8;
+  cursor: not-allowed;
+  filter: grayscale(.15);
+}
+.btn-send.is-loading::after {
+  content: "";
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  position: absolute;
+  right: 12px; top: 50%;
+  transform: translateY(-50%);
+  animation: spin2 .9s linear infinite;
+}
+
+.btn-cancel {
+  background: #e9ecef;
+  color: #2a2a2a;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.06);
+}
+.btn-cancel:hover { background: #dde2e4; transform: translateY(-1px); }
+.btn-cancel:active { transform: translateY(0); }
+
+/* Mini toast in modal */
+.forgot-toast {
+  position: relative;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .35s ease, transform .35s ease, box-shadow .3s ease;
+}
+.forgot-toast.visible { opacity: 1; transform: translateY(0); }
+.forgot-toast.success {
+  background: rgba(90, 217, 233, 0.14);
+  color: #0a5f73;
+  border: 1px solid rgba(90, 217, 233, 0.42);
+  animation: pulseGlow 1.6s ease-out 1;
+}
+.forgot-toast.error {
+  background: rgba(255, 99, 71, 0.12);
+  color: #b7322c;
+  border: 1px solid rgba(255, 99, 71, 0.3);
+  animation: shakeX .4s ease;
+}
+.forgot-content.is-error { animation: shakeX .4s ease; }
+
+/* ================================
+   SUBMIT BUTTON + LOADING STATE
+================================ */
+.submit {
+  margin-top:8px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  background:#5ad9e9;
+  color:#0b3b46;
+  font-weight:800;
+  letter-spacing:.6px;
+  border:0;
+  border-radius:999px;
+  padding: clamp(14px, 2.2vw, 16px) clamp(16px, 2.8vw, 20px);
+  cursor:pointer;
+  box-shadow: inset 0 -3px 0 rgba(0,0,0,.08), 0 8px 20px rgba(0,0,0,.12);
+  transform:translateZ(0);
+  animation:
+    buttonGlow .7s var(--ease-emph) .64s both,
+    softBlurIn .45s var(--ease-smooth) .70s both;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.submit i { font-size:18px; }
+.submit:active { transform:translateY(1px); }
+
+.submit::after{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border-radius:inherit;
+  background: linear-gradient(180deg, rgba(255,255,255,.36), transparent 58%);
+  pointer-events:none;
+  -webkit-mask: linear-gradient(90deg, transparent 0%, #000 40%, #000 60%, transparent 100%);
+          mask: linear-gradient(90deg, transparent 0%, #000 40%, #000 60%, transparent 100%);
+  animation: btnShine .9s cubic-bezier(.16,.84,.44,1) .85s both;
+}
+
+/* Premium loader */
+.submit { transition: background 0.25s ease, opacity 0.25s ease; }
+
+.submit .btn-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.25s var(--ease-smooth),
+              transform 0.25s var(--ease-smooth);
+}
+
+.submit .btn-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(6px) scale(0.95);
+  pointer-events: none;
+  transition:
+    opacity 0.28s var(--ease-smooth),
+    transform 0.28s var(--ease-smooth);
+}
+
+.submit .btn-loader::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.25));
+}
+
+.submit .loader-text {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  opacity: 0;
+  animation: loginFade 1.4s ease infinite;
+}
+
+.submit.is-loading .btn-inner {
+  opacity: 0;
+  transform: translateY(8px) scale(0.94);
+}
+.submit.is-loading .btn-loader {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.submit.is-loading .loader-text { opacity: 1; }
+
+@keyframes loginFade {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* ------------------------------------
+   ROLE-DEPENDENT VISIBILITY (using :has)
+------------------------------------- */
+.field-email,
+.field-username { display:none; }
+
+.role-toggle:has(#role-admin:checked) ~ .form .field-email { display:flex; }
+.role-toggle:has(#role-maint:checked) ~ .form .field-username { display:flex; }
+
+.role-toggle input[type="radio"] {
+  position:absolute; opacity:0; width:1px; height:1px; pointer-events:none;
+}
+
+/* =========================
+   ✅ RESPONSIVE CORE (ANY SCREEN)
+========================= */
+
+/* Allow scroll on smaller devices so nothing is cut off */
+@media (max-width: 1024px) {
+  html, body { height: auto; }
+  body { overflow-y: auto; }
+  .container { height: auto; min-height: 100vh; }
+}
+
+/* Medium screens */
+/* ✅ NICER 920px LAYOUT (cleaner spacing + better hierarchy) */
+@media (max-width: 920px){
+
+  /* Panel padding becomes more balanced (less “tight”) */
+  .left-panel{
+    padding: clamp(18px, 3.2vw, 30px) clamp(16px, 3vw, 26px);
+    padding-top: clamp(22px, 4.2vw, 40px);
+    padding-bottom: clamp(22px, 4vw, 34px);
+  }
+
+  /* Header looks more centered + consistent spacing */
+  .header{
+    justify-content: center;
+    padding-left: 0;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .header-logo{
+    width: clamp(42px, 5vw, 52px);
+  }
+  .header p{
+    text-align: center;
+    max-width: 520px;
+    line-height: 1.35;
+  }
+
+  /* Main content feels less “floating” and aligns nicely */
+  .main-content{
+    margin-top: 0;
+    height: auto;
+    padding-left: 0;
+    align-items: center;
+    justify-content: center;
+    max-width: 680px;
+    margin-inline: auto;
+    gap: 12px;
+  }
+
+  /* Logo + tagline scale better for 920 → 769 range */
+  .rp-logo{
+    width: min(280px, 62%);
+    max-width: 280px;
+  }
+  .rp-tagline{
+    margin-top: 14px;
+    max-width: 540px;
+    opacity: .95;
+  }
+
+  /* Card: centered, more “premium”, less awkward top offset */
+  .login-card{
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(640px, 94%);
+    padding: clamp(18px, 3vw, 30px) clamp(18px, 3.2vw, 28px);
+    border-radius: clamp(22px, 3.4vw, 38px);
+    max-height: min(760px, calc(100vh - 28px));
+  }
+
+  /* Card header spacing becomes tighter + cleaner */
+  .card-header{
+    margin-top: 10px;
+    margin-bottom: 8px;
+    gap: 14px;
+  }
+
+  /* Role pills look more “designed” in this breakpoint */
+  .role-toggle{
+    gap: 10px;
+    margin: 8px 0 16px;
+  }
+  .pill{
+    padding: 10px 16px;
+    min-width: 180px;
+    justify-content: center;
+  }
+}
+
+
+/* ✅ BULLETPROOF PHONE-FIRST STACKED LAYOUT (≤768px) */
+@media (max-width: 768px) {
+  html, body { 
+    height: auto; 
+    min-height: 100vh; 
+    overflow-x: hidden !important; 
+  }
+  
+  body { 
+    perspective: none !important; 
+  }
+
+  /* 1. Reset Container */
+  .container {
+    position: relative !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    padding-bottom: 40px !important; /* Added padding to give the card breathing room at the bottom */
+    background: linear-gradient(180deg, #0ba3b8 0%, #055f6e 100%) !important; 
+  }
+
+  /* 2. TOP: Logos */
+  .left-panel {
+    position: relative !important;
+    width: 100% !important;
+    order: 1 !important;
+    z-index: 2 !important;
+    padding: 40px 20px 20px 20px !important; 
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    transform: none !important; 
+    animation: none !important;
+    background: transparent !important;
+  }
+
+  .header {
+    justify-content: center !important;
+    padding-left: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .rp-logo { width: clamp(140px, 40vw, 180px) !important; }
+  
+  .rp-tagline {
+    text-align: center !important;
+    font-size: clamp(13px, 3.5vw, 15px) !important;
+    margin-top: 15px !important;
+    max-width: 90% !important;
+  }
+
+/* 3. MIDDLE: The Login Card */
+  .login-card {
+    position: relative !important; /* Removes absolute positioning */
+    order: 2 !important; /* Forces to middle */
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    
+    /* KILL DESKTOP CENTERING ANIMATION */
+    transform: none !important; 
+    animation: none !important; 
+    
+    margin: -60px auto 30px auto !important; /* Overlaps the teal section seamlessly */
+    width: 92% !important;
+    max-width: 450px !important;
+    height: auto !important;
+    max-height: none !important;
+    z-index: 10 !important;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25) !important;
+  }
+
+  /* Internal Card Adjustments */
+  .card-header { margin-top: 0 !important; gap: 12px !important; }
+  
+  .role-toggle {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    gap: 10px !important;
+    margin: 8px 0 16px !important;
+  }
+  
+  .pill {
+    flex: 1 1 40% !important;
+    justify-content: center !important;
+  }
+
+  /* 4. BOTTOM: Laptop Background Image */
+  .right-panel {
+    position: absolute !important; 
+    top: 45% !important; /* Starts higher up to guarantee it underlaps the login card */
+    bottom: 0 !important; /* Stretches to the bottom of the container */
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important; /* Removed 45vh so it dynamically stretches */
+    z-index: 1 !important; /* Ensures it sits BEHIND the z-index: 10 card */
+    transform: none !important; 
+    animation: none !important;
+    background-position: center bottom !important;
+    background-size: cover !important;
+    box-shadow: none !important;
+  }
+  
+  .right-panel::before,
+  .right-panel::after { display: none !important; }
+}
+
+/* ✅ IMPROVED SMALLER PHONES (≤600px)
+   - Better spacing + typography
+   - Pills become clean full-width when needed
+   - Inputs + buttons more touch-friendly
+   - Links stack nicely without looking “messy”
+*/
+@media (max-width: 600px){
+
+  /* Keep hero content compact */
+  .rp-logo{
+    width: min(210px, 62%);
+    max-width: 210px;
+  }
+  .rp-tagline{
+    max-width: 92%;
+    margin-top: 10px;
+    font-size: clamp(13px, 3.8vw, 15px);
+    line-height: 1.35;
+  }
+
+  /* Card: more premium + less cramped */
+  .login-card{
+    width: 94%;
+    padding: 18px 14px;
+    border-radius: clamp(20px, 6vw, 28px);
+    box-shadow:
+      0 18px 44px rgba(0,0,0,.22),
+      inset 0 0 0 1px rgba(255,255,255,.38);
+  }
+
+  /* Header row spacing */
+  .card-header{
+    margin-top: 6px;
+    gap: 12px;
+  }
+  .card-badge{
+    width: 66px;
+    height: 66px;
+  }
+
+  /* Title spacing + avoid cramped letter spacing */
+  .card-title .system-name{
+    letter-spacing: .34em;
+    font-size: 10.5px;
+  }
+  .card-title .system-sub{
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  /* ✅ Updated Role pills: Stacked vertically for 3 items */
+  .role-toggle{
+    display: grid;           /* Using grid for consistent widths */
+    grid-template-columns: 1fr; 
+    width: 100%;
+    gap: 8px;                /* Tighter gap for stacked look */
+    margin: 8px 0 14px;
+  }
+  
+  .pill{
+    width: 100%;             /* Force full width */
+    justify-content: center;
+    padding: 12px 16px;
+    font-size: 14px;         /* Slightly larger for easier tapping */
+  }
+
+  /* Inputs: more thumb-friendly */
+  .field{
+    padding: 12px 46px 12px 16px;
+  }
+  .field input{
+    font-size: 14px;
+  }
+  .field-action{
+    width: 38px;
+    height: 38px;
+    right: 8px;
+  }
+
+  /* Links: neat stacked layout */
+  .form-links{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .back-btn,
+  .forgot{
+    width: 100%;
+    justify-content: flex-start;
+    padding: 8px 2px;
+  }
+
+  /* Button: nicer height for touch */
+  .submit{
+    padding: 14px 16px;
+  }
+}
+
+
+/* ✅ IMPROVED ULTRA-NARROW PHONES (≤420px)
+   - Prevents cramped text
+   - Keeps hierarchy readable
+   - Makes card + modal feel intentional, not squeezed
+*/
+@media (max-width: 420px){
+
+  /* Slightly better breathing room + consistent center */
+  .main-content{
+    width: 100%;
+    max-width: 100vw;
+    padding-inline: clamp(10px, 3.2vw, 14px);
+    margin-inline: auto;
+    gap: 10px;
+  }
+
+  /* Logo: scales smoothly without dominating */
+  .rp-logo{
+    width: clamp(160px, 62vw, 190px);
+    max-width: 190px;
+  }
+
+  /* Tagline: smoother font scaling + better readability */
+  .rp-tagline{
+    max-width: 100%;
+    font-size: clamp(13px, 3.6vw, 14px);
+    line-height: 1.38;
+    margin-top: 10px;
+  }
+
+  /* Card: nicer padding + premium depth, avoid cramped look */
+  .login-card{
+    width: min(96%, 380px);
+    padding: clamp(14px, 3.6vw, 16px) clamp(12px, 3.2vw, 14px);
+    border-radius: clamp(18px, 5.5vw, 22px);
+    box-shadow:
+      0 16px 36px rgba(0,0,0,.22),
+      inset 0 0 0 1px rgba(255,255,255,.34);
+  }
+
+  /* Header area: balanced proportions */
+  .card-header{
+    gap: 10px;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 8px;
+  }
+
+  .card-badge{
+    width: clamp(54px, 14.5vw, 60px);
+    height: clamp(54px, 14.5vw, 60px);
+    flex: 0 0 auto;
+  }
+
+  /* Title block: reduce spacing + improve hierarchy */
+  .card-title .system-name{
+    letter-spacing: .22em; /* less “spread” on tiny screens */
+    font-size: clamp(9.6px, 2.9vw, 10px);
+  }
+  .card-title .system-sub{
+    font-size: clamp(13.5px, 4vw, 14.5px);
+    line-height: 1.18;
+  }
+
+  /* Inputs: more thumb-friendly + no cramped right side */
+  .field{
+    padding: 12px 46px 12px 14px;
+    border-radius: 14px;
+  }
+  .field input{
+    font-size: 14px;
+  }
+  .field-action{
+    width: 38px;
+    height: 38px;
+    right: 8px;
+  }
+
+  /* Role pills: consistent full-width stack (if you use pills here) */
+  .role-toggle{
+    gap: 10px;
+    margin: 8px 0 14px;
+  }
+  .pill{
+    flex: 1 1 100%;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  /* Links: clean stacking */
+  .form-links{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  /* Forgot modal: matches card sizing */
+  .forgot-content{
+    width: min(96%, 380px);
+    padding: clamp(16px, 4vw, 18px) clamp(12px, 3.4vw, 14px);
+    border-radius: clamp(18px, 5.5vw, 22px);
+  }
+}
+
+
+/* ✅ IMPROVED VERY-SHORT LANDSCAPE (phones rotated)
+   - Avoids awkward scroll + overlap
+   - Keeps hero compact
+   - Login card remains readable
+*/
+@media (max-width: 900px) and (max-height: 540px){
+
+  body{ overflow-y: auto; }
+
+  .container{
+    height: auto;
+    min-height: 100vh;
+  }
+
+  /* Compact hero */
+  .right-panel{
+    position: relative;
+    width: 100%;
+    height: clamp(160px, 32vw, 200px);
+    background-position: 50% 40%;
+    box-shadow: 0 10px 22px rgba(0,0,0,.28);
+  }
+
+  /* Reduce visual noise */
+  .left-panel{
+    padding: 14px 14px 22px;
+  }
+
+  /* Card sits cleanly below hero */
+  .login-card{
+    position: relative;
+    top: auto;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: -24px;
+    width: min(520px, 94%);
+    max-height: none;
+    overflow: visible;
+  }
+
+  /* Slightly tighter internals */
+  .card-header{
+    margin-top: 6px;
+  }
+  .role-toggle{
+    margin-bottom: 14px;
+  }
+}
+
+
+/* =========================
+   Toast (login messages)
+========================= */
+.toast {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  min-width: 220px;
+  max-width: 360px;
+  background: #10253a;
+  color: #e6f0ff;
+  border: 1px solid #294664;
+  border-left: 6px solid #0bb0a8;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 800;
+  font-size: 13px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+  z-index: 9999;
+}
+
+/* =========================
+   Animations (your originals)
+========================= */
+@keyframes fadeZoom {
+  0%   { opacity: 0; transform: translateY(10px) scale(.995); filter: blur(.6px) saturate(.9); }
+  60%  { opacity: 1; transform: translateY(0) scale(1.002); filter: none; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes auroraShift { 0% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+@keyframes glassSlide {
+  0%   { opacity: 0; transform: translateX(18px) scale(.995); }
+  60%  { opacity: 1; transform: translateX(-2px) scale(1.004); }
+  100% { opacity: 1; transform: translateX(0)  scale(1); }
+}
+
+@keyframes veilSoft { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes contentRise { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+
+@keyframes logoBloom {
+  0%   { opacity: 0; transform: translateY(8px) scale(.96); filter: drop-shadow(0 8px 18px rgba(0,0,0,.2)); }
+  70%  { opacity: 1; transform: translateY(-1px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes idleLift { 0% { transform: translateY(0); } 100% { transform: translateY(-2.5px); } }
+@keyframes idleFloat { 0% { transform: translateY(0); } 100% { transform: translateY(2px); } }
+
+@keyframes auroraSheen {
+  0%   { transform: translateX(45%) skewX(8deg); opacity: 0; }
+  25%  { opacity: .35; }
+  100% { transform: translateX(-115%) skewX(8deg); opacity: 0; }
+}
+
+@keyframes photoParallax { 0% { background-position: 50% 50%; } 100% { background-position: 47% 52%; } }
+@keyframes softMask { 0% { opacity: 0; } 100% { opacity: .85; } }
+
+@keyframes cardFloatUp {
+  0%   { opacity: 0; transform: translate(-50%, calc(-50% + 14px)) scale(.985); filter: blur(.8px) saturate(.95); }
+  65%  { opacity: 1; transform: translate(-50%, calc(-50% - 2px)) scale(1.008); filter: none; }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes edgeGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(0,132,146,0), 0 0 0 0 rgba(17,197,190,0); }
+  35%  { box-shadow: 0 0 0 2px rgba(0,132,146,.32), 0 0 0 14px rgba(17,197,190,.12); }
+  100% { box-shadow: 0 0 0 0 rgba(0,132,146,0), 0 0 0 0 rgba(17,197,190,0); }
+}
+
+@keyframes pillsIn { 0% { opacity: 0; transform: translateY(8px) scale(.99); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes fieldsIn { 0% { opacity: 0; transform: translateY(10px) scale(.995); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes buttonGlow {
+  0%   { opacity: 0; transform: translateY(12px) scale(.985); filter: saturate(.92); }
+  60%  { opacity: 1; transform: translateY(-1.5px) scale(1.02); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes tiltIn { 0% { opacity: 0; transform: translateY(8px) rotate(-2.5deg) scale(.98); } 100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
+
+@keyframes fadeInSoft { from { opacity: 0 } to { opacity: 1 } }
+
+@keyframes curtainRevealX {
+  0%  { transform: translateX(0); opacity: 1 }
+  99% { transform: translateX(-100%); opacity: 1 }
+  100%{ transform: translateX(-100%); opacity: 0 }
+}
+
+@keyframes panelShimmer{
+  0%  { opacity:.0; transform:translateX(8%) skewX(8deg) }
+  60% { opacity:.18; transform:translateX(-110%) skewX(8deg) }
+  100%{ opacity:0; transform:translateX(-120%) skewX(8deg) }
+}
+
+@keyframes btnShine{
+  0%{transform:translateX(140%) skewX(20deg); opacity:0}
+  25%{opacity:.55}
+  60%{opacity:.25}
+  100%{transform:translateX(-160%) skewX(20deg); opacity:0}
+}
+
+@keyframes softBlurIn{
+  from{filter:blur(8px) saturate(.96); opacity:0.0}
+  to{filter:blur(0) saturate(1); opacity:1}
+}
+
+/* spin variants (kept yours + a safe second one) */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin2 { to { transform: translateY(-50%) rotate(360deg); } }
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(11,176,168,.35); }
+  70% { box-shadow: 0 0 0 10px rgba(11,176,168,0); }
+  100% { box-shadow: 0 0 0 0 rgba(11,176,168,0); }
+}
+
+@keyframes shakeX {
+  0%,100%{ transform: translateX(0); }
+  20%{ transform: translateX(-6px); }
+  40%{ transform: translateX(6px); }
+  60%{ transform: translateX(-4px); }
+  80%{ transform: translateX(4px); }
+}
+
+/* =========================
+   Motion accessibility
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+  .container::before,
+  .left-panel::before { display:none !important; }
+}

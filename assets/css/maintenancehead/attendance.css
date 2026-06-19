@@ -1,0 +1,428 @@
+.panel {
+  background: var(--card-bg, #f9fcfd);
+  border-radius: 18px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-family: 'Inter', sans-serif;
+  color: #0d2b34;
+}
+
+/* header title inside attendance content */
+.panel-head h2 {
+  font-family: 'Lovelo', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  letter-spacing: 0.4px;
+  color: #04263c;
+  margin-bottom: 4px;
+}
+
+/* ==========================
+   FILTER BAR
+   ========================== */
+.filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: #f2f7f8;
+  border-radius: 12px;
+  padding: 16px 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-grow {
+  flex: 1;
+  min-width: 240px;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2a4c56;
+}
+
+.pill {
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+}
+
+.pill-light {
+  background: #e8eef0;
+  color: #1c3641;
+}
+.pill-light:hover {
+  background: #dce5e8;
+}
+
+/* search input */
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #e8eef0;
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.search i {
+  color: #506973;
+}
+.search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1c3641;
+  font-weight: 600;
+}
+.search input::placeholder {
+  color: #8aa2ab;
+}
+
+/* ==========================
+   BUTTONS
+   ========================== */
+.btn {
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-weight: 800;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s ease;
+}
+
+.btn-reset {
+  background: #ff6b6b;
+  color: #fff;
+}
+.btn-reset:hover {
+  background: #ff5656;
+}
+
+.btn-export {
+  background: #b8f86f;
+  color: #04263c;
+}
+.btn-export:hover {
+  background: #a4f05b;
+}
+
+/* ==========================
+   TABLE CONTAINER
+   ========================== */
+.table-wrap {
+  border-radius: 14px;
+  border: 1px solid #e2e8ea;
+  background: #f4f8f9;
+  overflow: hidden;
+}
+
+/* main table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* sticky header */
+.table thead {
+  background: #0d2b34;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.table th {
+  text-align: left;
+  padding: 14px 18px;
+  font-weight: 800;
+  font-size: 13.5px;
+  letter-spacing: 0.4px;
+}
+
+/* scrollable body area */
+.table-wrap tbody {
+  display: block;
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* keep columns aligned */
+.table-wrap thead,
+.table-wrap tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.table td {
+  padding: 14px 18px;
+  border-top: 1px solid #e3ebee;
+  color: #1a3640;
+  font-weight: 600;
+}
+
+/* Prevent long text from breaking the layout */
+.table th,
+.table td {
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #edf3f5;
+}
+.table tbody tr:hover {
+  background: #e0f3f4;
+}
+
+/* scrollbar inside table body */
+.table-wrap tbody::-webkit-scrollbar {
+  width: 8px;
+}
+.table-wrap tbody::-webkit-scrollbar-track {
+  background: #e8eef0;
+  border-radius: 10px;
+}
+.table-wrap tbody::-webkit-scrollbar-thumb {
+  background: #b8f86f;
+  border-radius: 10px;
+}
+.table-wrap tbody::-webkit-scrollbar-thumb:hover {
+  background: #a4e25d;
+}
+
+/* Teacher name + ID cell */
+.tname {
+  font-weight: 700;
+  color: #0b2b38;
+}
+.tid {
+  font-size: 12.5px;
+  color: #5c727b;
+  margin-top: 2px;
+}
+
+/* status badge (if you add later) */
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 13px;
+}
+.chip-active {
+  background: #c8facc;
+  color: #0a4a1c;
+}
+.chip-inactive {
+  background: #f5bebe;
+  color: #601a1a;
+}
+.chip-unknown {
+  background: #e8e8e8;
+  color: #333;
+}
+
+/* rows selector footer */
+.rows-hint {
+  background: #f1f5f7;
+  border-top: 1px solid #e3ebee;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+}
+
+.pill-muted {
+  background: #e8eef0;
+  color: #5a6e76;
+  border: none;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 10px;
+}
+
+.rows-select {
+  background: #e8eef0;
+  border: 1px solid #d0d8da;
+  color: #1c3641;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: 700;
+  outline: none;
+  cursor: pointer;
+}
+.rows-select option {
+  background: #fff;
+  color: #0d2b34;
+}
+
+/* ==========================
+   EMPTY STATE ("No attendance yet.")
+   ========================== */
+.t-empty-cell {
+  text-align: center !important;
+  padding: 40px 16px;
+}
+
+.t-empty-center {
+  color: #777;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: 'Fredoka', sans-serif;
+}
+
+/* ==========================
+   RESPONSIVE
+   ========================== */
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-reset,
+  .btn-export {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .table th,
+  .table td {
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+}
+
+/* ==========================
+   ROOM SELECTION PANEL (A301 / A302)
+   ========================== */
+
+.hidden {
+  display: none !important;
+}
+
+.select-room-panel {
+  padding: 24px 32px;
+  text-align: center;
+  background: #f6fbff;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(5, 25, 45, 0.12);
+}
+
+.select-room-panel h2 {
+  font-family: 'Lovelo', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  color: #04263c;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+/* room buttons row */
+.room-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+/* 🚪 ROOM BUTTONS (A301 / A302) */
+.room-btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: #b8f86f;
+  color: #04263c;
+  font-weight: 800;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 8px 18px rgba(5, 25, 45, 0.18);
+}
+
+.room-btn:hover,
+.room-btn:focus-visible {
+  background: #a4f05b;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(5, 25, 45, 0.22);
+  outline: none;
+}
+
+/* selected state if you toggle .selected via JS later */
+.room-btn.selected {
+  background: #0b3141;
+  color: #e7ffbf;
+}
+
+/* 🔙 BACK BUTTON — minimal */
+.back-btn {
+  margin-top: 16px;
+  margin-right: auto;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: #0b3141;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.8;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
+}
+
+.back-btn i {
+  font-size: 14px;
+}
+
+.back-btn:hover,
+.back-btn:focus-visible {
+  opacity: 1;
+  transform: translateX(-2px);
+  outline: none;
+}
+
+/* 📱 Responsive for room selection */
+@media (max-width: 600px) {
+  .select-room-panel {
+    padding: 18px 16px;
+  }
+
+  .room-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

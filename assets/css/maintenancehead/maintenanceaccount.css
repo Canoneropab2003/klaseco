@@ -1,0 +1,119 @@
+/* ================================
+   MAINTENANCE ACCOUNT SECTION
+   ================================ */
+
+#maintenance-account.page-section {
+  width: 100%;
+}
+
+.maintenance-panel {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 22px 28px 26px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  border: 1px solid rgba(7, 26, 60, 0.65);
+  color: var(--text-dark);
+  animation: fadeIn var(--dur-panel) var(--ease-smooth);
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.maintenance-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.maintenance-head h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Subtitle reused */
+.t-subtitle {
+  font-size: 14px;
+  color: #4f6570;
+}
+
+/* TABLE WRAPPER */
+.t-table-wrap {
+  overflow-x: auto;
+}
+
+/* TABLE STYLES */
+.t-table-compact {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Example of column width tweaks */
+.t-table-compact th:nth-child(1) { width: 60px; }   /* # column */
+.t-table-compact th:nth-child(2) { width: 180px; }  /* Staff Name */
+.t-table-compact th:nth-child(3) { width: 190px; }  /* Staff ID */
+.t-table-compact th:nth-child(4) { width: 160px; }  /* Area / Unit */
+.t-table-compact th:nth-child(5) { width: 130px; }  /* Phone */
+.t-table-compact th:nth-child(6) { width: 200px; }  /* Email */
+.t-table-compact th:nth-child(7) { width: 110px; }  /* Status */
+
+.t-table-compact thead {
+  background: var(--sidebar-bg);
+  color: #ffffff;
+}
+
+.t-table-compact th {
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.t-table-compact tbody td {
+  padding: 10px 14px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(7, 26, 60, 0.1);
+}
+
+/* Hover row */
+.t-table-compact tbody tr:hover {
+  background: rgba(0, 128, 160, 0.08);
+  cursor: pointer;
+}
+
+/* Empty state */
+.t-table-compact tbody tr.empty-row td {
+  text-align: center;
+  font-style: italic;
+  color: #a3b1b8;
+}
+
+/* Scrollbar */
+.maintenance-panel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.maintenance-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+.maintenance-panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0px); }
+}

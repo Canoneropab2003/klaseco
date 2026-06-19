@@ -1,0 +1,704 @@
+/* =========================
+   CLASS SCHEDULE WRAPPER
+   ========================= */
+
+#schedule.page-section {
+  width: 100%;
+}
+
+.schedule-panel {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 22px 28px 26px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  margin-bottom: 20px;
+  border: 1px solid rgba(7, 26, 60, 0.65);
+
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.schedule-panel::-webkit-scrollbar {
+  width: 12px;
+}
+
+.schedule-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.07);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+.schedule-panel::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 20px;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.schedule-head h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: 22px;
+  letter-spacing: .2px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.schedule-head i {
+  color: #0b1f44;
+}
+
+
+/* =========================
+   TOAST
+   ========================= */
+
+#toast-schedule {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.toast-msg {
+  padding: 10px 16px;
+  background: #e53935;
+  color: white;
+  font-size: 13px;
+  border-radius: 10px;
+  animation: fadeIn .2s ease, fadeOut .3s ease 2.1s forwards;
+  box-shadow: 0 6px 12px rgba(0,0,0,.25);
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+/* success green */
+.toast-success {
+  background: #16db65;
+  color: #0a2413;
+}
+
+/* update blue */
+.toast-update {
+  background: #3fa9f5;
+  color: #001e40;
+}
+
+/* delete red */
+.toast-delete {
+  background: #ff6b6b;
+  color: #370000;
+}
+
+/* editing orange */
+.toast-edit {
+  background: #ffb347;
+  color: #402200;
+}
+
+
+/* =========================
+   FORM CARD
+   ========================= */
+
+.schedule-form-card {
+  background: #0f2230;
+  padding: 22px 24px 20px;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  margin-bottom: 20px;
+}
+
+.schedule-form-card h3 {
+  margin-bottom: 12px;
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+
+/* =========================
+   GRID LAYOUT
+   ========================= */
+
+#schedule-form {
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 1.5fr)
+    minmax(220px, 1.4fr)
+    minmax(220px, 1.2fr);
+  column-gap: 26px;
+  row-gap: 18px;
+  align-items: end;
+}
+
+.schedule-form-card .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.schedule-form-card .form-row label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d5eaf3;
+}
+
+.form-row-days {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.form-row-start {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+
+.form-row-end {
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+}
+
+.form-row-teacher {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.form-row-subject {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+
+.form-row-room {
+  grid-column: 3 / 4;
+  grid-row: 2 / 3;
+}
+
+.form-row-submit {
+  grid-column: 3 / 2;
+  grid-row: 3 / 3;
+  align-self: center;
+}
+
+.form-row-reset {
+  grid-column: 3 / 4;
+  grid-row: 3 / 3;
+  align-self: center;
+}
+
+
+/* =========================
+   INPUTS + SELECTS
+   ========================= */
+
+.schedule-form-card input[type="text"] {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #0e2a3a;
+  font-size: 13px;
+  color: #f1fcff;
+  transition: border-color 0.18s ease,
+              background-color 0.18s ease,
+              box-shadow 0.18s ease;
+  outline: none;
+  width: 100%;
+}
+
+/* =========================
+   SELECT — Improved UI
+   ========================= */
+
+.schedule-form-card select {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #102635;
+  font-size: 13px;
+  color: #e6f4ff;
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+
+  /* remove native arrows — correct order */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* softer arrow icon */
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 2 L6 7 L11 2' stroke='%23d3e7f3' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 12px 8px;
+
+  /* spacing below select */
+  margin-bottom: 6px;
+
+  transition:
+    border-color .18s ease,
+    background-color .18s ease,
+    box-shadow .18s ease;
+}
+
+/* SELECT — Focus */
+.schedule-form-card select:focus {
+  border-color: #b8f86f;
+  background: #143549;
+  box-shadow: 0 0 0 2px rgba(184,248,111,0.25);
+}
+
+/* Optgroup labels: Morning/Afternoon/Evening */
+.schedule-form-card select optgroup {
+  color: #9dbdd2;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Options text (lighter for dark UI) */
+.schedule-form-card select option {
+  background: #0c1d29;
+  color: #e6f4ff;
+  font-size: 13px;
+}
+
+
+/* =========================
+   DAY PILLS
+   ========================= */
+
+.days-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 5px;
+  border-radius: 14px;
+  background: #081a29;
+  border: 1px solid rgba(255,255,255,0.06);
+  justify-content: space-between;
+}
+
+.day-pill {
+  position: relative;
+  display: flex;
+  flex: 1 1 calc(33.33% - 10px);
+  cursor: pointer;
+  justify-content: center;
+}
+
+.day-pill input[type="checkbox"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.day-pill span {
+  width: 100%;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: #0f283c;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: #dbe8f3;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition:
+    background-color .16s ease,
+    box-shadow .16s ease,
+    transform .1s ease,
+    color .16s ease;
+}
+
+.day-pill:hover span {
+  background: #16344e;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,0,0,.45);
+}
+
+.day-pill input[type="checkbox"]:checked + span {
+  background: #0bb0a8;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(11, 176, 168, .55);
+}
+
+
+/* =========================
+   BUTTONS (Add Schedule + Clear)
+   ========================= */
+
+/* Primary — Add Schedule */
+.schedule-form-card .btn-primary {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: linear-gradient(180deg, #b8f86f, #8fdc49);
+  color: #0b2b38;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.7);
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease,
+              background-color 0.15s ease;
+}
+
+.schedule-form-card .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.8);
+}
+
+/* CLEAR — Warning (prevent misclick) */
+.schedule-form-card .btn-clear {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  background: #ff6b6b;
+  color: #0b2b38;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease,
+              box-shadow 0.15s ease,
+              background-color 0.15s ease;
+}
+
+.schedule-form-card .btn-clear:hover {
+  background: #ff6b6b;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.35);
+}
+
+/* Wrapper: align both buttons right */
+.form-row-submit {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.form-row-submit button {
+  white-space: nowrap;
+}
+
+
+/* =========================
+   EXISTING SCHEDULES TABLE
+   ========================= */
+
+.schedule-table-container {
+  margin-top: 24px;
+  background: #eef4fb;
+  border-radius: 18px;
+  padding: 18px 22px 22px;
+  box-shadow: 0 10px 26px rgba(7, 26, 60, 0.22);
+}
+
+/* Title: "Existing Schedules" */
+.schedule-table-header h3 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #071a3d;
+}
+
+/* Outer shell – scrollable card */
+.schedule-table-shell {
+  margin-top: 4px;
+  border-radius: 18px;
+  background: #f7fbff;
+  box-shadow: 0 8px 18px rgba(7, 26, 60, 0.1);
+
+  max-height: 360px;
+  overflow-y: auto;
+  overflow-x: auto;
+
+  display: block;
+}
+
+/* Scrollbar (both directions inside this shell only) */
+.schedule-table-shell::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.schedule-table-shell::-webkit-scrollbar-thumb {
+  background: #9bb2d5;
+  border-radius: 10px;
+}
+
+.schedule-table-shell::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Table base */
+.schedule-table-shell table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+/* Dark navy header row */
+.schedule-table-shell thead th {
+  background: #031b3f;
+  color: #f7fbff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+/* Rounded header corners */
+.schedule-table-shell thead th:first-child {
+  border-top-left-radius: 18px;
+}
+.schedule-table-shell thead th:last-child {
+  border-top-right-radius: 18px;
+}
+
+/* Body rows */
+.schedule-table-shell tbody tr {
+  background: #f7fbff;
+  color: #08234a;
+}
+.schedule-table-shell tbody tr:nth-child(even) {
+  background: #edf3ff;
+}
+.schedule-table-shell tbody tr:hover {
+  background: #e1eefc;
+}
+
+/* Cells */
+.schedule-table-shell tbody td {
+  padding: 12px 18px;
+  border-top: 1px solid rgba(7, 26, 60, 0.08);
+  text-align: center;
+  vertical-align: middle; /* Center content when wrapping */
+}
+
+/* Auto-wrap Teacher, Subject & Room (columns 4, 5, 6) */
+.schedule-table-shell tbody td:nth-child(4),
+.schedule-table-shell tbody td:nth-child(5),
+.schedule-table-shell tbody td:nth-child(6) {
+  max-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  text-align: left;
+  padding-right: 12px;
+}
+
+/* ACTION column – fixed width & aligned */
+.schedule-table-shell thead th:last-child,
+.schedule-table-shell tbody td:last-child {
+  width: 190px;
+  min-width: 190px;
+  max-width: 190px;
+  white-space: nowrap;
+  text-align: center;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+   ========================= */
+
+.schedule-table-shell .action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.12s ease,
+              box-shadow 0.12s ease,
+              background-color 0.12s ease;
+}
+
+/* Edit (blue) */
+.schedule-table-shell .action-btn.edit {
+  background: #82c9f9;
+  color: #063256;
+  box-shadow: 0 6px 14px rgba(63, 154, 214, 0.45);
+}
+.schedule-table-shell .action-btn.edit:hover {
+  transform: translateY(-1px);
+  background: #6bb9f0;
+}
+
+/* Delete (red) */
+.schedule-table-shell .action-btn.delete {
+  background: #ff8a9c;
+  color: #5a0d16;
+  box-shadow: 0 6px 14px rgba(223, 73, 94, 0.5);
+}
+.schedule-table-shell .action-btn.delete:hover {
+  transform: translateY(-1px);
+  background: #ff7489;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 1024px) {
+  #schedule-form {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .form-row-days {
+    grid-column: 1 / -1;
+  }
+
+  .form-row-teacher,
+  .form-row-subject,
+  .form-row-room,
+  .form-row-submit {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .schedule-panel {
+    padding: 18px 16px 20px;
+  }
+
+  #schedule-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row-days,
+  .form-row-start,
+  .form-row-end,
+  .form-row-teacher,
+  .form-row-subject,
+  .form-row-room,
+  .form-row-submit {
+    grid-column: 1 / -1;
+  }
+
+  .schedule-table-shell table {
+    min-width: 620px;
+  }
+}
+
+
+/* =========================
+   DELETE CONFIRM MODAL
+   ========================= */
+
+.t-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.t-confirm-box {
+  background: #ffffff;
+  padding: 32px 40px;
+  width: 420px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.t-confirm-icon {
+  font-size: 48px;
+  font-weight: 900;
+  color: #ffb700;
+  margin-bottom: 12px;
+}
+
+.t-confirm-box h3 {
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+
+.t-confirm-id {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-bottom: 20px;
+}
+
+.t-confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.t-confirm-delete {
+  background: #e53935;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t-confirm-delete:hover {
+  background: #c62828;
+}
+
+.t-confirm-cancel {
+  background: #6c757d;
+  border: none;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.t-confirm-cancel:hover {
+  background: #5a6268;
+}

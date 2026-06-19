@@ -1,0 +1,1167 @@
+/* =========================================================
+   📋 KLASECO • ATTENDANCE PANEL (ULTRA-RESPONSIVE • CLEAN)
+   ✅ FULL UPDATED VERSION — includes Export PDF button
+   - Works on all screen sizes
+   - Filter bar uses responsive grid (no overflow)
+   - Table supports BOTH vertical + horizontal scroll
+   - Sticky header, aligned columns
+   - Keeps your room selection panel styles
+   - Keeps your empty-state classes (.t-empty-cell / .t-empty-center)
+   - NEW: .btn-pdf (blue) + grid spans updated for 3-button layout
+   - FIXED: No button clipping on 320px / 375px / 425px / 768px / 1024px
+========================================================= */
+
+/* ---------- Base Panel ---------- */
+#attendance.panel,
+.panel {
+  background: rgba(249, 252, 253, 0.96);
+  border-radius: 18px;
+  padding: 26px 30px;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(13, 43, 52, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: "Inter", sans-serif;
+  color: #0d2b34;
+  min-width: 0;
+  overflow: visible;
+}
+
+/* ---------- Header ---------- */
+#attendance .panel-head,
+.panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#attendance .panel-head h2,
+.panel-head h2 {
+  font-family: "Lovelo", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.4px;
+  color: #04263c;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* =========================================================
+   FILTER BAR
+   Desktop (>= 1281px):
+     Date(2) | Teacher(2) | Search(4) | Reset(1) | CSV(2) | PDF(1)
+========================================================= */
+#attendance .filters,
+.filters {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  align-items: end;
+  background: rgba(242, 247, 248, 0.92);
+  border-radius: 16px;
+  padding: 16px 16px;
+  border: 1px solid rgba(13, 43, 52, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* Field blocks */
+#attendance .field,
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+/* Labels */
+#attendance .field label,
+.field label {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: rgba(42, 76, 86, 0.95);
+  letter-spacing: 0.2px;
+}
+
+/* Desktop default column spans */
+#attendance .filters .field:nth-child(1),
+.filters .field:nth-child(1) { grid-column: span 2; }
+
+#attendance .filters .field:nth-child(2),
+.filters .field:nth-child(2) { grid-column: span 2; }
+
+#attendance .filters .field.field-grow,
+.filters .field.field-grow   { grid-column: span 4; }
+
+#attendance .filters .btn-reset,
+.filters .btn-reset           { grid-column: span 1; }
+
+#attendance .filters .btn-export,
+.filters .btn-export          { grid-column: span 2; }
+
+#attendance .filters .btn-pdf,
+.filters .btn-pdf             { grid-column: span 1; }
+
+/* =========================================================
+   Pill Buttons
+========================================================= */
+#attendance .pill,
+.pill {
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  transition:
+    transform 0.18s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+}
+
+#attendance .pill::after,
+.pill::after {
+  content: "▾";
+  font-size: 11px;
+  opacity: 0.45;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  line-height: 1;
+}
+
+#attendance .pill.pill--open::after,
+.pill.pill--open::after {
+  transform: rotate(180deg);
+  opacity: 0.8;
+}
+
+#attendance .pill-light,
+.pill-light {
+  background: rgba(232, 238, 240, 0.95);
+  color: #1c3641;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+#attendance .pill-light:hover,
+.pill-light:hover {
+  background: rgba(220, 229, 232, 0.98);
+  border-color: rgba(13, 43, 52, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 22px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+#attendance .pill-light.pill--open,
+.pill-light.pill--open {
+  background: #fff;
+  border-color: rgba(0, 195, 213, 0.4);
+  box-shadow:
+    0 0 0 3px rgba(0, 195, 213, 0.13),
+    0 8px 20px rgba(0, 0, 0, 0.09);
+  transform: translateY(-1px);
+  color: #04263c;
+}
+
+/* =========================================================
+   PICKER MENU
+========================================================= */
+.picker-menu {
+  position: absolute;
+  z-index: 99999;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  box-shadow:
+    0 24px 56px rgba(13, 43, 52, 0.18),
+    0 4px 14px rgba(13, 43, 52, 0.08),
+    0 0 0 1px rgba(13, 43, 52, 0.03);
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+  animation: pickerIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: top left;
+}
+
+@keyframes pickerIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.picker-menu__header {
+  padding: 11px 14px 9px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: rgba(42, 76, 86, 0.6);
+  background: rgba(242, 247, 248, 0.9);
+  border-bottom: 1px solid rgba(13, 43, 52, 0.06);
+}
+
+.picker-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.picker-menu__list::-webkit-scrollbar { width: 5px; }
+.picker-menu__list::-webkit-scrollbar-track { background: transparent; }
+.picker-menu__list::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.55);
+  border-radius: 999px;
+}
+
+.picker-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 11px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1c3641;
+  transition: background 0.12s ease, color 0.12s ease;
+  white-space: nowrap;
+}
+
+.picker-menu__item:hover {
+  background: rgba(184, 248, 111, 0.2);
+  color: #04263c;
+}
+
+.picker-menu__item--all {
+  font-weight: 900;
+  color: #04263c;
+  background: rgba(13, 43, 52, 0.04);
+}
+.picker-menu__item--all:hover {
+  background: rgba(184, 248, 111, 0.25);
+}
+
+.picker-menu__item--active {
+  background: linear-gradient(135deg, rgba(184, 248, 111, 0.3), rgba(159, 240, 86, 0.18));
+  color: #04263c;
+  font-weight: 900;
+}
+.picker-menu__item--active:hover {
+  background: linear-gradient(135deg, rgba(184, 248, 111, 0.38), rgba(159, 240, 86, 0.26));
+}
+
+.picker-menu__icon {
+  font-size: 13px;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+.picker-menu__text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picker-menu__check {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 900;
+  color: #5aae1a;
+  flex-shrink: 0;
+}
+
+.picker-menu__divider {
+  height: 1px;
+  background: rgba(13, 43, 52, 0.07);
+  margin: 4px 2px;
+  border-radius: 999px;
+  list-style: none;
+  padding: 0;
+}
+
+/* =========================================================
+   Search
+========================================================= */
+#attendance .search,
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 12px;
+  padding: 11px 14px;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  min-height: 42px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+#attendance .search i,
+.search i {
+  color: rgba(80, 105, 115, 0.95);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+#attendance .search input,
+.search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1c3641;
+  font-weight: 700;
+  min-width: 0;
+  font-size: 14px;
+}
+
+#attendance .search input::placeholder,
+.search input::placeholder {
+  color: rgba(138, 162, 171, 0.95);
+  font-weight: 700;
+}
+
+/* Focus rings */
+#attendance .search:focus-within,
+#attendance .pill:focus-visible,
+#attendance .btn:focus-visible,
+#attendance .rows-select:focus-visible,
+.search:focus-within,
+.pill:focus-visible,
+.btn:focus-visible,
+.rows-select:focus-visible {
+  outline: 3px solid rgba(0, 195, 213, 0.22);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   Buttons — shared base
+========================================================= */
+#attendance .btn,
+.btn {
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 900;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.18s ease,
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+  white-space: nowrap;
+  min-height: 42px;
+  width: 100%;
+}
+
+/* Reset — red */
+#attendance .btn-reset,
+.btn-reset {
+  background: linear-gradient(180deg, #ff6b6b, #ff5454);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(255, 107, 107, 0.22);
+}
+
+#attendance .btn-reset:hover,
+.btn-reset:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 30px rgba(255, 107, 107, 0.28);
+}
+
+/* Export CSV — green */
+#attendance .btn-export,
+.btn-export {
+  background: linear-gradient(180deg, #b8f86f, #9ff056);
+  color: #04263c;
+  box-shadow: 0 12px 22px rgba(184, 248, 111, 0.22);
+}
+
+#attendance .btn-export:hover,
+.btn-export:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.01);
+  box-shadow: 0 16px 30px rgba(184, 248, 111, 0.28);
+}
+
+/* Export PDF — blue */
+#attendance .btn-pdf,
+.btn-pdf {
+  background: linear-gradient(180deg, #6b9fff, #4d85ff);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(77, 133, 255, 0.22);
+}
+
+#attendance .btn-pdf:hover,
+.btn-pdf:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 30px rgba(77, 133, 255, 0.28);
+}
+
+/* =========================================================
+   Table Wrapper
+========================================================= */
+#attendance .table-wrap,
+.table-wrap {
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 234, 0.95);
+  background: rgba(244, 248, 249, 0.95);
+  overflow-x: auto;
+  overflow-y: visible;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  scroll-behavior: smooth;
+}
+
+#attendance .table,
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#attendance .table thead,
+.table thead {
+  background: #0d2b34;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+#attendance .table th,
+.table th {
+  text-align: left;
+  padding: 14px 16px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.35px;
+  white-space: nowrap;
+}
+
+#attendance .table-wrap tbody,
+.table-wrap tbody {
+  display: block;
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#attendance .table-wrap thead,
+#attendance .table-wrap tbody tr,
+.table-wrap thead,
+.table-wrap tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+#attendance .table-wrap thead,
+#attendance .table-wrap tbody,
+.table-wrap thead,
+.table-wrap tbody {
+  min-width: 760px;
+}
+
+#attendance .table td,
+.table td {
+  padding: 13px 16px;
+  border-top: 1px solid rgba(227, 235, 238, 0.95);
+  color: #16333c;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#attendance .table tbody tr:nth-child(even),
+.table tbody tr:nth-child(even) {
+  background: rgba(237, 243, 245, 0.95);
+}
+
+#attendance .table tbody tr:hover,
+.table tbody tr:hover {
+  background: rgba(224, 243, 244, 0.95);
+}
+
+/* Scrollbars — vertical */
+#attendance .table-wrap tbody::-webkit-scrollbar,
+.table-wrap tbody::-webkit-scrollbar { width: 8px; }
+
+#attendance .table-wrap tbody::-webkit-scrollbar-track,
+.table-wrap tbody::-webkit-scrollbar-track {
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 999px;
+}
+
+#attendance .table-wrap tbody::-webkit-scrollbar-thumb,
+.table-wrap tbody::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.95);
+  border-radius: 999px;
+}
+
+#attendance .table-wrap tbody::-webkit-scrollbar-thumb:hover,
+.table-wrap tbody::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 226, 93, 0.98);
+}
+
+/* Scrollbars — horizontal */
+#attendance .table-wrap::-webkit-scrollbar,
+.table-wrap::-webkit-scrollbar { height: 8px; }
+
+#attendance .table-wrap::-webkit-scrollbar-track,
+.table-wrap::-webkit-scrollbar-track {
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 999px;
+}
+
+#attendance .table-wrap::-webkit-scrollbar-thumb,
+.table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.95);
+  border-radius: 999px;
+}
+
+#attendance .table-wrap::-webkit-scrollbar-thumb:hover,
+.table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 226, 93, 0.98);
+}
+
+/* =========================================================
+   Teacher name + ID
+========================================================= */
+.tname {
+  font-weight: 800;
+  color: #0b2b38;
+}
+.tid {
+  font-size: 12.5px;
+  color: rgba(92, 114, 123, 0.95);
+  margin-top: 2px;
+}
+
+/* =========================================================
+   Status badges
+========================================================= */
+.chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.chip-active   { background: #c8facc; color: #0a4a1c; }
+.chip-inactive { background: #f5bebe; color: #601a1a; }
+.chip-unknown  { background: #e8e8e8; color: #333;    }
+
+/* =========================================================
+   Rows footer
+========================================================= */
+#attendance .rows-hint,
+.rows-hint {
+  background: rgba(241, 245, 247, 0.98);
+  border-top: 1px solid rgba(227, 235, 238, 0.95);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  flex-wrap: nowrap;
+}
+
+/* "Rows:" label — override .pill styles that don't apply here */
+#attendance .rows-hint .pill-muted,
+.rows-hint .pill-muted {
+  background: rgba(232, 238, 240, 0.95);
+  color: #1c3641;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 7px 14px;
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  /* Reset .pill overrides */
+  width: auto;
+  min-height: unset;
+  cursor: default;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Remove the stray ▾ arrow from the label */
+#attendance .rows-hint .pill-muted::after,
+.rows-hint .pill-muted::after {
+  content: none;
+}
+
+/* "All ▾" select */
+#attendance .rows-select,
+.rows-select {
+  background: rgba(232, 238, 240, 0.95);
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  color: #1c3641;
+  border-radius: 12px;
+  padding: 7px 10px 7px 14px;
+  font-weight: 800;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  outline: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+#attendance .rows-select option,
+.rows-select option {
+  background: #fff;
+  color: #0d2b34;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+.t-empty-cell {
+  text-align: center !important;
+}
+
+#attendance .table tbody tr.t-empty-row {
+  display: table !important;
+  width: 100%;
+  table-layout: fixed;
+  background: transparent !important;
+}
+
+#attendance .table tbody tr.t-empty-row td.t-empty-cell {
+  padding: 0 !important;
+  border-top: 0 !important;
+  height: 260px;
+  vertical-align: middle;
+}
+
+.t-empty-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 900;
+  font-size: 16px;
+  color: rgba(13, 43, 52, 0.55);
+  letter-spacing: 0.4px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(242, 247, 248, 0.92)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(13, 43, 52, 0.08),
+    0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   ROOM SELECTION PANEL
+========================================================= */
+.hidden { display: none !important; }
+
+.select-room-panel {
+  padding: 24px 32px;
+  text-align: center;
+  background: #f6fbff;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(5, 25, 45, 0.12);
+}
+
+.select-room-panel h2 {
+  font-family: "Lovelo", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  color: #04263c;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+}
+
+.room-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.room-btn {
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: #b8f86f;
+  color: #04263c;
+  font-weight: 900;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+  box-shadow: 0 8px 18px rgba(5, 25, 45, 0.18);
+}
+
+.room-btn:hover,
+.room-btn:focus-visible {
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+  box-shadow: 0 10px 22px rgba(5, 25, 45, 0.22);
+  outline: none;
+}
+
+.room-btn.selected {
+  background: #0b3141;
+  color: #e7ffbf;
+}
+
+.back-btn {
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-right: auto;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  color: #0b3141;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.back-btn i { font-size: 14px; }
+
+.back-btn:hover,
+.back-btn:focus-visible {
+  opacity: 1;
+  transform: translateX(-2px);
+  outline: none;
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+   ≥ 1281px  — desktop (base styles above)
+   ≤ 1280px  — large tablet / small laptop
+   ≤ 1024px  — tablet landscape    → 3 equal cols per row
+   ≤  900px  — tablet portrait     → Date+Teacher / Search full / 3 btns
+   ≤  768px  — phablet             → same as 900
+   ≤  600px  — large phone         → all fields full, 3 btns side by side
+   ≤  520px  — medium phone        → same + tighter font
+   ≤  425px  — small-medium phone  → icon-only buttons
+   ≤  380px  — small phone         → every button own row (full width)
+   ≤  320px  — extra small phone   → fully stacked, smallest sizing
+========================================================= */
+
+/* ── ≤ 1280px ─────────────────────────────────────────── */
+@media (max-width: 1280px) {
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 2; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 2; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 4; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 1; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 2; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 1; }
+}
+
+/* ── ≤ 1024px ─────────────────────────────────────────── */
+/*
+   Row 1: Date(4) | Teacher(4) | Search(4)
+   Row 2: Reset(4) | CSV(4) | PDF(4)
+*/
+@media (max-width: 1024px) {
+  #attendance.panel,
+  .panel { padding: 22px 22px; border-radius: 16px; }
+
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 20px; }
+
+  #attendance .filters,
+  .filters { padding: 14px; gap: 12px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 4; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 4; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 4; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 340px; }
+}
+
+/* ── ≤ 900px ──────────────────────────────────────────── */
+/*
+   Row 1: Date(6) | Teacher(6)
+   Row 2: Search(12)
+   Row 3: Reset(4) | CSV(4) | PDF(4)
+*/
+@media (max-width: 900px) {
+  #attendance .filters,
+  .filters { gap: 10px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 6; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 6; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 12; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+}
+
+/* ── ≤ 768px ──────────────────────────────────────────── */
+/*
+   Same layout as 900 — still works well at this width
+*/
+@media (max-width: 768px) {
+  #attendance.panel,
+  .panel { padding: 18px 16px; border-radius: 16px; gap: 14px; }
+
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 18px; }
+
+  #attendance .filters,
+  .filters { padding: 14px; gap: 12px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 6; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 6; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 12; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+
+  #attendance .table,
+  .table { min-width: 740px; }
+
+  #attendance .table th,
+  #attendance .table td,
+  .table th,
+  .table td { font-size: 13px; padding: 11px 12px; }
+
+  #attendance .rows-hint,
+  .rows-hint { justify-content: space-between; gap: 8px; }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 310px; }
+
+  #attendance .table tbody tr.t-empty-row td.t-empty-cell { height: 220px; }
+  .t-empty-center { font-size: 14px; }
+
+  .select-room-panel { padding: 18px 16px; }
+  .room-btn { width: 100%; justify-content: center; }
+}
+
+/* ── ≤ 600px ──────────────────────────────────────────── */
+/*
+   Row 1: Date(12)
+   Row 2: Teacher(12)
+   Row 3: Search(12)
+   Row 4: Reset(4) | CSV(4) | PDF(4)
+*/
+@media (max-width: 600px) {
+  #attendance .filters,
+  .filters { padding: 12px; gap: 10px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 12; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 12; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 12; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+
+  #attendance .btn,
+  .btn { font-size: 13px; padding: 10px 10px; min-height: 40px; }
+
+  #attendance .pill,
+  .pill { font-size: 13px; padding: 10px 12px; min-height: 40px; }
+}
+
+/* ── ≤ 520px ──────────────────────────────────────────── */
+@media (max-width: 520px) {
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 17px; letter-spacing: 0.3px; }
+
+  #attendance .filters,
+  .filters { padding: 12px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 12; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 12; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 12; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+
+  #attendance .btn,
+  .btn { font-size: 12px; padding: 10px 6px; min-height: 40px; gap: 5px; }
+
+  #attendance .search,
+  .search { padding: 10px 12px; min-height: 40px; }
+
+  #attendance .table,
+  .table { min-width: 720px; }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 290px; }
+
+  #attendance .table tbody tr.t-empty-row td.t-empty-cell { height: 210px; }
+}
+
+/* ── ≤ 425px ──────────────────────────────────────────── */
+/*
+   All fields full width. Buttons: Reset(4)|CSV(4)|PDF(4)
+   Hide button text labels — show only icons so nothing clips.
+   IMPORTANT: wrap your button text in <span> and icon in <i>.
+   Example: <button class="btn btn-reset"><i class="fa-solid fa-rotate-left"></i><span>Reset</span></button>
+*/
+@media (max-width: 425px) {
+  #attendance.panel,
+  .panel { padding: 14px 12px; }
+
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 16px; }
+
+  #attendance .filters,
+  .filters { padding: 10px; gap: 8px; }
+
+  #attendance .filters .field:nth-child(1),
+  .filters .field:nth-child(1) { grid-column: span 12; }
+
+  #attendance .filters .field:nth-child(2),
+  .filters .field:nth-child(2) { grid-column: span 12; }
+
+  #attendance .filters .field.field-grow,
+  .filters .field.field-grow   { grid-column: span 12; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 4; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 4; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 4; }
+
+  /* Icon-only buttons — text hidden, icon stays */
+  #attendance .btn span,
+  .btn span { display: none; }
+
+  #attendance .btn i,
+  .btn i { font-size: 16px; }
+
+  #attendance .btn,
+  .btn {
+    font-size: 11.5px;
+    padding: 9px 4px;
+    min-height: 40px;
+    gap: 0;
+  }
+
+  #attendance .pill,
+  .pill { font-size: 13px; padding: 10px 12px; min-height: 40px; }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 280px; }
+}
+
+/* ── ≤ 380px ──────────────────────────────────────────── */
+/*
+   Buttons go full-width on separate rows to guarantee no clipping.
+   Text restored (no more icon-only).
+*/
+@media (max-width: 380px) {
+  #attendance.panel,
+  .panel { padding: 12px 10px; }
+
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 15px; }
+
+  #attendance .filters,
+  .filters { padding: 10px; gap: 8px; }
+
+  #attendance .filters .btn-reset,
+  .filters .btn-reset           { grid-column: span 12; }
+
+  #attendance .filters .btn-export,
+  .filters .btn-export          { grid-column: span 12; }
+
+  #attendance .filters .btn-pdf,
+  .filters .btn-pdf             { grid-column: span 12; }
+
+  /* Restore text hidden at 425 */
+  #attendance .btn span,
+  .btn span { display: inline; }
+
+  #attendance .btn,
+  .btn {
+    font-size: 13px;
+    padding: 11px 14px;
+    min-height: 42px;
+    gap: 8px;
+  }
+
+  #attendance .rows-hint,
+  .rows-hint { justify-content: flex-end; flex-wrap: nowrap; }
+
+  #attendance .rows-hint .pill-muted,
+  .rows-hint .pill-muted { width: auto; }
+
+  #attendance .rows-select,
+  .rows-select { width: auto; }
+
+  .t-empty-center {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 260px; }
+}
+
+/* ── ≤ 320px ──────────────────────────────────────────── */
+/*
+   Everything fully stacked, smallest possible sizing.
+   All buttons full width on own row.
+*/
+@media (max-width: 320px) {
+  #attendance.panel,
+  .panel { padding: 10px 8px; gap: 10px; border-radius: 14px; }
+
+  #attendance .panel-head h2,
+  .panel-head h2 { font-size: 14px; }
+
+  #attendance .filters,
+  .filters { padding: 8px; gap: 7px; border-radius: 12px; }
+
+  #attendance .filters .field:nth-child(1),
+  #attendance .filters .field:nth-child(2),
+  #attendance .filters .field.field-grow,
+  #attendance .filters .btn-reset,
+  #attendance .filters .btn-export,
+  #attendance .filters .btn-pdf,
+  .filters .field:nth-child(1),
+  .filters .field:nth-child(2),
+  .filters .field.field-grow,
+  .filters .btn-reset,
+  .filters .btn-export,
+  .filters .btn-pdf { grid-column: span 12; }
+
+  #attendance .btn span,
+  .btn span { display: inline; }
+
+  #attendance .btn,
+  .btn { font-size: 12.5px; padding: 10px 12px; min-height: 40px; gap: 6px; }
+
+  #attendance .pill,
+  .pill { font-size: 12px; padding: 9px 10px; min-height: 38px; }
+
+  #attendance .search,
+  .search { padding: 9px 10px; min-height: 38px; }
+
+  #attendance .table,
+  .table { min-width: 620px; }
+
+  #attendance .table-wrap tbody,
+  .table-wrap tbody { max-height: 240px; }
+
+  #attendance .table tbody tr.t-empty-row td.t-empty-cell { height: 180px; }
+
+  .t-empty-center {
+    font-size: 13px;
+    padding: 14px 16px;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+
+  .select-room-panel { padding: 14px 10px; }
+  .room-btn { font-size: 13px; padding: 10px 18px; }
+}

@@ -1,0 +1,95 @@
+/* =========================================================
+   📟 DEVICE HEALTH PANEL
+========================================================= */
+.devicehealth-panel {
+  background: var(--card-bg);
+  padding: 22px 28px 26px;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.devicehealth-head h2 {
+  color: #0b1f44;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+/* Cards */
+.dh-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.dh-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  transition: 0.2s ease;
+}
+
+.dh-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Colors */
+.dh-card.healthy i { color: #2ecc71; }  
+.dh-card.warning i { color: #f1c40f; }  
+.dh-card.offline i { color: #e74c3c; }
+
+.dh-card i {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+.dh-card p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+.dh-card strong {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+/* Table */
+.devicehealth-table-card {
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.devicehealth-table-card h3 {
+  font-weight: 800;
+  margin-bottom: 14px;
+  color: #0b1f44;
+}
+
+.device-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.device-table th {
+  background: #eaf2f8;
+  padding: 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.device-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e6eb;
+}
+
+.device-table tr:hover {
+  background: #f5f9fb;
+}

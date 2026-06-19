@@ -1,0 +1,671 @@
+/* =========================================================
+   📅 CLASS SCHEDULE (IMPROVED • CLEAN • RESPONSIVE)
+   Scoped to #schedule — no HTML changes required
+========================================================= */
+#schedule{
+  --s-pad: clamp(16px, 2.2vw, 28px);
+  --s-gap: clamp(12px, 1.6vw, 18px);
+  --s-radius: 18px;
+
+  --s-card: #ffffff;
+  --s-ink: var(--ink, #0b2b38);
+  --s-ink2: #355e6b;
+
+  --s-border: rgba(7,26,60,.16);
+  --s-shadow: 0 14px 34px rgba(0,0,0,.12);
+
+  --s-input: #f7fafc;
+  --s-input-border: #d7e0e6;
+  --s-ring: rgba(11,176,168,.22);
+
+  --s-pill: #eef3f6;
+  --s-pill-hover: #e6eef2;
+  --s-teal: var(--teal-1, #0bb0a8);
+  --s-teal2: var(--teal-2, #0a5f73);
+
+  /* ✅ Toast colors */
+  --toast-ok: #18a957;
+  --toast-err: #e53935;
+  --toast-warn: #f4b400;
+  --toast-info: #0bb0a8;
+
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* =========================================================
+   PANEL
+========================================================= */
+#schedule .schedule-panel{
+  background: var(--card-bg, rgba(249, 252, 253, .96));
+  border-radius: var(--s-radius);
+  padding: var(--s-pad);
+  box-shadow: var(--s-shadow);
+  border: 1px solid var(--s-border);
+
+  max-height: calc(100vh - 160px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+/* Scrollbar */
+#schedule .schedule-panel::-webkit-scrollbar{ width: 12px; height: 12px; }
+#schedule .schedule-panel::-webkit-scrollbar-track{
+  background: rgba(255,255,255,.08);
+  border-radius: 20px;
+}
+#schedule .schedule-panel::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.28);
+  border-radius: 20px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+#schedule .schedule-head h2{
+  margin: 0;
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 800;
+  color: var(--s-ink);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#schedule .schedule-head i{ color: var(--s-teal); }
+
+/* =========================================================
+   CARDS
+========================================================= */
+#schedule .schedule-form-card,
+#schedule .schedule-table-container{
+  background: var(--s-card);
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 10px 22px rgba(0,0,0,.08);
+}
+
+#schedule .schedule-form-card{ padding: clamp(16px, 2vw, 22px); }
+#schedule .schedule-form-card h3{
+  margin: 0 0 14px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--s-ink);
+}
+
+#schedule .schedule-table-container{ padding: 16px; }
+#schedule .schedule-table-header h3{
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--s-ink);
+}
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+#schedule form{
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: var(--s-gap);
+  align-items: end;
+}
+
+#schedule .form-row{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#schedule .form-row > label{
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--s-ink2);
+}
+
+#schedule input,
+#schedule select{
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--s-input-border);
+  background: var(--s-input);
+  padding: 0 12px;
+  font-size: 13px;
+  color: #1e3943;
+  outline: none;
+  transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+
+#schedule input::placeholder{ color: rgba(30,57,67,.55); }
+
+#schedule input:focus,
+#schedule select:focus{
+  border-color: rgba(11,176,168,.6);
+  box-shadow: 0 0 0 4px var(--s-ring);
+  background: #fff;
+}
+
+/* =========================================================
+   DAYS PILL GROUP
+========================================================= */
+#schedule .form-row-days{
+  grid-row: span 2;
+  grid-column: 1 / 2;
+}
+
+#schedule .days-group{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 10px;
+  margin-top: 2px;
+}
+
+#schedule .day-pill {
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#schedule .day-pill input{ display: none; }
+
+#schedule .day-pill span{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--s-pill);
+  color: #22424e;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease, box-shadow .2s ease, color .2s ease;
+}
+
+#schedule .day-pill span:hover{
+  background: var(--s-pill-hover);
+  transform: translateY(-1px);
+}
+
+#schedule .day-pill input:checked + span{
+  background: linear-gradient(135deg, var(--s-teal), var(--s-teal2));
+  color: #fff;
+  box-shadow: 0 10px 18px rgba(11,176,168,.28);
+}
+
+/* =========================================================
+   GRID PLACEMENT (desktop)
+========================================================= */
+#schedule .form-row-start{ grid-column: 2 / 3; }
+#schedule .form-row-end{ grid-column: 3 / 4; }
+#schedule .form-row-teacher{ grid-column: 4 / 5; }
+
+#schedule .form-row-subject{ grid-column: 2 / 4; }
+#schedule .form-row-room{ grid-column: 4 / 5; }
+
+#schedule .form-row-submit{ grid-column: 2 / 4; }
+#schedule .form-row-reset{ grid-column: 4 / 5; }
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+#schedule .btn-primary,
+#schedule .btn-clear{
+  height: 46px;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease, background .2s ease;
+  width: 100%;
+}
+
+#schedule .btn-primary{
+  color: #fff;
+  background: linear-gradient(135deg, var(--s-teal), var(--s-teal2));
+  box-shadow: 0 12px 20px rgba(10,95,115,.18);
+}
+#schedule .btn-primary:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+#schedule .btn-primary:active{ transform: translateY(0px) scale(.99); }
+
+#schedule .btn-clear{
+  background: #f6f8fa;
+  color: #244552;
+  border: 1px solid #d4dde2;
+}
+#schedule .btn-clear:hover{ transform: translateY(-1px); }
+
+/* =========================================================
+   TABLE + HORIZONTAL SCROLL FOR LONG TEXT
+========================================================= */
+#schedule .schedule-table-shell{
+  overflow: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+/* Table */
+#schedule table{
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px; /* keeps horizontal scroll on small widths */
+  background: #fff;
+}
+
+#schedule thead th{
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 12px 12px;
+  background: #f2f6f9;
+  color: #23414d;
+  border-bottom: 1px solid #e4ecf1;
+}
+
+#schedule tbody td{
+  padding: 12px;
+  font-size: 12px;
+  color: #1f3a45;
+  border-top: 1px solid #edf2f5;
+  vertical-align: middle;
+}
+
+#schedule tbody tr:hover td{
+  background: rgba(11,176,168,.06);
+}
+
+#schedule td.teacher-col,
+#schedule td.subject-col{
+  max-width: clamp(160px, 26vw, 340px);
+}
+
+#schedule td.teacher-col .cell-scroll,
+#schedule td.subject-col .cell-scroll{
+  display: block;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  padding-bottom: 2px;
+  scroll-behavior: smooth;
+}
+
+/* Chrome / Edge / Safari */
+#schedule td.teacher-col .cell-scroll::-webkit-scrollbar,
+#schedule td.subject-col .cell-scroll::-webkit-scrollbar{
+  height: 8px;
+}
+
+#schedule td.teacher-col .cell-scroll::-webkit-scrollbar-thumb,
+#schedule td.subject-col .cell-scroll::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.22);
+  border-radius: 999px;
+}
+
+#schedule td.teacher-col .cell-scroll::-webkit-scrollbar-track,
+#schedule td.subject-col .cell-scroll::-webkit-scrollbar-track{
+  background: rgba(0,0,0,.06);
+  border-radius: 999px;
+}
+
+/* =========================================================
+   🗑️ SCHEDULE DELETE TAG BUTTON
+   Matches: .action-btn.delete.sched-delete-btn
+========================================================= */
+#schedule .action-btn.delete,
+#schedule .sched-delete-btn{
+  background: #ff9aa2;
+  color: #fff;
+
+  border: none;
+  border-radius: 10px;
+
+  height: 32px;
+  padding: 0 12px;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255,154,162,0.25);
+  transition: background .2s ease, box-shadow .2s ease, transform .15s ease;
+}
+
+/* Hover */
+#schedule .action-btn.delete:hover,
+#schedule .sched-delete-btn:hover{
+  background: #ff6b6b;
+  box-shadow: 0 6px 14px rgba(255,107,107,0.3);
+  transform: translateY(-1px);
+}
+
+/* Active */
+#schedule .action-btn.delete:active,
+#schedule .sched-delete-btn:active{
+  transform: scale(.95);
+}
+
+
+/* =========================================================
+   CONFIRM MODAL
+========================================================= */
+#schedule .t-confirm-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+#schedule .t-confirm-overlay.hidden{ display: none; }
+
+#schedule .t-confirm-box{
+  width: min(92vw, 380px);
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 22px 50px rgba(0,0,0,.25);
+  border: 1px solid rgba(0,0,0,.10);
+  text-align: center;
+}
+
+#schedule .t-confirm-icon{
+  width: 44px;
+  height: 44px;
+  margin: 0 auto 10px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  background: rgba(229,57,53,.12);
+  color: #e53935;
+}
+
+#schedule .t-confirm-box h3{
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 900;
+}
+#schedule .t-confirm-box p{
+  margin: 0;
+  font-size: 13px;
+  color: rgba(30,57,67,.75);
+}
+
+#schedule .t-confirm-actions{
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+#schedule .t-confirm-delete,
+#schedule .t-confirm-cancel{
+  flex: 1;
+  height: 42px;
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+#schedule .t-confirm-delete{
+  border: none;
+  background: #e53935;
+  color: #fff;
+}
+#schedule .t-confirm-cancel{
+  border: 1px solid #cfd8dc;
+  background: #fff;
+}
+
+#toast-schedule{
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  z-index: 99999;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+
+  width: min(92vw, 300px);
+  pointer-events: none;
+}
+
+/* Base toast */
+#toast-schedule .toast-msg{
+  pointer-events: auto;
+  width: 100%;
+  padding: 14px 18px;
+
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.35;
+  text-align: center;
+
+  color: #fff;
+  background: linear-gradient(135deg, #0bb0a8, #0a5f73);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.25),
+    0 0 0 1px rgba(255,255,255,.16);
+
+  animation:
+    toastSlideUp .25s ease-out,
+    toastFadeOut .35s ease-in 2.15s forwards;
+}
+
+/* Generic tones */
+#toast-schedule .toast-msg.toast-success{
+  background: linear-gradient(135deg, #18a957, #0f7f40);
+}
+#toast-schedule .toast-msg.toast-error{
+  background: linear-gradient(135deg, #e53935, #b71c1c);
+}
+#toast-schedule .toast-msg.toast-warn{
+  background: linear-gradient(135deg, #f4b400, #c08a00);
+  color: #102026;
+}
+
+/* ✅ Specific success types (overrides generic success) */
+#toast-schedule .toast-msg.toast-success.toast-created{
+  background: linear-gradient(135deg, #1db7a8, #0a5f73); /* teal success */
+}
+#toast-schedule .toast-msg.toast-success.toast-deleted{
+  background: linear-gradient(135deg, #ff6b6b, #c62828); /* red success */
+}
+
+/* ✅ Specific errors (overrides generic error) */
+#toast-schedule .toast-msg.toast-error.toast-create-error{
+  background: linear-gradient(135deg, #ff8f00, #e65100); /* orange error */
+}
+#toast-schedule .toast-msg.toast-error.toast-delete-error{
+  background: linear-gradient(135deg, #d32f2f, #8e0000); /* deep red error */
+}
+
+@keyframes toastSlideUp{
+  from{ transform: translateY(12px) scale(.98); opacity: 0; }
+  to{ transform: translateY(0) scale(1); opacity: 1; }
+}
+@keyframes toastFadeOut{
+  to{ opacity: 0; transform: translateY(6px); }
+}
+
+/* 🌀 Spinner Rotation Animation */
+.fa-spin {
+  animation: spin 1s infinite linear;
+  margin-right: 8px; /* Space between icon and text */
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 🖱️ Disabled Button State */
+button[type="submit"]:disabled {
+  background-color: #cccccc !important; /* Grey out the button */
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  opacity: 0.8;
+  border-color: #bbbbbb !important;
+}
+
+/* Optional: Ensure the button keeps its width so it doesn't jump when text changes */
+#schedule-form button[type="submit"] {
+  min-width: 140px; 
+  transition: all 0.2s ease;
+}
+
+/* =========================================================
+   🔍 SCHEDULE TABLE — ROW HIGHLIGHT & SEARCH
+========================================================= */
+
+/* Pointer cursor so rows feel clickable */
+#schedule-table-body tr:not(.sched-empty-row) {
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+/* 🟢 Click-selected row → teal highlight */
+#schedule-table-body tr.sched-row-selected td {
+  background-color: #e0f5f2 !important;
+  border-left: 4px solid #0bb0a8;
+}
+
+/* 🟡 Search-matched row → gold highlight */
+#schedule-table-body tr.sched-row-match td {
+  background-color: #fff8e1 !important;
+  border-left: 4px solid #f0b429;
+}
+
+/* 🔴 Conflict row → red highlight + pulse animation */
+#schedule-table-body tr.sched-row-conflict td {
+  background-color: #fff0f0 !important;
+  border-left: 4px solid #e53935 !important;
+  transition: background-color 0.3s ease;
+}
+#schedule-table-body tr.sched-row-conflict {
+  animation: conflictPulse 0.5s ease 3;
+}
+@keyframes conflictPulse {
+  0%   { background-color: #fff0f0; }
+  50%  { background-color: #ffc8c8; }
+  100% { background-color: #fff0f0; }
+}
+
+/* Search box wrapper — sits beside the "Existing Schedules" heading */
+#schedule .schedule-table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sched-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7fafc;
+  border: 1.5px solid #d7e0e6;
+  border-radius: 10px;
+  padding: 6px 12px;
+  transition: border-color 0.2s;
+}
+
+.sched-search-wrap:focus-within {
+  border-color: #0bb0a8;
+  box-shadow: 0 0 0 3px rgba(11,176,168,.15);
+}
+
+.sched-search-wrap i {
+  color: #0bb0a8;
+  font-size: 13px;
+}
+
+.sched-search-wrap input {
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  height: auto !important;
+  width: 220px;
+  font-size: 13px;
+  color: #1e3943;
+  border-radius: 0 !important;
+}
+
+.sched-search-wrap input::placeholder {
+  color: rgba(30,57,67,.45);
+}
+
+@media (max-width: 640px) {
+  #schedule .schedule-table-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .sched-search-wrap input { width: 160px; }
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+========================================================= */
+@media (max-width: 1100px){
+  #schedule form{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  #schedule .form-row-days{
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  #schedule .days-group{
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  #schedule .form-row-start,
+  #schedule .form-row-end,
+  #schedule .form-row-teacher,
+  #schedule .form-row-subject,
+  #schedule .form-row-room,
+  #schedule .form-row-submit,
+  #schedule .form-row-reset{
+    grid-column: auto;
+  }
+
+  #schedule .form-row-submit{ grid-column: 1 / 2; }
+  #schedule .form-row-reset{ grid-column: 2 / 3; }
+}
+
+@media (max-width: 640px){
+  #schedule .schedule-panel{ padding: 16px; }
+  #schedule form{ grid-template-columns: 1fr; }
+
+  #schedule .form-row-submit,
+  #schedule .form-row-reset{ grid-column: 1 / -1; }
+
+  #schedule .days-group{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Slightly reduce max width so cell scroll feels nicer on small phones */
+  #schedule td.teacher-col,
+  #schedule td.subject-col{
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 380px){
+  #schedule .days-group{ grid-template-columns: 1fr; }
+}

@@ -1,0 +1,690 @@
+/* =========================================================
+   🧑‍💼 ADMIN STAFF PANEL — Scrollable & Responsive
+   (Scoped to #adminstaffaccounts)
+   FULL UPDATED (Now matches MaintenanceAccounts style/behavior)
+   ✅ Fix: 1024/768 clipping / pushed buttons
+   ✅ Fix: cleaner grid + button row across widths
+   ✅ Mobile stays clean (375/425 widths OK)
+   ✅ Same layout logic as MaintenanceAccounts
+========================================================= */
+
+/* ---------------------------------------------------------
+   ✅ Fluid tokens (scales smoothly) — MATCH MAINTENANCE
+--------------------------------------------------------- */
+#adminstaffaccounts{
+  --as-pad: clamp(14px, 2.2vw, 28px);
+  --as-radius: clamp(14px, 1.6vw, 20px);
+  --as-gap: clamp(12px, 1.6vw, 24px);
+  --as-title: clamp(18px, 1.9vw, 22px);
+  --as-input: clamp(13px, 1.4vw, 14px);
+}
+
+/* =========================================================
+   Panel
+========================================================= */
+#adminstaffaccounts .maintenance-panel{
+  background: var(--card-bg);
+  border-radius: var(--as-radius);
+  padding: var(--as-pad);
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+  margin-top: clamp(12px, 1.8vw, 20px);
+  max-height: clamp(520px, calc(100dvh - 160px), 980px);
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar (same “elite” feel) */
+#adminstaffaccounts .maintenance-panel::-webkit-scrollbar{ width: 12px; }
+#adminstaffaccounts .maintenance-panel::-webkit-scrollbar-track{
+  background: rgba(255,255,255,0.07);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 6px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.15);
+}
+#adminstaffaccounts .maintenance-panel::-webkit-scrollbar-thumb{
+  background: linear-gradient(145deg,#e8eff3 0%,#c6d4dd 40%,#9aabb4 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.4);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25), inset 0 0 6px rgba(255,255,255,0.25);
+  transition: all .3s ease;
+}
+#adminstaffaccounts .maintenance-panel::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(145deg,#f6fcff 0%,#dce8ee 40%,#b4c3cc 100%);
+  box-shadow: 0 0 14px rgba(230,240,255,0.6), inset 0 0 10px rgba(255,255,255,0.4);
+  transform: translateY(-1px);
+}
+@supports (scrollbar-width: thin){
+  #adminstaffaccounts .maintenance-panel{
+    scrollbar-width: thin;
+    scrollbar-color: #b4c3cc rgba(255,255,255,0.07);
+  }
+}
+
+/* =========================================================
+   Header
+========================================================= */
+#adminstaffaccounts .maintenance-head h2{
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  color: var(--text-dark);
+  font-size: var(--as-title);
+  letter-spacing: .2px;
+  margin-bottom: clamp(12px, 1.7vw, 18px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#adminstaffaccounts .maintenance-head h2 i{ color:#0b1f44; }
+
+/* ===================================================
+   🌙 FORM CARD — ADMIN STAFF (match MaintenanceAccounts)
+=================================================== */
+#adminstaffaccounts .mform-card{
+  background:#0f2230;
+  border-radius: var(--as-radius);
+  padding: clamp(16px, 2.2vw, 28px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+  margin-bottom: clamp(16px, 2.2vw, 28px);
+
+  /* ✅ IMPORTANT: prevents “clipped buttons” issues */
+  overflow: visible;
+}
+
+/* ✅ Grid that adapts automatically */
+#adminstaffaccounts .mform-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--as-gap);
+  align-items: end;
+  width: 100%;
+}
+
+/* Fields */
+#adminstaffaccounts .mfield{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+#adminstaffaccounts .mfield label{
+  font-weight:800;
+  font-size: clamp(12px, 1.2vw, 13px);
+  color:#d5eaf3;
+  letter-spacing:.2px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+#adminstaffaccounts .mfield label i{
+  color:#d5eaf3;
+  font-size:13px;
+}
+
+/* Inputs */
+#adminstaffaccounts .minput{
+  background:#0e2a3a;
+  border:1px solid rgba(255,255,255,0.08);
+  color:#f1fcff;
+  border-radius: clamp(10px, 1.2vw, 12px);
+  padding: clamp(10px, 1.3vw, 12px) clamp(12px, 1.6vw, 14px);
+  font-weight:700;
+  font-size: var(--as-input);
+  outline:none;
+  transition:all .25s ease;
+  min-width: 0; /* ✅ prevents grid overflow */
+}
+#adminstaffaccounts .minput::placeholder{
+  color: rgba(234,243,247,0.55);
+  font-weight:600;
+}
+#adminstaffaccounts .minput:focus{
+  border-color:#b8f86f;
+  box-shadow:0 0 0 3px rgba(184,248,111,0.25);
+}
+
+/* ===================================================
+   🔐 PASSWORD (with eye) — same feel
+=================================================== */
+#adminstaffaccounts .m-password-wrapper{
+  width:100%;
+  position:relative;
+}
+#adminstaffaccounts .m-password-wrapper .minput{
+  width:100%;
+  padding-right:42px;
+}
+#adminstaffaccounts .m-password-toggle{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  color:#c7d7e2;
+  font-size:14px;
+  padding:4px;
+}
+#adminstaffaccounts .m-password-toggle:hover{ color:#ffffff; }
+
+/* Strength */
+#adminstaffaccounts .m-password-strength{
+  margin-top:4px;
+  font-size:11px;
+  font-weight:700;
+}
+#adminstaffaccounts .m-password-strength.weak{ color:#ff6b6b; }
+#adminstaffaccounts .m-password-strength.medium{ color:#f6c344; }
+#adminstaffaccounts .m-password-strength.strong{ color:#4cd964; }
+
+/* ===================================================
+   🔧 BUTTONS — MATCH MaintenanceAccounts behavior
+=================================================== */
+#adminstaffaccounts .as-actions-field{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  min-width:0;
+}
+
+/* Main actions container */
+#adminstaffaccounts .mactions{
+  display:flex;
+  gap: clamp(10px, 1.5vw, 16px);
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  flex-wrap: nowrap; /* keep side-by-side */
+}
+
+/* ✅ button base (no stretching, no overflow) */
+#adminstaffaccounts .mbtn{
+  height: 48px;
+  min-height: 46px;
+  max-height: 52px;
+  padding: 0 18px;
+
+  border-radius: 12px;
+  font-weight: 900;
+  cursor: pointer;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+
+  transition: all .25s ease;
+  border:none;
+
+  flex: 0 1 auto;      /* ✅ can shrink */
+  min-width: 150px;    /* ✅ prevents clipping */
+  max-width: 280px;
+  width: auto;
+  white-space: nowrap;
+}
+
+/* Green */
+#adminstaffaccounts .mbtn-green{
+  background: linear-gradient(180deg,#b8f86f,#8fdc49);
+  color:#0b2b38;
+}
+#adminstaffaccounts .mbtn-green:hover{
+  box-shadow:0 0 16px rgba(184,248,111,0.35);
+  transform:translateY(-1px);
+}
+
+/* Clear */
+#adminstaffaccounts .mbtn-clear{
+  background:#ff6b6b;
+  color:#fff;
+}
+#adminstaffaccounts .mbtn-clear:hover{
+  background:#ff5050;
+  box-shadow:0 0 16px rgba(255,80,80,0.35);
+}
+
+/* =========================================================
+   ✅ DESKTOP (≥1200px) — SAME LOGIC AS MAINTENANCE
+   - Stable 3-column grid
+   - Password spans col 1–2 (supports your class)
+   - Actions in col 3
+========================================================= */
+@media (min-width: 1200px){
+
+  #adminstaffaccounts .mform-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    align-items: end;
+  }
+
+  #adminstaffaccounts .as-password-field{
+    grid-column: 1 / 3 !important;
+  }
+
+  #adminstaffaccounts .as-actions-field{
+    grid-column: 3 / 4 !important;
+    align-self: start;
+  }
+
+  /* Buttons side-by-side grid */
+  #adminstaffaccounts .mactions{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  #adminstaffaccounts .mbtn{
+    width: 100%;
+    min-width: 0;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: unset;
+  }
+}
+
+/* =========================================================
+   ✅ FHD / WQHD (≥1400px) — SAME FEEL AS MAINTENANCE
+========================================================= */
+@media (min-width: 1400px){
+
+  #adminstaffaccounts .mform-grid{
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
+    align-items: end;
+  }
+
+  #adminstaffaccounts .as-password-field{
+    grid-column: 1 / 3 !important;
+  }
+
+  #adminstaffaccounts .as-actions-field{
+    grid-column: 3 / 4 !important;
+    align-self: start;
+  }
+
+  #adminstaffaccounts .mactions{
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+    align-items: center;
+  }
+
+  #adminstaffaccounts .mbtn{
+    width: 100%;
+    min-width: 0;
+    font-size: 12.5px;
+    padding: 9px 12px;
+    white-space: nowrap;
+  }
+}
+
+/* =========================================================
+   ✅ KEY FIX: 1024 / 768 (Tablet & below) — MATCH MAINTENANCE
+   - password becomes full width row
+   - actions becomes full width row under it
+   - buttons wrap safely (no clipping)
+========================================================= */
+@media (max-width: 1199px){
+
+  #adminstaffaccounts .as-password-field{
+    grid-column: 1 / -1 !important;
+  }
+  #adminstaffaccounts .as-actions-field{
+    grid-column: 1 / -1 !important;
+    justify-content: center;
+  }
+
+  #adminstaffaccounts .mactions{
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  #adminstaffaccounts .mbtn{
+    flex: 1 1 240px;
+    width: min(100%, 360px);
+    min-width: 0;
+  }
+}
+
+/* ✅ Phones: 2 buttons side-by-side */
+@media (max-width: 520px){
+  #adminstaffaccounts .mactions{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:12px;
+    align-items:center;
+  }
+  #adminstaffaccounts .mbtn{
+    width:100%;
+    max-width:none;
+    min-width:0;
+    height:46px;
+    border-radius:14px;
+    padding:0 14px;
+    white-space: normal;
+    line-height: 1.1;
+  }
+}
+
+/* ✅ Very small: stack */
+@media (max-width: 360px){
+  #adminstaffaccounts .mactions{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   📋 ADMIN STAFF TABLE (match MaintenanceAccounts behavior)
+========================================================= */
+#adminstaffaccounts .m-table-scroll{
+  overflow-x:auto;
+  overflow-y:auto;
+  max-height: clamp(280px, 45vh, 520px);
+  border-radius: var(--as-radius);
+  box-shadow: 0 8px 18px rgba(7,26,60,0.18);
+  scroll-behavior:smooth;
+}
+
+#adminstaffaccounts .col-mid{
+  width: clamp(200px, 22%, 280px);
+  text-align:left;
+  white-space: nowrap;         /* ✅ FIX */
+  word-break: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#adminstaffaccounts .m-table-scroll::-webkit-scrollbar{ width:8px; height:8px; }
+#adminstaffaccounts .m-table-scroll::-webkit-scrollbar-thumb{ background:#b0bec5; border-radius:10px; }
+#adminstaffaccounts .m-table-scroll::-webkit-scrollbar-thumb:hover{ background:#8fa1a9; }
+@supports (scrollbar-width: thin){
+  #adminstaffaccounts .m-table-scroll{
+    scrollbar-width: thin;
+    scrollbar-color: #a6b4bd #e9edf0;
+  }
+}
+
+#adminstaffaccounts .m-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width: 980px;
+}
+
+#adminstaffaccounts .m-table thead th{
+  font-weight:900;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:.3px;
+  color:#fff;
+  text-align:center;
+  background:#0b1f44;
+  border-bottom:2px solid rgba(255,255,255,0.12);
+  padding:16px 18px;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+#adminstaffaccounts .m-table thead th:first-child{ border-top-left-radius:10px; }
+#adminstaffaccounts .m-table thead th:last-child{ border-top-right-radius:10px; }
+
+/* Column Layout (FIXED widths) */
+#adminstaffaccounts .col-mid{ width:45%; text-align:left; }
+#adminstaffaccounts .col-name{ width:18%; text-align:left; }
+#adminstaffaccounts .col-email{ width:20%; text-align:left; }
+#adminstaffaccounts .col-role{ width:16%; text-align:center; }
+#adminstaffaccounts .col-phone{ width:14%; text-align:center; }
+#adminstaffaccounts .col-user{ width:12%; text-align:center; }
+#adminstaffaccounts .col-pass{ width:10%; text-align:center; }
+#adminstaffaccounts .col-actions{
+  width: clamp(220px, 24%, 280px);
+  text-align: center;
+}
+
+/* Body */
+#adminstaffaccounts .m-table tbody td{
+  font-size:14px;
+  font-weight:700;
+  color:#1d303a;
+  background:#eef3f6;
+  padding:18px;
+  border-top:1px solid rgba(0,0,0,.06);
+  transition:background .2s ease;
+}
+#adminstaffaccounts .m-table tbody tr:nth-child(even) td{ background:#e7eef2; }
+#adminstaffaccounts .m-table tbody tr:hover td{ background:#dfe9ef; }
+
+/* Row action buttons */
+#adminstaffaccounts .m-actions{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+}
+
+#adminstaffaccounts .mtag{
+  border:0;
+  padding:8px 12px;
+  border-radius:12px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:all .2s ease;
+}
+#adminstaffaccounts .mtag-edit{ background:#a9def9; color:#0b3b46; }
+#adminstaffaccounts .mtag-edit:hover{ background:#8fd2f0; box-shadow:0 6px 14px rgba(137,215,247,0.3); }
+#adminstaffaccounts .mtag-delete{ background:#ff9aa2; color:#fff; }
+#adminstaffaccounts .mtag-delete:hover{ background:#ff6b6b; box-shadow:0 6px 14px rgba(255,107,107,0.3); }
+
+/* Scrollable long text cells (SCOPED so it won’t affect other pages) */
+#adminstaffaccounts .cell-scroll{
+  max-width:150px;
+  white-space:nowrap;
+  overflow-x:auto;
+  overflow-y:hidden;
+  display:block;
+  padding-bottom:3px;
+  scroll-behavior:smooth;
+}
+#adminstaffaccounts .cell-scroll::-webkit-scrollbar{ height:5px; }
+#adminstaffaccounts .cell-scroll::-webkit-scrollbar-thumb{ background:#9bb6cf; border-radius:10px; }
+#adminstaffaccounts .cell-scroll::-webkit-scrollbar-track{ background:#e8f1f9; }
+@supports (scrollbar-width: thin){ #adminstaffaccounts .cell-scroll{ scrollbar-width: thin; } }
+
+#adminstaffaccounts .col-name .cell-scroll,
+#adminstaffaccounts .col-email .cell-scroll,
+#adminstaffaccounts .col-role .cell-scroll,
+#adminstaffaccounts .col-user .cell-scroll,
+#adminstaffaccounts .col-pass .cell-scroll{ max-width:90px; }
+
+@media (max-width: 720px){
+  #adminstaffaccounts .m-table thead th{ padding:12px 12px; font-size:11px; }
+  #adminstaffaccounts .m-table tbody td{ padding:12px 12px; font-size:13px; }
+}
+
+/* =========================================================
+   🔔 TOAST — ADMIN STAFF (Perfect Fit)
+========================================================= */
+#adminstaffaccounts #toast-adminstaff {
+  position: fixed !important;
+  bottom: 26px !important;    /* Stick to bottom */
+  top: auto !important;       /* Prevent top inheritance */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;        /* ✅ Keeps toasts centered and non-stretched */
+  gap: 10px;
+  pointer-events: none;
+  width: auto;
+}
+
+#adminstaffaccounts #toast-adminstaff .toast {
+  /* ✅ The "Perfect Fit" Secret: */
+  width: max-content;         /* Fits the text exactly */
+  min-width: auto;            /* Removes the 260px restriction */
+  max-width: 90vw;            /* Safety for very long text */
+  white-space: nowrap;        /* Keeps it on one line like a pill */
+  
+  padding: 12px 22px;         /* Balanced padding */
+  pointer-events: auto;
+  border-radius: 50px;        /* Pill-style look */
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.30);
+  animation: adminstaff-toast-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Colors */
+#adminstaffaccounts #toast-adminstaff .toast.error { background: #ff6b6b; }
+#adminstaffaccounts #toast-adminstaff .toast.success { background: #4cd964; }
+#adminstaffaccounts #toast-adminstaff .toast.loading { background: #0f172a; color: #e5e7eb; }
+
+/* ⬆️ Animation: Smooth slide up */
+@keyframes adminstaff-toast-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ✅ Mobile: Safe fitting */
+@media (max-width: 520px) {
+  #adminstaffaccounts #toast-adminstaff {
+    bottom: 20px !important;
+  }
+  #adminstaffaccounts #toast-adminstaff .toast {
+    width: auto;
+    max-width: calc(100vw - 40px);
+    white-space: normal;      /* Allow wrap on small screens only */
+    text-align: center;
+    border-radius: 14px;      /* Slightly less round on mobile */
+  }
+}
+
+/* ==========================================
+   ⏳ ADMIN STAFF – LOADING TOAST
+========================================== */
+#adminstaffaccounts #toast-adminstaff .toast.loading{
+  background:#0f172a;
+  color:#e5e7eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+
+/* Spinner icon */
+#adminstaffaccounts #toast-adminstaff .toast.loading i{
+  font-size:15px;
+}
+
+/* =========================================================
+   🗑 DELETE CONFIRM POPUP (scoped)
+========================================================= */
+#adminstaffaccounts .t-confirm-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  padding:18px;
+}
+#adminstaffaccounts .t-confirm-box{
+  background:#fff;
+  padding:32px 40px;
+  width:min(420px, 100%);
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 28px rgba(0,0,0,0.25);
+}
+#adminstaffaccounts .hidden{ display:none !important; }
+
+#adminstaffaccounts .t-confirm-icon{
+  font-size:48px;
+  font-weight:900;
+  color:#ffb700;
+  margin-bottom:12px;
+}
+#adminstaffaccounts .t-confirm-box h3{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:4px;
+}
+#adminstaffaccounts .t-confirm-id{
+  font-size:14px;
+  opacity:.6;
+  margin-bottom:20px;
+}
+#adminstaffaccounts .t-confirm-actions{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+}
+#adminstaffaccounts .t-confirm-delete{
+  background:#e53935;
+  border:none;
+  color:#fff;
+  padding:10px 24px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#adminstaffaccounts .t-confirm-delete:hover{ background:#c62828; }
+
+#adminstaffaccounts .t-confirm-cancel{
+  background:#6c757d;
+  border:none;
+  color:#fff;
+  padding:10px 24px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+}
+#adminstaffaccounts .t-confirm-cancel:hover{ background:#5a6268; }
+
+/* =========================================================
+   EMPTY STATE ROW — "No admin staff yet."
+========================================================= */
+#adminstaffaccounts .m-table tbody .as-empty-row td{
+  background:#f5f9ff !important;
+  border:none !important;
+  padding:0 !important;
+  text-align:center !important;
+  display:table-cell !important;
+  vertical-align:middle !important;
+}
+#adminstaffaccounts .m-table tbody .as-empty-row .t-empty-center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:55px;
+  font-size:14px;
+  font-weight:500;
+  color:#7f8ea3;
+}

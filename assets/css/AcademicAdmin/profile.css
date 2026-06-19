@@ -1,0 +1,845 @@
+/* =========================================
+   🌈 KLASECO PROFILE THEME VARIABLES
+   ========================================= */
+:root {
+  --profile-bg-gradient: linear-gradient(135deg, #f5f8ff 0%, #f2f6fb 32%, #eef4fb 100%);
+  --profile-card-bg: #ffffff;
+  --profile-border: rgba(7, 26, 60, 0.12);
+  --profile-border-soft: rgba(7, 26, 60, 0.06);
+  --profile-text-main: #071a3c;
+  --profile-text-muted: #7c8aa5;
+  --profile-accent-navy: #0b1f44;
+  --profile-accent-blue: #0b72ff;
+  --profile-shadow-soft: 0 8px 18px rgba(7, 29, 68, 0.08);
+  --profile-shadow-strong: 0 12px 26px rgba(7, 29, 68, 0.15);
+}
+
+/* =========================
+   👤 PROFILE WRAPPER
+   ========================= */
+
+/* Main profile card */
+.profile-panel {
+  background: var(--profile-bg-gradient);
+  border-radius: 18px;
+  padding: 22px 26px 26px;
+  box-shadow: var(--profile-shadow-strong);
+  border: 1px solid var(--profile-border);
+
+  max-width: 1200px;
+  margin: 20px auto 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--profile-text-main);
+
+  max-height: 490px;
+  overflow-y: auto;
+}
+
+/* =========================
+   Firefox-only scrollbar
+========================= */
+@supports (scrollbar-width: thin) {
+  .profile-panel {
+    scrollbar-width: thin;
+    scrollbar-color: #a3b2c8 rgba(255, 255, 255, 0.12);
+  }
+}
+
+/* =========================
+   WebKit scrollbars
+   (Chrome, Edge, Safari)
+========================= */
+.profile-panel::-webkit-scrollbar {
+  width: 10px;
+}
+
+.profile-panel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+}
+
+.profile-panel::-webkit-scrollbar-thumb {
+  background: #a3b2c8;
+  border-radius: 20px;
+}
+
+.profile-panel::-webkit-scrollbar-thumb:hover {
+  background: #8998b0;
+}
+
+/* =========================
+   HEADER (AVATAR + NAME)
+   ========================= */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(7, 26, 60, 0.08);
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: contain;             /* show full KLASECO logo */
+  border: 3px solid #ffffff;       /* inner white ring */
+  box-shadow: 0 0 0 4px var(--profile-accent-navy);   /* brand navy outer ring */
+  background: transparent;         /* no black background */
+}
+
+.profile-name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  margin: 0;
+  color: var(--profile-text-main);
+}
+
+.profile-role {
+  margin: 2px 0 0;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--profile-text-muted);
+}
+
+/* =========================
+   ⚡ QUICK STATS CHIPS
+   ========================= */
+
+.profile-quick-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.stat-chip {
+  flex: 1 1 0;
+  min-width: 180px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--profile-border-soft);
+  box-shadow: 0 6px 14px rgba(7, 29, 68, 0.08);
+}
+
+.stat-chip i {
+  font-size: 15px;
+  color: var(--profile-accent-navy);
+  flex-shrink: 0;
+}
+
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--profile-text-muted);
+  font-weight: 700;
+}
+
+.stat-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--profile-text-main);
+}
+
+/* =========================
+   ACCOUNT INFORMATION
+   ========================= */
+
+.profile-info {
+  background: var(--profile-card-bg);
+  border-radius: 16px;
+  padding: 16px 18px 14px;
+  box-shadow: var(--profile-shadow-soft);
+  border: 1px solid var(--profile-border-soft);
+}
+
+.profile-info h3 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--profile-text-main);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-info h3::before {
+  content: "\f2bb"; /* fa-id-badge */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 14px;
+  color: var(--profile-accent-navy);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 28px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.info-item label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--profile-text-muted);
+  font-weight: 700;
+  margin-bottom: 1px;
+}
+
+.info-item span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--profile-text-main);
+  line-height: 1.4;
+}
+
+/* =========================
+   ACTION BUTTONS
+   ========================= */
+
+.profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.profile-actions button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+
+  transition: background 0.18s ease, color 0.18s ease,
+              box-shadow 0.18s ease, transform 0.12s ease;
+}
+
+.edit-btn {
+  background: #ffffff;
+  color: var(--profile-accent-navy);
+  border: 1px solid rgba(7, 26, 60, 0.1);
+  box-shadow: 0 6px 14px rgba(7, 29, 68, 0.14);
+}
+
+.password-btn {
+  background: var(--profile-accent-navy);
+  color: #ffffff;
+  box-shadow: 0 10px 20px rgba(7, 29, 68, 0.3);
+}
+
+.profile-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(7, 29, 68, 0.22);
+}
+
+.profile-actions button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(7, 29, 68, 0.16);
+}
+
+/* visible focus for accessibility */
+.profile-actions button:focus-visible {
+  outline: 2px solid var(--profile-accent-blue);
+  outline-offset: 2px;
+}
+
+/* =========================
+   PROFILE PHOTO UPLOAD (MODAL)
+   ========================= */
+
+.profile-photo-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.profile-photo-upload small {
+  font-size: 11px;
+  color: var(--profile-text-muted);
+  line-height: 1.4;
+}
+
+/* no overflow hidden so pencil can hang outside */
+.photo-preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  position: relative;
+  background: transparent;
+  border: 3px solid #ffffff;        /* inner white ring */
+  box-shadow: 0 0 0 4px var(--profile-accent-navy);    /* brand navy outer ring */
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: visible;                /* IMPORTANT: let the pencil show */
+}
+
+.photo-preview img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;               /* keep circular frame */
+  object-fit: contain;              /* show full KLASECO logo */
+  display: block;
+}
+
+/* pencil badge position + z-index */
+.photo-upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate(25%, 25%);   /* push it slightly outside the ring */
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--profile-accent-blue); /* brand blue */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+
+  z-index: 10;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.45);
+  transition: background 0.15s ease, transform 0.12s ease,
+              box-shadow 0.15s ease;
+}
+
+.photo-upload-btn i {
+  line-height: 1;
+}
+
+.photo-upload-btn:hover {
+  background: #0858c4;
+  transform: translate(25%, 25%) scale(1.05);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5);
+}
+
+.photo-upload-btn:active {
+  transform: translate(25%, 25%) scale(1.0);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.photo-upload-btn:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* =========================
+   🔒 PROFILE MODALS
+   ========================= */
+
+.profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 12, 32, 0.52);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 16px;
+
+  /* simple fade-in */
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.profile-modal-overlay.is-open {
+  display: flex;
+  opacity: 1;
+}
+
+.profile-modal {
+  background: linear-gradient(135deg, #f5f8ff 0%, #f2f6fb 38%, #ffffff 100%);
+  border-radius: 18px;
+  padding: 18px 20px 16px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 16px 34px rgba(7, 29, 68, 0.35);
+  border: 1px solid var(--profile-border);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--profile-text-main);
+
+  /* subtle scale-in */
+  transform: translateY(8px) scale(0.97);
+  opacity: 0;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+
+  max-height: 90vh;            /* prevent cutting off on small screens */
+  overflow-y: auto;
+}
+
+/* When overlay is open, animate modal in */
+.profile-modal-overlay.is-open .profile-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Modal header */
+
+.profile-modal .modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.profile-modal .modal-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--profile-text-main);
+}
+
+.profile-modal .modal-header i {
+  color: var(--profile-accent-navy);
+}
+
+.modal-close {
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #4c5f7c;
+  padding: 0 4px;
+  border-radius: 999px;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.1s ease;
+}
+
+.modal-close:hover {
+  background: rgba(11, 31, 68, 0.06);
+  color: var(--profile-accent-navy);
+  transform: translateY(-1px);
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--profile-accent-blue);
+  outline-offset: 2px;
+}
+
+/* Modal body */
+
+.profile-modal .modal-body {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+}
+
+/* Fields */
+
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.modal-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--profile-text-muted);
+  margin-bottom: 1px;
+}
+
+.modal-field input {
+  border-radius: 10px;
+  border: 1px solid rgba(7, 26, 60, 0.16);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: #ffffff;
+  line-height: 1.4;
+  transition: border-color 0.16s ease,
+              box-shadow 0.16s ease,
+              background 0.16s ease;
+}
+
+.modal-field input:focus {
+  border-color: var(--profile-accent-blue);
+  box-shadow: 0 0 0 1px rgba(11, 114, 255, 0.25);
+  background: #fdfefe;
+}
+
+.modal-field input[readonly] {
+  background: #f3f6fa;
+  color: #657493;
+}
+
+/* for any input you mark as .field-readonly in JS */
+.field-readonly {
+  background: #f3f6fa !important;
+  color: #657493 !important;
+}
+
+.field-hint {
+  font-size: 11px;
+  color: #95a1ba;
+  line-height: 1.4;
+}
+
+/* hidden by default, shown via JS */
+.field-error {
+  display: none;
+  font-size: 11px;
+  color: #d9534f;
+  line-height: 1.4;
+}
+
+/* Modal actions */
+
+.modal-actions {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-actions .btn-outline,
+.modal-actions .btn-primary {
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.18s ease, color 0.18s ease,
+              box-shadow 0.18s ease, transform 0.12s ease;
+}
+
+.modal-actions .btn-outline {
+  background: #ffffff;
+  color: var(--profile-accent-navy);
+  border: 1px solid rgba(7, 26, 60, 0.12);
+  box-shadow: 0 6px 14px rgba(7, 29, 68, 0.16);
+}
+
+.modal-actions .btn-primary {
+  background: var(--profile-accent-navy);
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(7, 29, 68, 0.32);
+}
+
+.modal-actions .btn-outline:hover,
+.modal-actions .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(7, 29, 68, 0.26);
+}
+
+.modal-actions .btn-outline:active,
+.modal-actions .btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(7, 29, 68, 0.18);
+}
+
+.modal-actions .btn-outline:focus-visible,
+.modal-actions .btn-primary:focus-visible {
+  outline: 2px solid var(--profile-accent-blue);
+  outline-offset: 2px;
+}
+
+
+/* Spinner Animation */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-loading {
+  position: relative;
+  color: transparent !important; /* Hide text while loading */
+  pointer-events: none; /* Prevent double clicks */
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: calc(50% - 9px);
+  left: calc(50% - 9px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 280px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-left: 4px solid #ddd;
+  animation: toastSlideIn 0.3s ease forwards;
+  font-family: inherit;
+}
+
+.toast.success { border-left-color: #22c55e; }
+.toast.error { border-left-color: #ef4444; }
+
+.toast i { font-size: 1.2rem; }
+.toast.success i { color: #22c55e; }
+.toast.error i { color: #ef4444; }
+
+@keyframes toastSlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast.hide {
+  animation: toastFadeOut 0.5s ease forwards;
+}
+
+@keyframes toastFadeOut {
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Leave space for the icon */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #64748b; /* Adjust color to match your theme */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.password-toggle:hover {
+  color: #1e293b;
+}
+
+/* Ensure the hint/error stays below the wrapper */
+.modal-field .field-hint, 
+.modal-field .field-error {
+  display: block;
+  margin-top: 5px;
+}
+/* =========================
+   RESPONSIVE (PROFILE)
+   ========================= */
+
+@media (max-width: 980px) {
+  #profile.page-section {
+    padding: 24px 18px;
+  }
+
+  .profile-panel {
+    max-height: none;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-quick-stats {
+    flex-direction: column;
+  }
+
+  .profile-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  #profile.page-section {
+    padding: 20px 14px;
+  }
+
+  .profile-panel {
+    padding: 18px 14px 20px;
+  }
+}
+
+/* extra tiny phones */
+@media (max-width: 400px) {
+  .profile-name {
+    font-size: 18px;
+  }
+
+  .profile-role {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .profile-info {
+    padding: 10px 12px;
+  }
+
+  .profile-panel {
+    padding: 14px 10px 16px;
+  }
+}
+
+/* Responsive modal */
+
+@media (max-width: 640px) {
+  .profile-modal {
+    max-width: 100%;
+  }
+
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================
+   💡 REDUCED MOTION SUPPORT
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-panel,
+  .profile-modal,
+  .profile-modal-overlay,
+  .profile-actions button,
+  .modal-actions .btn-outline,
+  .modal-actions .btn-primary,
+  .photo-upload-btn,
+  .modal-close {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================================
+    ✨ NEW ANIMATIONS (DYNAMIC FEEDBACK)
+   ========================================= */
+
+/* Loading State for Buttons */
+.btn-loading {
+  position: relative !important;
+  color: transparent !important;
+  pointer-events: none;
+}
+
+.btn-loading::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin: -8px 0 0 -8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success Glow for Profile Panel */
+.save-success-glow {
+  animation: success-glow-pulse 1.5s ease-out;
+}
+
+@keyframes success-glow-pulse {
+  0% { 
+    box-shadow: var(--profile-shadow-strong), 0 0 0 0px rgba(11, 114, 255, 0.4); 
+    border-color: var(--profile-accent-blue);
+  }
+  50% { 
+    box-shadow: var(--profile-shadow-strong), 0 0 20px 10px rgba(11, 114, 255, 0); 
+    border-color: var(--profile-accent-blue);
+  }
+  100% { 
+    box-shadow: var(--profile-shadow-strong), 0 0 0 0px rgba(11, 114, 255, 0); 
+    border-color: var(--profile-border);
+  }
+}

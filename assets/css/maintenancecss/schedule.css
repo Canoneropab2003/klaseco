@@ -1,0 +1,176 @@
+/* =========================================================
+   🗓 SCHEDULE PANEL
+========================================================= */
+.schedule-panel {
+  background: var(--card-bg);
+  padding: 22px 28px 30px;
+  border-radius: 18px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.schedule-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.schedule-head h2 {
+  color: #0b1f44;
+  font-size: 22px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.schedule-subtext {
+  font-size: 14px;
+  color: #44576d;
+  margin-bottom: 18px;
+}
+
+/* Buttons */
+.sch-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.2s ease;
+}
+
+.sch-add {
+  background: #2d9bf0;
+  color: #fff;
+}
+.sch-add:hover {
+  background: #1f84d0;
+}
+
+.sch-small {
+  background: #e9eef2;
+  color: #0b1f44;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+.sch-small:hover {
+  background: #d8e1e8;
+}
+
+.sch-danger {
+  background: #e74c3c;
+  color: #fff;
+}
+.sch-danger:hover {
+  background: #c0392b;
+}
+
+/* Table */
+.schedule-table-card {
+  background: #ffffff;
+  padding: 20px 22px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+.schedule-table-card h3 {
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #0b1f44;
+}
+
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.schedule-table th {
+  background: #eaf2f8;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 700;
+}
+
+.schedule-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e0e6eb;
+}
+
+.schedule-table tr:hover {
+  background: #f5f9fb;
+}
+
+
+/* Hide helper */
+.hidden {
+  display: none;
+}
+
+/* Schedule form card */
+.schedule-form-card {
+  background: #ffffff;
+  padding: 18px 20px 16px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 18px;
+}
+
+.schedule-form-card h3 {
+  margin-bottom: 10px;
+  font-weight: 800;
+  color: #0b1f44;
+  font-size: 16px;
+}
+
+/* Form layout */
+#schedule-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px 16px;
+  align-items: end;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-row label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #44576d;
+}
+
+.form-row select,
+.form-row input[type="time"] {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #cfd8e3;
+  font-size: 13px;
+  outline: none;
+}
+
+.form-row select:focus,
+.form-row input[type="time"]:focus {
+  border-color: #2d9bf0;
+}
+
+/* Form actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Reuse existing .sch-btn styles; just ensure small variant here */
+.form-actions .sch-btn {
+  margin-top: 4px;
+}

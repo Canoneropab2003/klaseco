@@ -1,0 +1,194 @@
+/* =========================================================
+   👤 PROFILE & SECURITY (Maintenance user)
+   ========================================================= */
+
+#profile.page-section {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.profile-panel {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 28px 36px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+
+.profile-panel h2 {
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--text-dark);
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-panel h2 i {
+  color: #ffcf4e;
+}
+
+/* layout: left account info, right security */
+.profile-grid {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1.15fr 0.95fr;
+  gap: 18px;
+}
+
+/* Glass card */
+.profile-card {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.45);
+  padding: 18px 20px 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  color: var(--text-dark);
+}
+
+.profile-card h3 {
+  margin: 0 0 10px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
+
+/* avatar + name row (optional) */
+.profile-header-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 0 12px rgba(0,0,0,0.25);
+}
+
+.profile-header-text h4 {
+  margin: 0 0 3px;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.profile-header-text span {
+  font-size: 12px;
+  color: #607285;
+}
+
+/* form fields */
+.profile-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #607285;
+}
+
+.profile-field input {
+  border-radius: 12px;
+  border: 1px solid #c8d7de;
+  padding: 8px 10px;
+  background: #ffffff;
+  color: #153741;
+  font-size: 13px;
+}
+
+.profile-field input::placeholder {
+  color: rgba(130,150,165,0.85);
+}
+
+/* password wrapper with eye icon (if used) */
+.profile-pass-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.profile-pass-wrap input {
+  width: 100%;
+  padding-right: 38px;
+}
+
+.profile-pass-toggle {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #74889b;
+  font-size: 15px;
+}
+
+.profile-pass-toggle:hover {
+  color: #1e293b;
+}
+
+/* save buttons */
+.profile-actions-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.profile-btn-primary {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #0f5fff, #00b7ff);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(15,95,255,0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-btn-secondary {
+  border-radius: 999px;
+  border: none;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  background: #e9eef2;
+  color: #0b1f44;
+}
+
+/* small danger text or note under form */
+.profile-note {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #8a5a00;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .profile-panel {
+    padding: 24px 20px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

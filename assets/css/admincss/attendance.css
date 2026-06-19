@@ -1,0 +1,698 @@
+/* =========================================================
+   📋 KLASECO • ATTENDANCE PANEL (ULTRA-RESPONSIVE • CLEAN)
+   - Works on all screen sizes
+   - Filter bar wraps beautifully
+   - Table supports BOTH vertical + horizontal scroll
+   - Nice scrollbars + spacing + touch-friendly
+   - No HTML changes required
+   - ✅ Uses YOUR JS empty row: .t-empty-row / .t-empty-cell / .t-empty-center
+========================================================= */
+
+/* ---------- Base Panel ---------- */
+#attendance.panel {
+  background: rgba(249, 252, 253, 0.96);
+  border-radius: 18px;
+  padding: 26px 30px;
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.14),
+    0 0 0 1px rgba(13, 43, 52, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-family: "Inter", sans-serif;
+  color: #0d2b34;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+#attendance .panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+#attendance .panel-head h2 {
+  font-family: "Lovelo", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.4px;
+  color: #04263c;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ---------- Filters: "auto grid" that scales well ---------- */
+#attendance .filters {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  align-items: end;
+  background: rgba(242, 247, 248, 0.92);
+  border-radius: 16px;
+  padding: 16px 16px;
+  border: 1px solid rgba(13, 43, 52, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+/* Field blocks */
+#attendance .field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+#attendance .field label {
+  font-size: 12.5px;
+  font-weight: 800;
+  color: rgba(42, 76, 86, 0.95);
+  letter-spacing: 0.2px;
+}
+
+/* Layout mapping (desktop) — 2+2+4+1+2+1 = 12 */
+#attendance .filters .field:nth-child(1) { grid-column: span 2; } /* Date */
+#attendance .filters .field:nth-child(2) { grid-column: span 2; } /* Teacher */
+#attendance .filters .field.field-grow   { grid-column: span 4; } /* Search */
+#attendance .filters .btn-reset          { grid-column: span 1; }
+#attendance .filters .btn-export         { grid-column: span 2; }
+#attendance .filters .btn-pdf            { grid-column: span 1; }
+
+/* ---------- Pill Buttons ---------- */
+#attendance .pill {
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  transition:
+    transform 0.18s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+
+  /* ✅ Safari compatibility */
+  -webkit-user-select: none;
+  user-select: none;
+
+  min-height: 42px;
+}
+
+#attendance .pill-light {
+  background: rgba(232, 238, 240, 0.95);
+  color: #1c3641;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+#attendance .pill-light:hover {
+  background: rgba(220, 229, 232, 0.98);
+  border-color: rgba(13, 43, 52, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 10px 22px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+
+/* ---------- Search ---------- */
+#attendance .search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 12px;
+  padding: 11px 14px;
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  min-height: 42px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+#attendance .search i {
+  color: rgba(80, 105, 115, 0.95);
+  font-size: 14px;
+}
+
+#attendance .search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #1c3641;
+  font-weight: 700;
+  min-width: 0;
+  font-size: 14px;
+}
+
+#attendance .search input::placeholder {
+  color: rgba(138, 162, 171, 0.95);
+  font-weight: 700;
+}
+
+/* Focus ring for accessibility */
+#attendance .search:focus-within,
+#attendance .pill:focus-visible,
+#attendance .btn:focus-visible,
+#attendance .rows-select:focus-visible {
+  outline: 3px solid rgba(0, 195, 213, 0.22);
+  outline-offset: 2px;
+}
+
+/* ---------- Action Buttons ---------- */
+#attendance .btn {
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-weight: 900;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: none;
+  transition:
+    transform 0.18s ease,
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+  white-space: nowrap;
+  min-height: 42px;
+}
+
+#attendance .btn-reset {
+  background: linear-gradient(180deg, #ff6b6b, #ff5454);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(255, 107, 107, 0.22);
+}
+
+#attendance .btn-reset:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 30px rgba(255, 107, 107, 0.28);
+}
+
+#attendance .btn-export {
+  background: linear-gradient(180deg, #b8f86f, #9ff056);
+  color: #04263c;
+  box-shadow: 0 12px 22px rgba(184, 248, 111, 0.22);
+}
+
+#attendance .btn-export:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.01);
+  box-shadow: 0 16px 30px rgba(184, 248, 111, 0.28);
+}
+
+/* ---------- Export PDF Button ---------- */
+#attendance .btn-pdf {
+  background: linear-gradient(180deg, #7aabf7, #5b8ff9);
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(91, 143, 249, 0.22);
+}
+
+#attendance .btn-pdf:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.02);
+  box-shadow: 0 16px 30px rgba(91, 143, 249, 0.32);
+}
+
+/* ---------- Table Wrapper (horizontal scroll container) ---------- */
+#attendance .table-wrap {
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 234, 0.95);
+  background: rgba(244, 248, 249, 0.95);
+  overflow-x: auto;
+  overflow-y: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+
+/* Make table wide enough to scroll on small screens */
+#attendance .table {
+  width: 100%;
+  min-width: 760px;               /* ✅ forces horizontal scroll on phones */
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* Header */
+#attendance .table thead {
+  background: #0d2b34;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+#attendance .table th {
+  text-align: left;
+  padding: 14px 16px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: 0.35px;
+  white-space: nowrap;
+}
+
+/* Scrollable body (vertical) */
+#attendance .table-wrap tbody {
+  display: block;
+  max-height: 380px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Keep header + rows aligned */
+#attendance .table-wrap thead,
+#attendance .table-wrap tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Ensure thead/tbody keep min width while horizontal-scrolling */
+#attendance .table-wrap thead,
+#attendance .table-wrap tbody {
+  min-width: 760px;
+}
+
+/* Cells */
+#attendance .table td {
+  padding: 13px 16px;
+  border-top: 1px solid rgba(227, 235, 238, 0.95);
+  color: #16333c;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#attendance .table tbody tr:nth-child(even) {
+  background: rgba(237, 243, 245, 0.95);
+}
+
+#attendance .table tbody tr:hover {
+  background: rgba(224, 243, 244, 0.95);
+}
+
+/* ---------- Rows footer ---------- */
+#attendance .rows-hint {
+  background: rgba(241, 245, 247, 0.98);
+  border-top: 1px solid rgba(227, 235, 238, 0.95);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  flex-wrap: wrap;
+}
+
+#attendance .pill-muted {
+  background: rgba(232, 238, 240, 0.95);
+  color: rgba(90, 110, 118, 0.98);
+  border: 1px solid rgba(13, 43, 52, 0.08);
+  font-weight: 900;
+  padding: 7px 12px;
+  border-radius: 12px;
+}
+
+#attendance .rows-select {
+  background: rgba(232, 238, 240, 0.95);
+  border: 1px solid rgba(208, 216, 218, 0.95);
+  color: #1c3641;
+  border-radius: 12px;
+  padding: 7px 10px;
+  font-weight: 900;
+  outline: none;
+  cursor: pointer;
+}
+
+#attendance .rows-select option {
+  background: #fff;
+  color: #0d2b34;
+}
+
+/* ---------- Scrollbars (vertical in tbody) ---------- */
+#attendance .table-wrap tbody::-webkit-scrollbar { width: 8px; }
+#attendance .table-wrap tbody::-webkit-scrollbar-track {
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 999px;
+}
+#attendance .table-wrap tbody::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.95);
+  border-radius: 999px;
+}
+#attendance .table-wrap tbody::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 226, 93, 0.98);
+}
+
+/* ---------- Scrollbars (horizontal in wrapper) ---------- */
+#attendance .table-wrap::-webkit-scrollbar { height: 8px; }
+#attendance .table-wrap::-webkit-scrollbar-track {
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 999px;
+}
+#attendance .table-wrap::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.95);
+  border-radius: 999px;
+}
+#attendance .table-wrap::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 226, 93, 0.98);
+}
+
+/* =========================================================
+   ✅ CENTER EMPTY STATE (YOUR JS ROW)
+   JS injects:
+   <tr class="t-empty-row">
+     <td colspan="6" class="t-empty-cell">
+       <div class="t-empty-center">No attendance yet.</div>
+     </td>
+   </tr>
+========================================================= */
+
+/* Keep it aligned with header widths */
+#attendance .table tbody tr.t-empty-row {
+  display: table !important;
+  width: 100%;
+  table-layout: fixed;
+  background: transparent !important;
+}
+
+/* Big centered canvas area */
+#attendance .table tbody tr.t-empty-row td.t-empty-cell {
+  padding: 0 !important;
+  border-top: 0 !important;
+  height: 260px;
+  vertical-align: middle;
+}
+
+/* Centered message bubble */
+#attendance .t-empty-center {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  font-weight: 900;
+  font-size: 16px;
+  color: rgba(13, 43, 52, 0.55);
+  letter-spacing: 0.4px;
+
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(242, 247, 248, 0.92)
+  );
+  box-shadow:
+    inset 0 0 0 1px rgba(13, 43, 52, 0.08),
+    0 10px 26px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+   📐 RESPONSIVE BREAKPOINTS
+========================================================= */
+
+/* ---------- Large tablets / small laptops (≤ 1024px) ---------- */
+@media (max-width: 1024px) {
+  #attendance.panel {
+    padding: 22px 22px;
+    border-radius: 16px;
+  }
+
+  #attendance .panel-head h2 {
+    font-size: 20px;
+  }
+
+  #attendance .filters {
+    padding: 14px 14px;
+    gap: 12px;
+  }
+
+  /* Re-map grid — 3+3+4+2+2 = 12, PDF wraps to next row at span 2 */
+  #attendance .filters .field:nth-child(1) { grid-column: span 3; }
+  #attendance .filters .field:nth-child(2) { grid-column: span 3; }
+  #attendance .filters .field.field-grow   { grid-column: span 4; }
+  #attendance .filters .btn-reset          { grid-column: span 2; }
+  #attendance .filters .btn-export         { grid-column: span 2; }
+  #attendance .filters .btn-pdf            { grid-column: span 2; }
+
+  #attendance .table-wrap tbody {
+    max-height: 340px;
+  }
+}
+
+/* ---------- Mobile / tablets (≤ 768px) ---------- */
+@media (max-width: 768px) {
+  #attendance.panel {
+    padding: 18px 16px;
+    border-radius: 16px;
+    gap: 14px;
+  }
+
+  #attendance .panel-head h2 {
+    font-size: 18px;
+  }
+
+  /* Stack filters nicely */
+  #attendance .filters {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  #attendance .filters .field,
+  #attendance .filters .field.field-grow,
+  #attendance .filters .btn-reset,
+  #attendance .filters .btn-export,
+  #attendance .filters .btn-pdf {
+    grid-column: auto;
+  }
+
+  #attendance .pill,
+  #attendance .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  #attendance .table {
+    min-width: 740px; /* keep horizontal scroll */
+  }
+
+  #attendance .table th,
+  #attendance .table td {
+    font-size: 13px;
+    padding: 11px 12px;
+  }
+
+  #attendance .rows-hint {
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  #attendance .table-wrap tbody {
+    max-height: 310px;
+  }
+
+  /* Empty state mobile */
+  #attendance .table tbody tr.t-empty-row td.t-empty-cell {
+    height: 220px;
+  }
+  #attendance .t-empty-center {
+    font-size: 14px;
+  }
+}
+
+/* ---------- Small mobile (≤ 520px) ---------- */
+@media (max-width: 520px) {
+  #attendance .panel-head h2 {
+    font-size: 17px;
+    letter-spacing: 0.3px;
+  }
+
+  #attendance .filters {
+    padding: 12px;
+  }
+
+  #attendance .pill,
+  #attendance .btn {
+    font-size: 13px;
+    padding: 10px 12px;
+    min-height: 40px;
+  }
+
+  #attendance .search {
+    padding: 10px 12px;
+    min-height: 40px;
+  }
+
+  #attendance .table {
+    min-width: 720px;
+  }
+
+  #attendance .table-wrap tbody {
+    max-height: 290px;
+  }
+
+  /* Empty state small */
+  #attendance .table tbody tr.t-empty-row td.t-empty-cell {
+    height: 210px;
+  }
+}
+
+/* ---------- Ultra small (≤ 380px) ---------- */
+@media (max-width: 380px) {
+  #attendance.panel {
+    padding: 14px 12px;
+  }
+
+  #attendance .panel-head h2 {
+    font-size: 16px;
+  }
+
+  #attendance .pill,
+  #attendance .btn {
+    font-size: 12.5px;
+  }
+
+  #attendance .rows-select,
+  #attendance .pill-muted {
+    width: 100%;
+  }
+
+  #attendance .rows-hint {
+    justify-content: flex-start;
+  }
+
+  /* Empty bubble width safety */
+  #attendance .t-empty-center {
+    width: 100%;
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
+/* =========================================================
+   ✅ FORCE-HIDE EMPTY STATE WHEN DATA EXISTS
+   Fixes tbody { display:block } behavior
+========================================================= */
+
+/* If tbody has ANY row that is NOT the empty row → hide empty row */
+#attendance .table-wrap tbody:has(tr:not(.t-empty-row)) tr.t-empty-row {
+  display: none !important;
+}
+
+/* =========================================================
+   📋 SCROLLABLE DROPDOWN (Date & Teacher pill dropdowns)
+   Works for any .pill-dropdown rendered below .field buttons
+========================================================= */
+
+/* Wrapper: position anchor for the dropdown */
+#attendance .field {
+  position: relative;
+}
+
+/* The dropdown list panel */
+#attendance .pill-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 999;
+
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(13, 43, 52, 0.10);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.13),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+
+  min-width: 200px;
+  max-width: 320px;
+
+  /* ✅ Scrollable when list is long */
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 6px 0;
+}
+
+/* Each option item */
+#attendance .pill-dropdown li,
+#attendance .pill-dropdown .dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1c3641;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  list-style: none;
+  border-radius: 0;
+  transition: background 0.15s ease;
+}
+
+#attendance .pill-dropdown li:hover,
+#attendance .pill-dropdown .dropdown-item:hover {
+  background: rgba(224, 243, 244, 0.95);
+}
+
+/* First item ("All dates" / "All teachers") — highlighted */
+#attendance .pill-dropdown li:first-child,
+#attendance .pill-dropdown .dropdown-item:first-child {
+  color: rgba(13, 43, 52, 0.55);
+  font-weight: 900;
+  border-bottom: 1px solid rgba(13, 43, 52, 0.07);
+  margin-bottom: 4px;
+}
+
+/* Active / selected item */
+#attendance .pill-dropdown li.active,
+#attendance .pill-dropdown .dropdown-item.active {
+  background: rgba(184, 248, 111, 0.18);
+  color: #04263c;
+}
+
+/* ✅ Scrollbar styling — matches your green thumb */
+#attendance .pill-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+#attendance .pill-dropdown::-webkit-scrollbar-track {
+  background: rgba(232, 238, 240, 0.95);
+  border-radius: 999px;
+}
+#attendance .pill-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(184, 248, 111, 0.95);
+  border-radius: 999px;
+}
+#attendance .pill-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(164, 226, 93, 0.98);
+}
+
+/* =========================================================
+   📐 RESPONSIVE: Dropdown adjustments
+========================================================= */
+
+@media (max-width: 768px) {
+  #attendance .pill-dropdown {
+    max-height: 220px;
+    min-width: 160px;
+    max-width: 90vw;
+  }
+}
+
+@media (max-width: 520px) {
+  #attendance .pill-dropdown {
+    max-height: 200px;
+    font-size: 13px;
+  }
+
+  #attendance .pill-dropdown li,
+  #attendance .pill-dropdown .dropdown-item {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+}
